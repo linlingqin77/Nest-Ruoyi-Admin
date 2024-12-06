@@ -3,7 +3,7 @@ import { BaseEntity } from 'src/common/entities/base.entity';
 import { Excel } from 'src/modules/common/excel/excel.decorator';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity({
+@Entity('sys_config', {
   name: 'config',
 })
 export class SysConfig extends BaseEntity {

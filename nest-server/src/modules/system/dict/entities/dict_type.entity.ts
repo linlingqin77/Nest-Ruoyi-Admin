@@ -6,7 +6,7 @@ import { Excel } from 'src/modules/common/excel/excel.decorator';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { DictData } from './dict_data.entity';
 
-@Entity({
+@Entity('sys_dict_type', {
   name: 'dict_type',
 })
 export class DictType extends BaseEntity {

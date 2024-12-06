@@ -14,7 +14,7 @@ import { Dept } from '../../dept/entities/dept.entity';
 import { Menu } from '../../menu/entities/menu.entity';
 import { User } from '../../user/entities/user.entity';
 
-@Entity()
+@Entity('sys_role')
 export class Role extends BaseEntity {
   /* 角色ID */
   @PrimaryGeneratedColumn({
@@ -123,12 +123,16 @@ export class Role extends BaseEntity {
 
   @ApiHideProperty()
   @ManyToMany(() => Dept, (dept) => dept.roles)
-  @JoinTable()
+  @JoinTable({
+    name: 'sys_role_dept',
+  })
   depts: Dept[];
 
   @ApiHideProperty()
   @ManyToMany(() => Menu, (menu) => menu.roles)
-  @JoinTable()
+  @JoinTable({
+    name: 'sys_role_menu',
+  })
   menus: Menu[];
 
   @ApiHideProperty()

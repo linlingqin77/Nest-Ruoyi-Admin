@@ -4,7 +4,7 @@ import { BaseEntity } from 'src/common/entities/base.entity';
 import { Excel } from 'src/modules/common/excel/excel.decorator';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity()
+@Entity('sys_job')
 export class Job extends BaseEntity {
   /* 任务Id */
   @PrimaryGeneratedColumn({

@@ -15,7 +15,9 @@ import {
 import { Role } from '../../role/entities/role.entity';
 import { User } from '../../user/entities/user.entity';
 
-@Entity()
+@Entity('sys_dept',{
+  name: '部门表',
+})
 @Tree('materialized-path')
 export class Dept extends BaseEntity {
   /*  部门id */

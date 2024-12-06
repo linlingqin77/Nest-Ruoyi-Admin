@@ -3,7 +3,7 @@ import { IsNumber, IsOptional, IsString } from 'class-validator';
 import { BaseEntity } from 'src/common/entities/base.entity';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity()
+@Entity('sys_notice')
 export class Notice extends BaseEntity {
   @PrimaryGeneratedColumn({
     name: 'notice_id',

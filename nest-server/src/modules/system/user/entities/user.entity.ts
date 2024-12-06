@@ -16,7 +16,7 @@ import { Dept } from '../../dept/entities/dept.entity';
 import { Post } from '../../post/entities/post.entity';
 import { Role } from '../../role/entities/role.entity';
 
-@Entity()
+@Entity('sys_user')
 export class User extends BaseEntity {
   /* 用户Id */
   @PrimaryGeneratedColumn({
@@ -184,11 +184,15 @@ export class User extends BaseEntity {
 
   @ApiHideProperty()
   @ManyToMany(() => Post, (post) => post.users)
-  @JoinTable()
+  @JoinTable({
+    name: 'sys_user_post',
+  })
   posts: Post[];
 
   @ApiHideProperty()
   @ManyToMany(() => Role, (role) => role.users)
-  @JoinTable()
+  @JoinTable({
+    name: 'sys_user_role',
+  })
   roles: Role[];
 }

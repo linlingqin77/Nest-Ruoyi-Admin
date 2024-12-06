@@ -54,7 +54,8 @@ export class LoginService {
     });
     const svgBuffer = Buffer.from(data).toString('base64');
     const result = {
-      img: svgBuffer,
+      // img: svgBuffer,
+      img: data.toString(),
       uuid: this.sharedService.generateUUID(),
     };
     await this.redis.set(
@@ -129,19 +130,19 @@ export class LoginService {
     }
     /* 将用户信息、权限数组、角色数组 存放进入缓存 */
     const promiseArr = [
-      this.redis.set(`${USER_USERNAME_KEY}:${userId}`, user.userName),
-      this.redis.set(`${USER_NICKNAME_KEY}:${userId}`, user.nickName),
-      this.redis.set(`${USER_DEPTID_KEY}:${userId}`, deptId),
-      this.redis.set(`${USER_DEPTNAME_KEY}:${userId}`, deptName),
-      this.redis.set(
+      await this.redis.set(`${USER_USERNAME_KEY}:${userId}`, user.userName),
+      await this.redis.set(`${USER_NICKNAME_KEY}:${userId}`, user.nickName),
+      await this.redis.set(`${USER_DEPTID_KEY}:${userId}`, deptId),
+      await this.redis.set(`${USER_DEPTNAME_KEY}:${userId}`, deptName),
+      await this.redis.set(
         `${USER_PERMISSIONS_KEY}:${userId}`,
         JSON.stringify(permissions),
       ),
-      this.redis.set(
+      await this.redis.set(
         `${USER_ROLEKEYS_KEY}:${userId}`,
         JSON.stringify(roleKeyArr),
       ),
-      this.redis.set(
+      await this.redis.set(
         `${USER_ROLEKS_KEY}:${userId}`,
         JSON.stringify(user.roles),
       ),

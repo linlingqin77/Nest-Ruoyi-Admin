@@ -1,7 +1,7 @@
 import { Excel } from 'src/modules/common/excel/excel.decorator';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity({
+@Entity('sys_opera_log', {
   name: 'oper_log',
 })
 export class OperLog {

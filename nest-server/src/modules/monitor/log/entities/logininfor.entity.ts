@@ -1,7 +1,7 @@
 import { Excel } from 'src/modules/common/excel/excel.decorator';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity()
+@Entity('sys_logininfor')
 export class Logininfor {
   /* 访问id */
   @PrimaryGeneratedColumn({

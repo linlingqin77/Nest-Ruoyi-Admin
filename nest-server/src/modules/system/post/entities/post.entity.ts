@@ -6,7 +6,7 @@ import { Excel } from 'src/modules/common/excel/excel.decorator';
 import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
 
-@Entity()
+@Entity('sys_post')
 export class Post extends BaseEntity {
   /* 岗位ID */
   @PrimaryGeneratedColumn({

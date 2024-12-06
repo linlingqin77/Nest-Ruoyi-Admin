@@ -12,7 +12,7 @@ import {
   TreeParent,
 } from 'typeorm';
 import { Role } from '../../role/entities/role.entity';
-@Entity()
+@Entity('sys_menu')
 @Tree('materialized-path')
 export class Menu extends BaseEntity {
   /* 菜单ID */

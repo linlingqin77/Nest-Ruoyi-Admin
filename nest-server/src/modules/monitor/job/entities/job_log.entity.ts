@@ -8,7 +8,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-@Entity({
+@Entity('sys_job_log', {
   name: 'job_log',
 })
 export class JobLog {
