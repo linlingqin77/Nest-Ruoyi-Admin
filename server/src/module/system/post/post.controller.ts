@@ -1,9 +1,11 @@
 import { Controller, Get, Post, Body, Put, Param, Delete, Res, Query } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBody, ApiConsumes, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { PostService } from './post.service';
 import { CreatePostDto, UpdatePostDto, ListPostDto } from './dto/index';
 import { RequirePermission } from 'src/common/decorators/require-premission.decorator';
 import { Response } from 'express';
+import { Api } from 'src/common/decorators/api.decorator';
+import { PostVo, PostListVo } from './vo/post.vo';
 
 @ApiTags('岗位管理')
 @Controller('system/post')
@@ -11,12 +13,10 @@ import { Response } from 'express';
 export class PostController {
   constructor(private readonly postService: PostService) {}
 
-  @ApiOperation({
+  @Api({
     summary: '岗位管理-创建',
-  })
-  @ApiBody({
-    type: CreatePostDto,
-    required: true,
+    description: '创建新岗位',
+    body: CreatePostDto,
   })
   @RequirePermission('system:post:add')
   @Post('/')
@@ -24,12 +24,10 @@ export class PostController {
     return this.postService.create(createPostDto);
   }
 
-  @ApiOperation({
+  @Api({
     summary: '岗位管理-列表',
-  })
-  @ApiBody({
-    type: ListPostDto,
-    required: true,
+    description: '分页查询岗位列表',
+    type: PostListVo,
   })
   @RequirePermission('system:post:list')
   @Get('/list')
@@ -37,8 +35,11 @@ export class PostController {
     return this.postService.findAll(query);
   }
 
-  @ApiOperation({
+  @Api({
     summary: '岗位管理-详情',
+    description: '根据ID获取岗位详情',
+    type: PostVo,
+    params: [{ name: 'id', description: '岗位ID', type: 'number' }],
   })
   @RequirePermission('system:post:query')
   @Get('/:id')
@@ -46,12 +47,10 @@ export class PostController {
     return this.postService.findOne(+id);
   }
 
-  @ApiOperation({
+  @Api({
     summary: '岗位管理-更新',
-  })
-  @ApiBody({
-    type: UpdatePostDto,
-    required: true,
+    description: '修改岗位信息',
+    body: UpdatePostDto,
   })
   @RequirePermission('system:post:edit')
   @Put('/')
@@ -59,8 +58,10 @@ export class PostController {
     return this.postService.update(updatePostDto);
   }
 
-  @ApiOperation({
+  @Api({
     summary: '岗位管理-删除',
+    description: '批量删除岗位，多个ID用逗号分隔',
+    params: [{ name: 'ids', description: '岗位ID，多个用逗号分隔' }],
   })
   @RequirePermission('system:post:remove')
   @Delete('/:ids')
@@ -69,7 +70,12 @@ export class PostController {
     return this.postService.remove(menuIds);
   }
 
-  @ApiOperation({ summary: '导出岗位管理xlsx文件' })
+  @Api({
+    summary: '岗位管理-导出Excel',
+    description: '导出岗位数据为xlsx文件',
+    body: ListPostDto,
+    produces: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
+  })
   @RequirePermission('system:post:export')
   @Post('/export')
   async export(@Res() res: Response, @Body() body: ListPostDto): Promise<void> {

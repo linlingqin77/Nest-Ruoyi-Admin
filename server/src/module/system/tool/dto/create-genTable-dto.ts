@@ -47,6 +47,7 @@ export class GenDbTableList extends PagingDto {
 export class TableName {
   @ApiProperty({
     required: true,
+    description: '表名称列表',
   })
   @IsString()
   tableNames: string;
@@ -54,6 +55,7 @@ export class TableName {
 export class TableId {
   @ApiProperty({
     required: true,
+    description: '表ID列表',
   })
   @IsString()
   tableIds: string;
@@ -71,6 +73,7 @@ export class GenTableList extends PagingDto {
 export class GenTableUpdate {
   @ApiProperty({
     required: true,
+    description: '表ID',
   })
   @IsOptional()
   tableId: number;

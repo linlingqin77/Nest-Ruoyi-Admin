@@ -2,15 +2,16 @@ import { IsString, IsNumberString, IsEnum, IsPhoneNumber, Min, Length, IsOptiona
 import { ApiProperty } from '@nestjs/swagger';
 
 export class OnlineListDto {
-  @ApiProperty({ required: false })
+  @ApiProperty({ required: false, description: '当前页码' })
   @IsNumberString()
   pageNum: number;
 
-  @ApiProperty({ required: false })
+  @ApiProperty({ required: false, description: '每页条数' })
   @IsNumberString()
   pageSize: number;
   @ApiProperty({
     required: false,
+    description: '登录IP地址',
   })
   @IsOptional()
   @IsString()
@@ -19,6 +20,7 @@ export class OnlineListDto {
 
   @ApiProperty({
     required: false,
+    description: '用户名',
   })
   @IsOptional()
   @IsString()

@@ -1,9 +1,10 @@
 import { Controller, Get, Post, Body, Delete, Param, Put, Query, Req, Res } from '@nestjs/common';
 import { Response } from 'express';
-import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { JobService } from './job.service';
 import { CreateJobDto, ListJobDto } from './dto/create-job.dto';
 import { RequirePermission } from 'src/common/decorators/require-premission.decorator';
+import { Api } from 'src/common/decorators/api.decorator';
 
 @ApiTags('定时任务管理')
 @Controller('monitor/job')
@@ -11,56 +12,85 @@ import { RequirePermission } from 'src/common/decorators/require-premission.deco
 export class JobController {
   constructor(private readonly jobService: JobService) {}
 
+  @Api({
+    summary: '获取定时任务列表',
+    description: '分页查询定时任务列表',
+  })
   @Get('list')
-  @ApiOperation({ summary: '获取定时任务列表' })
   @RequirePermission('monitor:job:list')
   list(@Query() query: { pageNum?: number; pageSize?: number; jobName?: string; jobGroup?: string; status?: string }) {
     return this.jobService.list(query);
   }
 
+  @Api({
+    summary: '获取定时任务详情',
+    description: '根据任务ID获取定时任务详细信息',
+    params: [{ name: 'jobId', description: '任务ID', type: 'number' }],
+  })
   @Get(':jobId')
-  @ApiOperation({ summary: '获取定时任务详细信息' })
   @RequirePermission('monitor:job:query')
   getInfo(@Param('jobId') jobId: number) {
     return this.jobService.getJob(jobId);
   }
 
+  @Api({
+    summary: '创建定时任务',
+    description: '新增定时任务',
+    body: CreateJobDto,
+  })
   @Post()
-  @ApiOperation({ summary: '创建定时任务' })
   @RequirePermission('monitor:job:add')
   add(@Body() createJobDto: CreateJobDto, @Req() req: any) {
     return this.jobService.create(createJobDto, req.user?.userName);
   }
 
+  @Api({
+    summary: '修改任务状态',
+    description: '启用或停用定时任务',
+  })
   @Put('changeStatus')
-  @ApiOperation({ summary: '修改任务状态' })
   @RequirePermission('monitor:job:changeStatus')
   changeStatus(@Body('jobId') jobId: number, @Body('status') status: string, @Req() req: any) {
     return this.jobService.changeStatus(jobId, status, req.user?.userName);
   }
 
+  @Api({
+    summary: '修改定时任务',
+    description: '更新定时任务信息',
+  })
   @Put('')
-  @ApiOperation({ summary: '修改定时任务' })
   @RequirePermission('monitor:job:edit')
   update(@Body('jobId') jobId: number, @Body() updateJobDto: Partial<CreateJobDto>, @Req() req: any) {
     return this.jobService.update(jobId, updateJobDto, req.user?.userName);
   }
 
+  @Api({
+    summary: '删除定时任务',
+    description: '批量删除定时任务，多个ID用逗号分隔',
+    params: [{ name: 'jobIds', description: '任务ID，多个用逗号分隔' }],
+  })
   @Delete(':jobIds')
-  @ApiOperation({ summary: '删除定时任务' })
   @RequirePermission('monitor:job:remove')
   remove(@Param('jobIds') jobIds: string) {
     return this.jobService.remove(jobIds.split(',').map((id) => +id));
   }
 
+  @Api({
+    summary: '立即执行一次',
+    description: '手动触发定时任务执行',
+  })
   @Put('/run')
-  @ApiOperation({ summary: '立即执行一次' })
   @RequirePermission('monitor:job:changeStatus')
   run(@Body('jobId') jobId: number) {
     return this.jobService.run(jobId);
   }
 
-  @ApiOperation({ summary: '导出定时任务为xlsx文件' })
+  @Api({
+    summary: '导出定时任务Excel',
+    description: '导出定时任务数据为xlsx文件',
+    body: ListJobDto,
+    produces: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
+  })
   @RequirePermission('monitor:job:export')
   @Post('/export')
   async export(@Res() res: Response, @Body() body: ListJobDto): Promise<void> {

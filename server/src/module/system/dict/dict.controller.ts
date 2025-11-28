@@ -1,9 +1,11 @@
 import { Controller, Get, Post, Body, Query, Request, Put, Res, HttpCode, Param, Delete } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBody, ApiConsumes, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { DictService } from './dict.service';
 import { CreateDictTypeDto, UpdateDictTypeDto, ListDictType, CreateDictDataDto, UpdateDictDataDto, ListDictData } from './dto/index';
 import { RequirePermission } from 'src/common/decorators/require-premission.decorator';
 import { Response } from 'express';
+import { Api } from 'src/common/decorators/api.decorator';
+import { DictTypeVo, DictTypeListVo, DictDataVo, DictDataListVo } from './vo/dict.vo';
 
 @ApiTags('字典管理')
 @Controller('system/dict')
@@ -12,12 +14,10 @@ export class DictController {
   constructor(private readonly dictService: DictService) {}
 
   //字典类型
-  @ApiOperation({
+  @Api({
     summary: '字典类型-创建',
-  })
-  @ApiBody({
-    type: CreateDictTypeDto,
-    required: true,
+    description: '创建字典类型',
+    body: CreateDictTypeDto,
   })
   @RequirePermission('system:dict:add')
   @HttpCode(200)
@@ -27,8 +27,9 @@ export class DictController {
     return this.dictService.createType(createDictTypeDto);
   }
 
-  @ApiOperation({
+  @Api({
     summary: '字典数据-刷新缓存',
+    description: '清除并重新加载字典数据缓存',
   })
   @RequirePermission('system:dict:remove')
   @Delete('/type/refreshCache')
@@ -36,8 +37,10 @@ export class DictController {
     return this.dictService.resetDictCache();
   }
 
-  @ApiOperation({
+  @Api({
     summary: '字典类型-删除',
+    description: '批量删除字典类型，多个ID用逗号分隔',
+    params: [{ name: 'id', description: '字典类型ID，多个用逗号分隔' }],
   })
   @RequirePermission('system:dict:remove')
   @Delete('/type/:id')
@@ -46,8 +49,10 @@ export class DictController {
     return this.dictService.deleteType(dictIds);
   }
 
-  @ApiOperation({
+  @Api({
     summary: '字典类型-修改',
+    description: '修改字典类型信息',
+    body: UpdateDictTypeDto,
   })
   @RequirePermission('system:dict:edit')
   @Put('/type')
@@ -55,8 +60,10 @@ export class DictController {
     return this.dictService.updateType(updateDictTypeDto);
   }
 
-  @ApiOperation({
+  @Api({
     summary: '字典类型-列表',
+    description: '分页查询字典类型列表',
+    type: DictTypeListVo,
   })
   @RequirePermission('system:dict:list')
   @Get('/type/list')
@@ -64,8 +71,11 @@ export class DictController {
     return this.dictService.findAllType(query);
   }
 
-  @ApiOperation({
-    summary: '全部字典类型-下拉数据',
+  @Api({
+    summary: '字典类型-下拉选项',
+    description: '获取全部字典类型用于下拉选择',
+    type: DictTypeVo,
+    isArray: true,
   })
   @RequirePermission('system:dict:query')
   @Get('/type/optionselect')
@@ -73,8 +83,11 @@ export class DictController {
     return this.dictService.findOptionselect();
   }
 
-  @ApiOperation({
+  @Api({
     summary: '字典类型-详情',
+    description: '根据ID获取字典类型详情',
+    type: DictTypeVo,
+    params: [{ name: 'id', description: '字典类型ID', type: 'number' }],
   })
   @RequirePermission('system:dict:query')
   @Get('/type/:id')
@@ -83,8 +96,10 @@ export class DictController {
   }
 
   // 字典数据
-  @ApiOperation({
+  @Api({
     summary: '字典数据-创建',
+    description: '在指定字典类型下创建字典数据',
+    body: CreateDictDataDto,
   })
   @RequirePermission('system:dict:add')
   @HttpCode(200)
@@ -94,8 +109,10 @@ export class DictController {
     return this.dictService.createDictData(createDictDataDto);
   }
 
-  @ApiOperation({
+  @Api({
     summary: '字典数据-删除',
+    description: '批量删除字典数据，多个ID用逗号分隔',
+    params: [{ name: 'id', description: '字典数据ID，多个用逗号分隔' }],
   })
   @RequirePermission('system:dict:remove')
   @Delete('/data/:id')
@@ -104,8 +121,10 @@ export class DictController {
     return this.dictService.deleteDictData(dictIds);
   }
 
-  @ApiOperation({
+  @Api({
     summary: '字典数据-修改',
+    description: '修改字典数据',
+    body: UpdateDictDataDto,
   })
   @RequirePermission('system:dict:edit')
   @Put('/data')
@@ -113,8 +132,10 @@ export class DictController {
     return this.dictService.updateDictData(updateDictDataDto);
   }
 
-  @ApiOperation({
+  @Api({
     summary: '字典数据-列表',
+    description: '查询指定字典类型下的数据列表',
+    type: DictDataListVo,
   })
   @RequirePermission('system:dict:list')
   @Get('/data/list')
@@ -122,30 +143,47 @@ export class DictController {
     return this.dictService.findAllData(query);
   }
 
-  @ApiOperation({
+  @Api({
     summary: '字典数据-详情',
+    description: '根据字典编码获取字典数据详情',
+    type: DictDataVo,
+    params: [{ name: 'id', description: '字典数据编码', type: 'number' }],
   })
   @Get('/data/:id')
   findOneDictData(@Param('id') dictCode: string) {
     return this.dictService.findOneDictData(+dictCode);
   }
 
-  @ApiOperation({
-    summary: '字典数据-类型-详情【走缓存】',
+  @Api({
+    summary: '字典数据-按类型查询（缓存）',
+    description: '根据字典类型获取字典数据列表，优先使用缓存',
+    type: DictDataVo,
+    isArray: true,
+    params: [{ name: 'id', description: '字典类型标识' }],
   })
   @Get('/data/type/:id')
   findOneDataType(@Param('id') dictType: string) {
     return this.dictService.findOneDataType(dictType);
   }
 
-  @ApiOperation({ summary: '导出字典组为xlsx文件' })
+  @Api({
+    summary: '字典类型-导出Excel',
+    description: '导出字典类型为xlsx文件',
+    body: ListDictType,
+    produces: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
+  })
   @RequirePermission('system:dict:export')
   @Post('/type/export')
   async export(@Res() res: Response, @Body() body: ListDictType): Promise<void> {
     return this.dictService.export(res, body);
   }
 
-  @ApiOperation({ summary: '导出字典内容为xlsx文件' })
+  @Api({
+    summary: '字典数据-导出Excel',
+    description: '导出字典数据为xlsx文件',
+    body: ListDictType,
+    produces: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
+  })
   @RequirePermission('system:dict:export')
   @Post('/data/export')
   async exportData(@Res() res: Response, @Body() body: ListDictType): Promise<void> {

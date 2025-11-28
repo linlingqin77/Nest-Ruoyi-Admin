@@ -11,7 +11,7 @@ import { ${serviceName} } from './${businessName}.service';
 import { Create${Lodash.upperFirst(BusinessName)}Dto, Base${Lodash.upperFirst(BusinessName)}Dto, Update${Lodash.upperFirst(BusinessName)}Dto, Query${Lodash.upperFirst(
     BusinessName,
   )}Dto, List${Lodash.upperFirst(BusinessName)}Dto } from './dto/${businessName}.dto';
-import { ApiDataResponse } from 'src/common/decorators/apiDataResponse.decorator';
+import { ApiDataResponse } from 'src/common/decorators/api.decorator';
 
 @ApiTags('${functionName}')
 @Controller('${moduleName}/${businessName}')

@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Body, HttpCode } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBody, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { MainService } from './main.service';
 import { RegisterDto, LoginDto } from './dto/index';
 import { createMath } from 'src/common/utils/captcha';
@@ -10,6 +10,9 @@ import { CacheEnum } from 'src/common/enum/index';
 import { ConfigService } from 'src/module/system/config/config.service';
 import { ClientInfo, ClientInfoDto } from 'src/common/decorators/common.decorator';
 import { NotRequireAuth, User, UserDto } from 'src/module/system/user/user.decorator';
+import { Api } from 'src/common/decorators/api.decorator';
+import { LoginVo, CaptchaVo, GetInfoVo } from './vo/main.vo';
+import { RouterVo } from 'src/module/system/menu/vo/menu.vo';
 
 @ApiTags('根目录')
 @Controller('/')
@@ -20,12 +23,13 @@ export class MainController {
     private readonly redisService: RedisService,
     private readonly configService: ConfigService,
   ) {}
-  @ApiOperation({
+
+  @Api({
     summary: '用户登录',
-  })
-  @ApiBody({
-    type: LoginDto,
-    required: true,
+    description: '用户登录接口，需要用户名、密码和验证码',
+    body: LoginDto,
+    security: false,
+    type: LoginVo,
   })
   @Post('/login')
   @HttpCode(200)
@@ -33,12 +37,9 @@ export class MainController {
     return this.mainService.login(user, clientInfo);
   }
 
-  @ApiOperation({
+  @Api({
     summary: '退出登录',
-  })
-  @ApiBody({
-    type: LoginDto,
-    required: true,
+    description: '退出当前登录状态，清除登录令牌',
   })
   @NotRequireAuth()
   @Post('/logout')
@@ -50,12 +51,11 @@ export class MainController {
     return this.mainService.logout(clientInfo);
   }
 
-  @ApiOperation({
+  @Api({
     summary: '用户注册',
-  })
-  @ApiBody({
-    type: RegisterDto,
-    required: true,
+    description: '新用户注册接口，需要用户名、密码和验证码',
+    body: RegisterDto,
+    security: false,
   })
   @Post('/register')
   @HttpCode(200)
@@ -63,8 +63,10 @@ export class MainController {
     return this.mainService.register(user);
   }
 
-  @ApiOperation({
-    summary: '账号自助-是否开启用户注册功能',
+  @Api({
+    summary: '是否开启用户注册',
+    description: '查询系统是否开启用户自主注册功能',
+    security: false,
   })
   @Get('/registerUser')
   async registerUser() {
@@ -74,8 +76,11 @@ export class MainController {
     return ResultData.ok(enable, '操作成功');
   }
 
-  @ApiOperation({
-    summary: '获取验证图片',
+  @Api({
+    summary: '获取验证码图片',
+    description: '获取登录/注册所需的图形验证码，返回 Base64 图片和 UUID',
+    security: false,
+    type: CaptchaVo,
   })
   @Get('/captchaImage')
   async captchaImage() {
@@ -100,8 +105,10 @@ export class MainController {
     }
   }
 
-  @ApiOperation({
-    summary: '用户信息',
+  @Api({
+    summary: '获取当前用户信息',
+    description: '获取当前登录用户的基本信息、角色和权限',
+    type: GetInfoVo,
   })
   @Get('/getInfo')
   async getInfo(@User() user: UserDto) {
@@ -114,8 +121,11 @@ export class MainController {
     };
   }
 
-  @ApiOperation({
-    summary: '路由信息',
+  @Api({
+    summary: '获取路由菜单',
+    description: '获取当前用户的前端路由菜单数据',
+    type: RouterVo,
+    isArray: true,
   })
   @Get('/getRouters')
   getRouters(@User() user: UserDto) {

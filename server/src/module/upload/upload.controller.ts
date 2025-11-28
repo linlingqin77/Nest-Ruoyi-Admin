@@ -1,9 +1,10 @@
 import { Controller, Get, Post, Body, Query, UploadedFile, UseInterceptors, HttpCode } from '@nestjs/common';
 import { UploadService } from './upload.service';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiTags, ApiOperation, ApiBody, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { ChunkFileDto, ChunkMergeFileDto, FileUploadDto, uploadIdDto } from './dto/index';
 import { ResultData } from 'src/common/utils/result';
+import { Api } from 'src/common/decorators/api.decorator';
 
 @ApiTags('通用-文件上传')
 @Controller('common/upload')
@@ -16,12 +17,13 @@ export class UploadController {
    * @param file
    * @returns
    */
-  @ApiOperation({
+  @Api({
     summary: '文件上传',
-  })
-  @ApiBody({
-    type: FileUploadDto,
-    required: true,
+    description: '上传单个文件',
+    fileUpload: {
+      fieldName: 'file',
+      description: '上传的文件',
+    },
   })
   @HttpCode(200)
   @Post()
@@ -36,11 +38,9 @@ export class UploadController {
    * @param file
    * @returns
    */
-  @ApiOperation({
+  @Api({
     summary: '获取切片上传任务Id',
-  })
-  @ApiBody({
-    required: true,
+    description: '初始化切片上传，获取任务ID',
   })
   @HttpCode(200)
   @Get('/chunk/uploadId')
@@ -53,11 +53,13 @@ export class UploadController {
    * @param file
    * @returns
    */
-  @ApiOperation({
+  @Api({
     summary: '文件切片上传',
-  })
-  @ApiBody({
-    required: true,
+    description: '上传文件分片',
+    fileUpload: {
+      fieldName: 'file',
+      description: '文件分片数据',
+    },
   })
   @HttpCode(200)
   @Post('/chunk')
@@ -70,12 +72,10 @@ export class UploadController {
    * 文件分片合并
    * @returns
    */
-  @ApiOperation({
+  @Api({
     summary: '合并切片',
-  })
-  @ApiBody({
-    type: ChunkMergeFileDto,
-    required: true,
+    description: '合并所有分片为完整文件',
+    body: ChunkMergeFileDto,
   })
   @HttpCode(200)
   @Post('/chunk/merge')
@@ -89,12 +89,10 @@ export class UploadController {
    * @returns
    *
    */
-  @ApiOperation({
+  @Api({
     summary: '获取切片上传结果',
-  })
-  @ApiQuery({
-    type: uploadIdDto,
-    required: true,
+    description: '查询切片上传任务的状态',
+    queries: [{ name: 'uploadId', description: '上传任务ID', required: true }],
   })
   @HttpCode(200)
   @Get('/chunk/result')
@@ -106,11 +104,10 @@ export class UploadController {
    * 获取cos授权
    * @param query
    */
-  @ApiOperation({
-    summary: '获取cos上传密钥',
-  })
-  @ApiBody({
-    required: true,
+  @Api({
+    summary: '获取COS上传密钥',
+    description: '获取腾讯云COS上传临时授权密钥',
+    queries: [{ name: 'key', description: '文件对象路径', required: true }],
   })
   @Get('/cos/authorization')
   getAuthorization(@Query() query: { key: string }) {

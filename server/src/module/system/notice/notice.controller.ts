@@ -1,9 +1,11 @@
 import { Controller, Get, Post, Body, Patch, Param, Query, Request, Put, Delete } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBody, ApiConsumes, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { NoticeService } from './notice.service';
 import { CreateNoticeDto, UpdateNoticeDto, ListNoticeDto } from './dto/index';
 import { RequirePermission } from 'src/common/decorators/require-premission.decorator';
 import { GetNowDate } from 'src/common/utils';
+import { Api } from 'src/common/decorators/api.decorator';
+import { NoticeVo, NoticeListVo } from './vo/notice.vo';
 
 @ApiTags('通知公告')
 @Controller('system/notice')
@@ -11,11 +13,10 @@ import { GetNowDate } from 'src/common/utils';
 export class NoticeController {
   constructor(private readonly noticeService: NoticeService) {}
 
-  @ApiOperation({
+  @Api({
     summary: '通知公告-创建',
-  })
-  @ApiBody({
-    type: CreateNoticeDto,
+    description: '发布新的通知公告',
+    body: CreateNoticeDto,
   })
   @RequirePermission('system:notice:add')
   @Post()
@@ -24,12 +25,10 @@ export class NoticeController {
     return this.noticeService.create(createConfigDto);
   }
 
-  @ApiOperation({
+  @Api({
     summary: '通知公告-列表',
-  })
-  @ApiBody({
-    type: ListNoticeDto,
-    required: true,
+    description: '分页查询通知公告列表',
+    type: NoticeListVo,
   })
   @RequirePermission('system:notice:list')
   @Get('/list')
@@ -37,8 +36,11 @@ export class NoticeController {
     return this.noticeService.findAll(query);
   }
 
-  @ApiOperation({
+  @Api({
     summary: '通知公告-详情',
+    description: '根据ID获取通知公告详情',
+    type: NoticeVo,
+    params: [{ name: 'id', description: '公告ID', type: 'number' }],
   })
   @RequirePermission('system:notice:query')
   @Get(':id')
@@ -46,8 +48,10 @@ export class NoticeController {
     return this.noticeService.findOne(+id);
   }
 
-  @ApiOperation({
+  @Api({
     summary: '通知公告-更新',
+    description: '修改通知公告内容',
+    body: UpdateNoticeDto,
   })
   @RequirePermission('system:notice:edit')
   @Put()
@@ -55,8 +59,10 @@ export class NoticeController {
     return this.noticeService.update(updateNoticeDto);
   }
 
-  @ApiOperation({
+  @Api({
     summary: '通知公告-删除',
+    description: '批量删除通知公告，多个ID用逗号分隔',
+    params: [{ name: 'id', description: '公告ID，多个用逗号分隔' }],
   })
   @RequirePermission('system:notice:remove')
   @Delete(':id')

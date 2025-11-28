@@ -1,21 +1,22 @@
 import { Controller, Get, Post, Body, Res, Param, Delete, Query } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBody, ApiConsumes, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { Response } from 'express';
 import { LoginlogService } from './loginlog.service';
 import { ListLoginlogDto } from './dto/index';
 import { RequirePermission } from 'src/common/decorators/require-premission.decorator';
+import { Api } from 'src/common/decorators/api.decorator';
+import { LoginLogListVo } from 'src/module/monitor/vo/monitor.vo';
 
 @ApiTags('登录日志')
 @Controller('monitor/logininfor')
 @ApiBearerAuth('Authorization')
 export class LoginlogController {
   constructor(private readonly loginlogService: LoginlogService) {}
-  @ApiOperation({
+
+  @Api({
     summary: '登录日志-列表',
-  })
-  @ApiBody({
-    type: ListLoginlogDto,
-    required: true,
+    description: '分页查询登录日志列表',
+    type: LoginLogListVo,
   })
   @RequirePermission('monitor:logininfor:list')
   @Get('/list')
@@ -23,8 +24,9 @@ export class LoginlogController {
     return this.loginlogService.findAll(query);
   }
 
-  @ApiOperation({
+  @Api({
     summary: '登录日志-清除全部日志',
+    description: '清空所有登录日志记录',
   })
   @RequirePermission('monitor:logininfor:remove')
   @Delete('/clean')
@@ -32,8 +34,10 @@ export class LoginlogController {
     return this.loginlogService.removeAll();
   }
 
-  @ApiOperation({
+  @Api({
     summary: '登录日志-删除日志',
+    description: '批量删除登录日志，多个ID用逗号分隔',
+    params: [{ name: 'id', description: '登录日志ID，多个用逗号分隔' }],
   })
   @RequirePermission('monitor:logininfor:remove')
   @Delete(':id')
@@ -42,7 +46,12 @@ export class LoginlogController {
     return this.loginlogService.remove(infoIds);
   }
 
-  @ApiOperation({ summary: '导出登录日志为xlsx文件' })
+  @Api({
+    summary: '登录日志-导出Excel',
+    description: '导出登录日志数据为xlsx文件',
+    body: ListLoginlogDto,
+    produces: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
+  })
   @RequirePermission('system:config:export')
   @Post('/export')
   async export(@Res() res: Response, @Body() body: ListLoginlogDto): Promise<void> {

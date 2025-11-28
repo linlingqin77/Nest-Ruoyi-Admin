@@ -1,8 +1,10 @@
 import { Controller, Get, Post, Body, Query, Put, Param, Delete } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBody, ApiConsumes, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { MenuService } from './menu.service';
 import { CreateMenuDto, UpdateMenuDto, ListDeptDto } from './dto/index';
 import { RequirePermission } from 'src/common/decorators/require-premission.decorator';
+import { Api } from 'src/common/decorators/api.decorator';
+import { MenuVo, MenuTreeVo, RoleMenuTreeSelectVo } from './vo/menu.vo';
 
 @ApiTags('菜单管理')
 @Controller('system/menu')
@@ -10,12 +12,10 @@ import { RequirePermission } from 'src/common/decorators/require-premission.deco
 export class MenuController {
   constructor(private readonly menuService: MenuService) {}
 
-  @ApiOperation({
+  @Api({
     summary: '菜单管理-创建',
-  })
-  @ApiBody({
-    type: CreateMenuDto,
-    required: true,
+    description: '创建新菜单，支持目录、菜单、按钮三种类型',
+    body: CreateMenuDto,
   })
   @RequirePermission('system:menu:add')
   @Post()
@@ -23,8 +23,11 @@ export class MenuController {
     return this.menuService.create(createMenuDto);
   }
 
-  @ApiOperation({
+  @Api({
     summary: '菜单管理-列表',
+    description: '获取菜单列表，支持按名称和状态筛选',
+    type: MenuVo,
+    isArray: true,
   })
   @RequirePermission('system:menu:list')
   @Get('/list')
@@ -32,8 +35,11 @@ export class MenuController {
     return this.menuService.findAll(query);
   }
 
-  @ApiOperation({
-    summary: '菜单管理-树表',
+  @Api({
+    summary: '菜单管理-树形选择',
+    description: '获取菜单树形结构，用于下拉选择',
+    type: MenuTreeVo,
+    isArray: true,
   })
   @RequirePermission('system:menu:query')
   @Get('/treeselect')
@@ -41,8 +47,11 @@ export class MenuController {
     return this.menuService.treeSelect();
   }
 
-  @ApiOperation({
-    summary: '菜单管理-角色-树表',
+  @Api({
+    summary: '菜单管理-角色菜单树',
+    description: '获取角色已分配的菜单树结构',
+    type: RoleMenuTreeSelectVo,
+    params: [{ name: 'menuId', description: '角色ID', type: 'number' }],
   })
   @RequirePermission('system:menu:query')
   @Get('/roleMenuTreeselect/:menuId')
@@ -50,8 +59,11 @@ export class MenuController {
     return this.menuService.roleMenuTreeselect(+menuId);
   }
 
-  @ApiOperation({
+  @Api({
     summary: '菜单管理-详情',
+    description: '根据菜单ID获取菜单详细信息',
+    type: MenuVo,
+    params: [{ name: 'menuId', description: '菜单ID', type: 'number' }],
   })
   @RequirePermission('system:menu:query')
   @Get(':menuId')
@@ -59,12 +71,10 @@ export class MenuController {
     return this.menuService.findOne(+menuId);
   }
 
-  @ApiOperation({
+  @Api({
     summary: '菜单管理-修改',
-  })
-  @ApiBody({
-    type: UpdateMenuDto,
-    required: true,
+    description: '修改菜单信息',
+    body: UpdateMenuDto,
   })
   @RequirePermission('system:menu:edit')
   @Put()
@@ -72,8 +82,10 @@ export class MenuController {
     return this.menuService.update(updateMenuDto);
   }
 
-  @ApiOperation({
+  @Api({
     summary: '菜单管理-删除',
+    description: '删除菜单，会同时删除子菜单',
+    params: [{ name: 'menuId', description: '菜单ID', type: 'number' }],
   })
   @RequirePermission('system:menu:remove')
   @Delete(':menuId')

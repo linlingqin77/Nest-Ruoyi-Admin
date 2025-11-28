@@ -1,9 +1,11 @@
 import { Controller, Get, Post, Body, Put, Param, Delete, Request, Query, Res } from '@nestjs/common';
 import { Response } from 'express';
-import { ApiTags, ApiOperation, ApiBody, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { ConfigService } from './config.service';
 import { CreateConfigDto, UpdateConfigDto, ListConfigDto } from './dto/index';
 import { RequirePermission } from 'src/common/decorators/require-premission.decorator';
+import { Api } from 'src/common/decorators/api.decorator';
+import { ConfigVo, ConfigListVo } from './vo/config.vo';
 
 @ApiTags('参数设置')
 @Controller('system/config')
@@ -11,11 +13,10 @@ import { RequirePermission } from 'src/common/decorators/require-premission.deco
 export class ConfigController {
   constructor(private readonly configService: ConfigService) {}
 
-  @ApiOperation({
+  @Api({
     summary: '参数设置-创建',
-  })
-  @ApiBody({
-    type: CreateConfigDto,
+    description: '创建系统参数配置',
+    body: CreateConfigDto,
   })
   @RequirePermission('system:config:add')
   @Post()
@@ -24,12 +25,10 @@ export class ConfigController {
     return this.configService.create(createConfigDto);
   }
 
-  @ApiOperation({
+  @Api({
     summary: '参数设置-列表',
-  })
-  @ApiBody({
-    type: ListConfigDto,
-    required: true,
+    description: '分页查询系统参数列表',
+    type: ConfigListVo,
   })
   @RequirePermission('system:config:list')
   @Get('/list')
@@ -37,8 +36,11 @@ export class ConfigController {
     return this.configService.findAll(query);
   }
 
-  @ApiOperation({
-    summary: '参数设置-详情(id)',
+  @Api({
+    summary: '参数设置-详情',
+    description: '根据ID获取参数详情',
+    type: ConfigVo,
+    params: [{ name: 'id', description: '参数ID', type: 'number' }],
   })
   @RequirePermission('system:config:query')
   @Get(':id')
@@ -46,8 +48,10 @@ export class ConfigController {
     return this.configService.findOne(+id);
   }
 
-  @ApiOperation({
-    summary: '参数设置-详情(configKey)【走缓存】',
+  @Api({
+    summary: '参数设置-按Key查询（缓存）',
+    description: '根据参数键获取参数值，优先使用缓存',
+    params: [{ name: 'id', description: '参数键名' }],
   })
   @RequirePermission('system:config:query')
   @Get('/configKey/:id')
@@ -55,8 +59,10 @@ export class ConfigController {
     return this.configService.findOneByConfigKey(configKey);
   }
 
-  @ApiOperation({
+  @Api({
     summary: '参数设置-更新',
+    description: '修改系统参数配置',
+    body: UpdateConfigDto,
   })
   @RequirePermission('system:config:edit')
   @Put()
@@ -64,8 +70,9 @@ export class ConfigController {
     return this.configService.update(updateConfigDto);
   }
 
-  @ApiOperation({
+  @Api({
     summary: '参数设置-刷新缓存',
+    description: '清除并重新加载参数配置缓存',
   })
   @RequirePermission('system:config:remove')
   @Delete('/refreshCache')
@@ -73,8 +80,10 @@ export class ConfigController {
     return this.configService.resetConfigCache();
   }
 
-  @ApiOperation({
+  @Api({
     summary: '参数设置-删除',
+    description: '批量删除参数配置，多个ID用逗号分隔',
+    params: [{ name: 'id', description: '参数ID，多个用逗号分隔' }],
   })
   @RequirePermission('system:config:remove')
   @Delete(':id')
@@ -83,7 +92,12 @@ export class ConfigController {
     return this.configService.remove(configIds);
   }
 
-  @ApiOperation({ summary: '导出参数管理为xlsx文件' })
+  @Api({
+    summary: '参数设置-导出Excel',
+    description: '导出参数管理数据为xlsx文件',
+    body: ListConfigDto,
+    produces: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
+  })
   @RequirePermission('system:config:export')
   @Post('/export')
   async export(@Res() res: Response, @Body() body: ListConfigDto): Promise<void> {

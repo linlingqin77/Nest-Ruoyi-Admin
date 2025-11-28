@@ -1,10 +1,12 @@
 import { Controller, Get, Post, Body, Put, Param, Query, Delete, Res } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBody, ApiConsumes, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { RoleService } from './role.service';
 import { Response } from 'express';
 import { CreateRoleDto, UpdateRoleDto, ListRoleDto, ChangeStatusDto, AuthUserCancelDto, AuthUserCancelAllDto, AuthUserSelectAllDto } from './dto/index';
 import { AllocatedListDto } from '../user/dto/index';
 import { RequirePermission } from 'src/common/decorators/require-premission.decorator';
+import { Api } from 'src/common/decorators/api.decorator';
+import { RoleVo, RoleListVo, RoleDeptTreeVo, AllocatedUserListVo } from './vo/role.vo';
 
 import { UserService } from '../user/user.service';
 import { User, UserDto } from 'src/module/system/user/user.decorator';
@@ -18,12 +20,10 @@ export class RoleController {
     private readonly userService: UserService,
   ) {}
 
-  @ApiOperation({
+  @Api({
     summary: '角色管理-创建',
-  })
-  @ApiBody({
-    type: CreateRoleDto,
-    required: true,
+    description: '创建新角色并分配权限',
+    body: CreateRoleDto,
   })
   @RequirePermission('system:role:add')
   @Post()
@@ -31,12 +31,10 @@ export class RoleController {
     return this.roleService.create(createRoleDto);
   }
 
-  @ApiOperation({
+  @Api({
     summary: '角色管理-列表',
-  })
-  @ApiBody({
-    type: ListRoleDto,
-    required: true,
+    description: '分页查询角色列表',
+    type: RoleListVo,
   })
   @RequirePermission('system:role:list')
   @Get('list')
@@ -44,8 +42,11 @@ export class RoleController {
     return this.roleService.findAll(query);
   }
 
-  @ApiOperation({
+  @Api({
     summary: '角色管理-部门树',
+    description: '获取角色数据权限的部门树',
+    type: RoleDeptTreeVo,
+    params: [{ name: 'id', description: '角色ID', type: 'number' }],
   })
   @RequirePermission('system:role:edit')
   @Get('deptTree/:id')
@@ -53,8 +54,11 @@ export class RoleController {
     return this.roleService.deptTree(+id);
   }
 
-  @ApiOperation({
+  @Api({
     summary: '角色管理-详情',
+    description: '根据角色ID获取角色详情',
+    type: RoleVo,
+    params: [{ name: 'id', description: '角色ID', type: 'number' }],
   })
   @RequirePermission('system:role:query')
   @Get(':id')
@@ -62,12 +66,10 @@ export class RoleController {
     return this.roleService.findOne(+id);
   }
 
-  @ApiOperation({
+  @Api({
     summary: '角色管理-修改',
-  })
-  @ApiBody({
-    type: UpdateRoleDto,
-    required: true,
+    description: '修改角色信息及权限',
+    body: UpdateRoleDto,
   })
   @RequirePermission('system:role:edit')
   @Put()
@@ -75,12 +77,10 @@ export class RoleController {
     return this.roleService.update(updateRoleDto);
   }
 
-  @ApiOperation({
+  @Api({
     summary: '角色管理-数据权限修改',
-  })
-  @ApiBody({
-    type: UpdateRoleDto,
-    required: true,
+    description: '修改角色的数据权限范围',
+    body: UpdateRoleDto,
   })
   @RequirePermission('system:role:edit')
   @Put('dataScope')
@@ -88,12 +88,10 @@ export class RoleController {
     return this.roleService.dataScope(updateRoleDto);
   }
 
-  @ApiOperation({
-    summary: '角色管理-停用角色',
-  })
-  @ApiBody({
-    type: ChangeStatusDto,
-    required: true,
+  @Api({
+    summary: '角色管理-修改状态',
+    description: '启用或停用角色',
+    body: ChangeStatusDto,
   })
   @RequirePermission('system:role:edit')
   @Put('changeStatus')
@@ -101,6 +99,11 @@ export class RoleController {
     return this.roleService.changeStatus(changeStatusDto);
   }
 
+  @Api({
+    summary: '角色管理-删除',
+    description: '批量删除角色，多个ID用逗号分隔',
+    params: [{ name: 'id', description: '角色ID，多个用逗号分隔' }],
+  })
   @RequirePermission('system:role:remove')
   @Delete(':id')
   remove(@Param('id') ids: string) {
@@ -108,12 +111,10 @@ export class RoleController {
     return this.roleService.remove(menuIds);
   }
 
-  @ApiOperation({
-    summary: '角色管理-角色已分配用户列表',
-  })
-  @ApiBody({
-    type: AllocatedListDto,
-    required: true,
+  @Api({
+    summary: '角色管理-已分配用户列表',
+    description: '获取角色已分配的用户列表',
+    type: AllocatedUserListVo,
   })
   @RequirePermission('system:role:query')
   @Get('authUser/allocatedList')
@@ -121,12 +122,10 @@ export class RoleController {
     return this.userService.allocatedList(query);
   }
 
-  @ApiOperation({
-    summary: '角色管理-角色未分配用户列表',
-  })
-  @ApiBody({
-    type: AllocatedListDto,
-    required: true,
+  @Api({
+    summary: '角色管理-未分配用户列表',
+    description: '获取角色未分配的用户列表',
+    type: AllocatedUserListVo,
   })
   @RequirePermission('system:role:query')
   @Get('authUser/unallocatedList')
@@ -134,12 +133,10 @@ export class RoleController {
     return this.userService.unallocatedList(query);
   }
 
-  @ApiOperation({
-    summary: '角色管理-解绑角色',
-  })
-  @ApiBody({
-    type: AuthUserCancelDto,
-    required: true,
+  @Api({
+    summary: '角色管理-解绑用户',
+    description: '取消用户与角色的绑定关系',
+    body: AuthUserCancelDto,
   })
   @RequirePermission('system:role:edit')
   @Put('authUser/cancel')
@@ -147,12 +144,10 @@ export class RoleController {
     return this.userService.authUserCancel(body);
   }
 
-  @ApiOperation({
-    summary: '角色管理-批量解绑角色',
-  })
-  @ApiBody({
-    type: AuthUserCancelAllDto,
-    required: true,
+  @Api({
+    summary: '角色管理-批量解绑用户',
+    description: '批量取消用户与角色的绑定关系',
+    body: AuthUserCancelAllDto,
   })
   @RequirePermission('system:role:edit')
   @Put('authUser/cancelAll')
@@ -160,12 +155,10 @@ export class RoleController {
     return this.userService.authUserCancelAll(body);
   }
 
-  @ApiOperation({
-    summary: '角色管理-批量绑定角色',
-  })
-  @ApiBody({
-    type: AuthUserSelectAllDto,
-    required: true,
+  @Api({
+    summary: '角色管理-批量绑定用户',
+    description: '批量将用户绑定到角色',
+    body: AuthUserSelectAllDto,
   })
   @RequirePermission('system:role:edit')
   @Put('authUser/selectAll')
@@ -173,7 +166,12 @@ export class RoleController {
     return this.userService.authUserSelectAll(body);
   }
 
-  @ApiOperation({ summary: '导出角色管理xlsx文件' })
+  @Api({
+    summary: '角色管理-导出Excel',
+    description: '导出角色管理数据为xlsx文件',
+    body: ListRoleDto,
+    produces: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
+  })
   @RequirePermission('system:role:export')
   @Post('/export')
   async export(@Res() res: Response, @Body() body: ListRoleDto): Promise<void> {

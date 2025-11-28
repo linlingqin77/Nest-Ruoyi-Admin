@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Body, Put, Param, Query, Res, Delete, Request, UploadedFile, UseInterceptors } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBody, ApiConsumes, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { Response } from 'express';
 import { RequirePermission } from 'src/common/decorators/require-premission.decorator';
@@ -11,6 +11,9 @@ import { ResultData } from 'src/common/utils/result';
 import { User, UserDto, UserTool, UserToolType } from 'src/module/system/user/user.decorator';
 import { BusinessType } from 'src/common/constant/business.constant';
 import { Operlog } from 'src/common/decorators/operlog.decorator';
+import { Api } from 'src/common/decorators/api.decorator';
+import { UserVo, UserListVo, UserDetailVo, UserProfileVo, UserAvatarVo, AuthRoleVo } from './vo/user.vo';
+import { DeptTreeNodeVo } from 'src/module/system/dept/vo/dept.vo';
 
 @ApiTags('用户管理')
 @Controller('system/user')
@@ -21,8 +24,10 @@ export class UserController {
     private readonly uploadService: UploadService,
   ) {}
 
-  @ApiOperation({
+  @Api({
     summary: '个人中心-用户信息',
+    description: '获取当前登录用户的个人信息',
+    type: UserVo,
   })
   @RequirePermission('system:user:query')
   @Get('/profile')
@@ -30,8 +35,10 @@ export class UserController {
     return ResultData.ok(user.user);
   }
 
-  @ApiOperation({
+  @Api({
     summary: '个人中心-修改用户信息',
+    description: '修改当前用户的个人基本信息',
+    body: UpdateProfileDto,
   })
   @RequirePermission('system:user:edit')
   @Put('/profile')
@@ -40,8 +47,16 @@ export class UserController {
     return this.userService.updateProfile(user, updateProfileDto);
   }
 
-  @ApiOperation({
+  @Api({
     summary: '个人中心-上传用户头像',
+    description: '上传并更新当前用户头像',
+    type: UserAvatarVo,
+    fileUpload: {
+      fieldName: 'avatarfile',
+      description: '用户头像图片',
+      allowedTypes: ['image/jpeg', 'image/png', 'image/gif'],
+      maxSize: '2MB',
+    },
   })
   @RequirePermission('system:user:edit')
   @Post('/profile/avatar')
@@ -51,8 +66,10 @@ export class UserController {
     return ResultData.ok({ imgUrl: res.fileName });
   }
 
-  @ApiOperation({
+  @Api({
     summary: '个人中心-修改密码',
+    description: '修改当前用户的登录密码',
+    body: UpdatePwdDto,
   })
   @RequirePermission('system:user:edit')
   @Operlog({ businessType: BusinessType.UPDATE })
@@ -61,12 +78,10 @@ export class UserController {
     return this.userService.updatePwd(user, updatePwdDto);
   }
 
-  @ApiOperation({
+  @Api({
     summary: '用户-创建',
-  })
-  @ApiBody({
-    type: CreateUserDto,
-    required: true,
+    description: '创建新用户，可分配角色和岗位',
+    body: CreateUserDto,
   })
   @RequirePermission('system:user:add')
   @Post()
@@ -74,8 +89,10 @@ export class UserController {
     return this.userService.create(injectCreate(createUserDto));
   }
 
-  @ApiOperation({
+  @Api({
     summary: '用户-列表',
+    description: '分页查询用户列表，支持多条件筛选',
+    type: UserListVo,
   })
   @RequirePermission('system:user:list')
   @Get('list')
@@ -83,8 +100,11 @@ export class UserController {
     return this.userService.findAll(query, user.user);
   }
 
-  @ApiOperation({
+  @Api({
     summary: '用户-部门树',
+    description: '获取部门树形结构，用于用户筛选',
+    type: DeptTreeNodeVo,
+    isArray: true,
   })
   @RequirePermission('system:dept:query')
   @Get('deptTree')
@@ -92,8 +112,10 @@ export class UserController {
     return this.userService.deptTree();
   }
 
-  @ApiOperation({
-    summary: '用户-角色+岗位',
+  @Api({
+    summary: '用户-角色和岗位列表',
+    description: '获取所有角色和岗位列表，用于新建/编辑用户时选择',
+    type: UserDetailVo,
   })
   @RequirePermission('system:user:add')
   @Get()
@@ -101,8 +123,11 @@ export class UserController {
     return this.userService.findPostAndRoleAll();
   }
 
-  @ApiOperation({
-    summary: '用户-分配角色-详情',
+  @Api({
+    summary: '用户-分配角色详情',
+    description: '获取用户已分配的角色信息',
+    type: AuthRoleVo,
+    params: [{ name: 'id', description: '用户ID', type: 'number' }],
   })
   @RequireRole('admin')
   @Get('authRole/:id')
@@ -110,8 +135,13 @@ export class UserController {
     return this.userService.authRole(+id);
   }
 
-  @ApiOperation({
-    summary: '用户-角色信息-更新',
+  @Api({
+    summary: '用户-更新角色分配',
+    description: '更新用户的角色分配',
+    queries: [
+      { name: 'userId', description: '用户ID', required: true, type: 'number' },
+      { name: 'roleIds', description: '角色ID列表，逗号分隔', required: true },
+    ],
   })
   @RequireRole('admin')
   @Put('authRole')
@@ -119,8 +149,11 @@ export class UserController {
     return this.userService.updateAuthRole(query);
   }
 
-  @ApiOperation({
+  @Api({
     summary: '用户-详情',
+    description: '根据用户ID获取用户详细信息',
+    type: UserDetailVo,
+    params: [{ name: 'userId', description: '用户ID', type: 'number' }],
   })
   @RequirePermission('system:user:query')
   @Get(':userId')
@@ -128,12 +161,10 @@ export class UserController {
     return this.userService.findOne(+userId);
   }
 
-  @ApiOperation({
-    summary: '用户-停用角色',
-  })
-  @ApiBody({
-    type: ChangeStatusDto,
-    required: true,
+  @Api({
+    summary: '用户-修改状态',
+    description: '启用或停用用户账号',
+    body: ChangeStatusDto,
   })
   @RequireRole('admin')
   @Put('changeStatus')
@@ -141,12 +172,10 @@ export class UserController {
     return this.userService.changeStatus(changeStatusDto);
   }
 
-  @ApiOperation({
+  @Api({
     summary: '用户-更新',
-  })
-  @ApiBody({
-    type: UpdateUserDto,
-    required: true,
+    description: '更新用户基本信息',
+    body: UpdateUserDto,
   })
   @RequirePermission('system:user:edit')
   @Put()
@@ -158,12 +187,10 @@ export class UserController {
     return result;
   }
 
-  @ApiOperation({
+  @Api({
     summary: '用户-重置密码',
-  })
-  @ApiBody({
-    type: ResetPwdDto,
-    required: true,
+    description: '管理员重置用户密码',
+    body: ResetPwdDto,
   })
   @RequireRole('admin')
   @Put('resetPwd')
@@ -171,8 +198,10 @@ export class UserController {
     return this.userService.resetPwd(body);
   }
 
-  @ApiOperation({
+  @Api({
     summary: '用户-删除',
+    description: '批量删除用户，多个ID用逗号分隔',
+    params: [{ name: 'id', description: '用户ID，多个用逗号分隔' }],
   })
   @RequireRole('admin')
   @Delete(':id')
@@ -181,7 +210,12 @@ export class UserController {
     return this.userService.remove(menuIds);
   }
 
-  @ApiOperation({ summary: '导出用户信息数据为xlsx' })
+  @Api({
+    summary: '用户-导出Excel',
+    description: '导出用户信息数据为xlsx文件',
+    body: ListUserDto,
+    produces: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
+  })
   @RequirePermission('system:user:export')
   @Post('/export')
   async export(@Res() res: Response, @Body() body: ListUserDto, @User() user: UserDto): Promise<void> {
