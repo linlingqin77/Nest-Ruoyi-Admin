@@ -7,7 +7,12 @@
     "flat": false
   },
   "compilerOptions": {
-    "assets": ["**/*.yml"],
+    "assets": [
+      {
+        "include": "config/*.yml",
+        "outDir": "dist/src"
+      }
+    ],
     "watchAssets": true,
     "deleteOutDir": true
   }
