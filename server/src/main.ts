@@ -11,6 +11,32 @@ import { ConfigService } from '@nestjs/config';
 import path from 'path';
 import { writeFileSync } from 'fs';
 
+// API 版本信息
+const API_INFO = {
+  title: 'Nest-Admin',
+  description: `
+## Nest-Admin 后台管理系统 API 文档
+
+### 接口说明
+- 所有接口返回统一格式: \`{ code: number, msg: string, data: any }\`
+- code=200 表示成功，其他表示失败
+- 需要认证的接口请在请求头携带 \`Authorization: Bearer <token>\`
+
+### 版本历史
+- v2.0.0 (2024-01) - 重构优化，Enum 统一管理，DTO/VO 文件拆分
+- v1.0.0 (2023-01) - 初始版本
+  `,
+  version: '2.0.0',
+  contact: {
+    name: 'Nest-Admin',
+    url: 'https://github.com/linlingqin77/Nest-Admin',
+  },
+  license: {
+    name: 'MIT',
+    url: 'https://opensource.org/licenses/MIT',
+  },
+};
+
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     cors: true, // 开启跨域访问
@@ -53,9 +79,11 @@ async function bootstrap() {
     }),
   );
   const swaggerOptions = new DocumentBuilder()
-    .setTitle('Nest-Admin')
-    .setDescription('Nest-Admin 接口文档')
-    .setVersion('2.0.0')
+    .setTitle(API_INFO.title)
+    .setDescription(API_INFO.description)
+    .setVersion(API_INFO.version)
+    .setContact(API_INFO.contact.name, API_INFO.contact.url, '')
+    .setLicense(API_INFO.license.name, API_INFO.license.url)
     .addBearerAuth(
       {
         type: 'http',
@@ -71,6 +99,7 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, swaggerOptions);
+
   // 保存OpenAPI规范文件
   writeFileSync(path.posix.join(process.cwd(), 'public', 'openApi.json'), JSON.stringify(document, null, 2));
 

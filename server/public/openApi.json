@@ -3,9 +3,8 @@
   "paths": {
     "/login": {
       "post": {
-        "operationId": "MainController_login",
-        "summary": "用户登录",
         "description": "用户登录接口，需要用户名、密码和验证码",
+        "operationId": "MainController_login",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -109,22 +108,22 @@
             }
           }
         },
-        "tags": [
-          "根目录"
-        ],
         "security": [
           {
             "Authorization": []
           },
           {}
+        ],
+        "summary": "用户登录",
+        "tags": [
+          "根目录"
         ]
       }
     },
     "/logout": {
       "post": {
-        "operationId": "MainController_logout",
-        "summary": "退出登录",
         "description": "退出当前登录状态，清除登录令牌",
+        "operationId": "MainController_logout",
         "parameters": [],
         "responses": {
           "200": {
@@ -225,21 +224,21 @@
             }
           }
         },
-        "tags": [
-          "根目录"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "退出登录",
+        "tags": [
+          "根目录"
         ]
       }
     },
     "/register": {
       "post": {
-        "operationId": "MainController_register",
-        "summary": "用户注册",
         "description": "新用户注册接口，需要用户名、密码和验证码",
+        "operationId": "MainController_register",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -350,22 +349,22 @@
             }
           }
         },
-        "tags": [
-          "根目录"
-        ],
         "security": [
           {
             "Authorization": []
           },
           {}
+        ],
+        "summary": "用户注册",
+        "tags": [
+          "根目录"
         ]
       }
     },
     "/registerUser": {
       "get": {
-        "operationId": "MainController_registerUser",
-        "summary": "是否开启用户注册",
         "description": "查询系统是否开启用户自主注册功能",
+        "operationId": "MainController_registerUser",
         "parameters": [],
         "responses": {
           "200": {
@@ -466,22 +465,22 @@
             }
           }
         },
-        "tags": [
-          "根目录"
-        ],
         "security": [
           {
             "Authorization": []
           },
           {}
+        ],
+        "summary": "是否开启用户注册",
+        "tags": [
+          "根目录"
         ]
       }
     },
     "/captchaImage": {
       "get": {
-        "operationId": "MainController_captchaImage",
-        "summary": "获取验证码图片",
         "description": "获取登录/注册所需的图形验证码，返回 Base64 图片和 UUID",
+        "operationId": "MainController_captchaImage",
         "parameters": [],
         "responses": {
           "200": {
@@ -575,22 +574,22 @@
             }
           }
         },
-        "tags": [
-          "根目录"
-        ],
         "security": [
           {
             "Authorization": []
           },
           {}
+        ],
+        "summary": "获取验证码图片",
+        "tags": [
+          "根目录"
         ]
       }
     },
     "/getInfo": {
       "get": {
-        "operationId": "MainController_getInfo",
-        "summary": "获取当前用户信息",
         "description": "获取当前登录用户的基本信息、角色和权限",
+        "operationId": "MainController_getInfo",
         "parameters": [],
         "responses": {
           "200": {
@@ -684,21 +683,21 @@
             }
           }
         },
-        "tags": [
-          "根目录"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "获取当前用户信息",
+        "tags": [
+          "根目录"
         ]
       }
     },
     "/getRouters": {
       "get": {
-        "operationId": "MainController_getRouters",
-        "summary": "获取路由菜单",
         "description": "获取当前用户的前端路由菜单数据",
+        "operationId": "MainController_getRouters",
         "parameters": [],
         "responses": {
           "200": {
@@ -795,21 +794,21 @@
             }
           }
         },
-        "tags": [
-          "根目录"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "获取路由菜单",
+        "tags": [
+          "根目录"
         ]
       }
     },
     "/common/upload": {
       "post": {
-        "operationId": "UploadController_singleFileUpload",
-        "summary": "文件上传",
         "description": "上传单个文件",
+        "operationId": "UploadController_singleFileUpload",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -930,21 +929,21 @@
             }
           }
         },
-        "tags": [
-          "通用-文件上传"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "文件上传",
+        "tags": [
+          "通用-文件上传"
         ]
       }
     },
     "/common/upload/chunk/uploadId": {
       "get": {
-        "operationId": "UploadController_getChunkUploadId",
-        "summary": "获取切片上传任务Id",
         "description": "初始化切片上传，获取任务ID",
+        "operationId": "UploadController_getChunkUploadId",
         "parameters": [],
         "responses": {
           "200": {
@@ -1045,21 +1044,21 @@
             }
           }
         },
-        "tags": [
-          "通用-文件上传"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "获取切片上传任务Id",
+        "tags": [
+          "通用-文件上传"
         ]
       }
     },
     "/common/upload/chunk": {
       "post": {
-        "operationId": "UploadController_chunkFileUpload",
-        "summary": "文件分片上传",
         "description": "上传文件分片",
+        "operationId": "UploadController_chunkFileUpload",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -1180,21 +1179,21 @@
             }
           }
         },
-        "tags": [
-          "通用-文件上传"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "文件分片上传",
+        "tags": [
+          "通用-文件上传"
         ]
       }
     },
     "/common/upload/chunk/merge": {
       "post": {
-        "operationId": "UploadController_chunkMergeFile",
-        "summary": "文件分片合并",
         "description": "合并所有分片为完整文件",
+        "operationId": "UploadController_chunkMergeFile",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -1305,21 +1304,21 @@
             }
           }
         },
-        "tags": [
-          "通用-文件上传"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "文件分片合并",
+        "tags": [
+          "通用-文件上传"
         ]
       }
     },
     "/common/upload/chunk/result": {
       "get": {
-        "operationId": "UploadController_getChunkUploadResult",
-        "summary": "获取切片上传任务结果",
         "description": "查询切片上传任务的状态",
+        "operationId": "UploadController_getChunkUploadResult",
         "parameters": [
           {
             "name": "uploadId",
@@ -1430,21 +1429,21 @@
             }
           }
         },
-        "tags": [
-          "通用-文件上传"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "获取切片上传任务结果",
+        "tags": [
+          "通用-文件上传"
         ]
       }
     },
     "/common/upload/cos/authorization": {
       "get": {
-        "operationId": "UploadController_getAuthorization",
-        "summary": "获取cos授权",
         "description": "获取腾讯云COS上传临时授权密钥",
+        "operationId": "UploadController_getAuthorization",
         "parameters": [
           {
             "name": "key",
@@ -1555,21 +1554,21 @@
             }
           }
         },
-        "tags": [
-          "通用-文件上传"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "获取cos授权",
+        "tags": [
+          "通用-文件上传"
         ]
       }
     },
     "/system/config": {
       "post": {
-        "operationId": "ConfigController_create",
-        "summary": "参数设置-创建",
         "description": "创建系统参数配置",
+        "operationId": "ConfigController_create",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -1690,19 +1689,19 @@
             }
           }
         },
-        "tags": [
-          "参数设置"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "参数设置-创建",
+        "tags": [
+          "参数设置"
         ]
       },
       "put": {
-        "operationId": "ConfigController_update",
-        "summary": "参数设置-更新",
         "description": "修改系统参数配置",
+        "operationId": "ConfigController_update",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -1813,21 +1812,21 @@
             }
           }
         },
-        "tags": [
-          "参数设置"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "参数设置-更新",
+        "tags": [
+          "参数设置"
         ]
       }
     },
     "/system/config/list": {
       "get": {
-        "operationId": "ConfigController_findAll",
-        "summary": "参数设置-列表",
         "description": "分页查询系统参数列表",
+        "operationId": "ConfigController_findAll",
         "parameters": [
           {
             "name": "pageNum",
@@ -1850,19 +1849,12 @@
             }
           },
           {
-            "required": true,
-            "name": "beginTime",
+            "name": "params",
+            "required": false,
             "in": "query",
+            "description": "时间范围",
             "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "required": true,
-            "name": "endTime",
-            "in": "query",
-            "schema": {
-              "type": "string"
+              "$ref": "#/components/schemas/DateParamsDTO"
             }
           },
           {
@@ -1909,9 +1901,8 @@
             "name": "configType",
             "required": false,
             "in": "query",
-            "description": "系统内置（Y是 N否）",
             "schema": {
-              "type": "string"
+              "$ref": "#/components/schemas/ConfigTypeEnum"
             }
           }
         ],
@@ -2007,21 +1998,21 @@
             }
           }
         },
-        "tags": [
-          "参数设置"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "参数设置-列表",
+        "tags": [
+          "参数设置"
         ]
       }
     },
     "/system/config/{id}": {
       "get": {
-        "operationId": "ConfigController_findOne",
-        "summary": "参数设置-详情",
         "description": "根据ID获取参数详情",
+        "operationId": "ConfigController_findOne",
         "parameters": [
           {
             "name": "id",
@@ -2125,19 +2116,19 @@
             }
           }
         },
-        "tags": [
-          "参数设置"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "参数设置-详情",
+        "tags": [
+          "参数设置"
         ]
       },
       "delete": {
-        "operationId": "ConfigController_remove",
-        "summary": "参数设置-删除",
         "description": "批量删除参数配置，多个ID用逗号分隔",
+        "operationId": "ConfigController_remove",
         "parameters": [
           {
             "name": "id",
@@ -2248,21 +2239,21 @@
             }
           }
         },
-        "tags": [
-          "参数设置"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "参数设置-删除",
+        "tags": [
+          "参数设置"
         ]
       }
     },
     "/system/config/configKey/{id}": {
       "get": {
-        "operationId": "ConfigController_findOneByconfigKey",
-        "summary": "参数设置-按Key查询（缓存）",
         "description": "根据参数键获取参数值，优先使用缓存",
+        "operationId": "ConfigController_findOneByconfigKey",
         "parameters": [
           {
             "name": "id",
@@ -2373,21 +2364,21 @@
             }
           }
         },
-        "tags": [
-          "参数设置"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "参数设置-按Key查询（缓存）",
+        "tags": [
+          "参数设置"
         ]
       }
     },
     "/system/config/refreshCache": {
       "delete": {
-        "operationId": "ConfigController_refreshCache",
-        "summary": "参数设置-刷新缓存",
         "description": "清除并重新加载参数配置缓存",
+        "operationId": "ConfigController_refreshCache",
         "parameters": [],
         "responses": {
           "200": {
@@ -2488,21 +2479,21 @@
             }
           }
         },
-        "tags": [
-          "参数设置"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "参数设置-刷新缓存",
+        "tags": [
+          "参数设置"
         ]
       }
     },
     "/system/config/export": {
       "post": {
-        "operationId": "ConfigController_export",
-        "summary": "参数设置-导出Excel",
         "description": "导出参数管理数据为xlsx文件",
+        "operationId": "ConfigController_export",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -2616,21 +2607,21 @@
             }
           }
         },
-        "tags": [
-          "参数设置"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "参数设置-导出Excel",
+        "tags": [
+          "参数设置"
         ]
       }
     },
     "/system/dept": {
       "post": {
-        "operationId": "DeptController_create",
-        "summary": "部门管理-创建",
         "description": "创建新部门，需要指定父部门ID",
+        "operationId": "DeptController_create",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -2741,19 +2732,19 @@
             }
           }
         },
-        "tags": [
-          "部门管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "部门管理-创建",
+        "tags": [
+          "部门管理"
         ]
       },
       "put": {
-        "operationId": "DeptController_update",
-        "summary": "部门管理-更新",
         "description": "更新部门信息",
+        "operationId": "DeptController_update",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -2864,21 +2855,21 @@
             }
           }
         },
-        "tags": [
-          "部门管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "部门管理-更新",
+        "tags": [
+          "部门管理"
         ]
       }
     },
     "/system/dept/list": {
       "get": {
-        "operationId": "DeptController_findAll",
-        "summary": "部门管理-列表",
         "description": "获取部门列表，支持按名称和状态筛选",
+        "operationId": "DeptController_findAll",
         "parameters": [
           {
             "name": "deptName",
@@ -2895,11 +2886,7 @@
             "in": "query",
             "description": "状态（0正常 1停用）",
             "schema": {
-              "enum": [
-                "0",
-                "1"
-              ],
-              "type": "string"
+              "$ref": "#/components/schemas/StatusEnum"
             }
           }
         ],
@@ -2998,21 +2985,21 @@
             }
           }
         },
-        "tags": [
-          "部门管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "部门管理-列表",
+        "tags": [
+          "部门管理"
         ]
       }
     },
     "/system/dept/{id}": {
       "get": {
-        "operationId": "DeptController_findOne",
-        "summary": "部门管理-详情",
         "description": "根据部门ID获取部门详细信息",
+        "operationId": "DeptController_findOne",
         "parameters": [
           {
             "name": "id",
@@ -3116,19 +3103,19 @@
             }
           }
         },
-        "tags": [
-          "部门管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "部门管理-详情",
+        "tags": [
+          "部门管理"
         ]
       },
       "delete": {
-        "operationId": "DeptController_remove",
-        "summary": "部门管理-删除",
         "description": "根据ID删除部门，如果存在子部门则无法删除",
+        "operationId": "DeptController_remove",
         "parameters": [
           {
             "name": "id",
@@ -3262,21 +3249,21 @@
             }
           }
         },
-        "tags": [
-          "部门管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "部门管理-删除",
+        "tags": [
+          "部门管理"
         ]
       }
     },
     "/system/dept/list/exclude/{id}": {
       "get": {
-        "operationId": "DeptController_findListExclude",
-        "summary": "部门管理-排除节点列表",
         "description": "查询部门列表（排除指定节点及其子节点），用于编辑时选择父部门",
+        "operationId": "DeptController_findListExclude",
         "parameters": [
           {
             "name": "id",
@@ -3383,21 +3370,21 @@
             }
           }
         },
-        "tags": [
-          "部门管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "部门管理-排除节点列表",
+        "tags": [
+          "部门管理"
         ]
       }
     },
     "/system/dict/type": {
       "post": {
-        "operationId": "DictController_createType",
-        "summary": "字典类型-创建",
         "description": "创建字典类型",
+        "operationId": "DictController_createType",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -3508,19 +3495,19 @@
             }
           }
         },
-        "tags": [
-          "字典管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "字典类型-创建",
+        "tags": [
+          "字典管理"
         ]
       },
       "put": {
-        "operationId": "DictController_updateType",
-        "summary": "字典类型-修改",
         "description": "修改字典类型信息",
+        "operationId": "DictController_updateType",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -3631,21 +3618,21 @@
             }
           }
         },
-        "tags": [
-          "字典管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "字典类型-修改",
+        "tags": [
+          "字典管理"
         ]
       }
     },
     "/system/dict/type/refreshCache": {
       "delete": {
-        "operationId": "DictController_refreshCache",
-        "summary": "字典数据-刷新缓存",
         "description": "清除并重新加载字典数据缓存",
+        "operationId": "DictController_refreshCache",
         "parameters": [],
         "responses": {
           "200": {
@@ -3746,21 +3733,21 @@
             }
           }
         },
-        "tags": [
-          "字典管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "字典数据-刷新缓存",
+        "tags": [
+          "字典管理"
         ]
       }
     },
     "/system/dict/type/{id}": {
       "delete": {
-        "operationId": "DictController_deleteType",
-        "summary": "字典类型-删除",
         "description": "批量删除字典类型，多个ID用逗号分隔",
+        "operationId": "DictController_deleteType",
         "parameters": [
           {
             "name": "id",
@@ -3871,19 +3858,19 @@
             }
           }
         },
-        "tags": [
-          "字典管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "字典类型-删除",
+        "tags": [
+          "字典管理"
         ]
       },
       "get": {
-        "operationId": "DictController_findOneType",
-        "summary": "字典类型-详情",
         "description": "根据ID获取字典类型详情",
+        "operationId": "DictController_findOneType",
         "parameters": [
           {
             "name": "id",
@@ -3987,21 +3974,21 @@
             }
           }
         },
-        "tags": [
-          "字典管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "字典类型-详情",
+        "tags": [
+          "字典管理"
         ]
       }
     },
     "/system/dict/type/list": {
       "get": {
-        "operationId": "DictController_findAllType",
-        "summary": "字典类型-列表",
         "description": "分页查询字典类型列表",
+        "operationId": "DictController_findAllType",
         "parameters": [
           {
             "name": "pageNum",
@@ -4024,19 +4011,12 @@
             }
           },
           {
-            "required": true,
-            "name": "beginTime",
+            "name": "params",
+            "required": false,
             "in": "query",
+            "description": "时间范围",
             "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "required": true,
-            "name": "endTime",
-            "in": "query",
-            "schema": {
-              "type": "string"
+              "$ref": "#/components/schemas/DateParamsDTO"
             }
           },
           {
@@ -4083,9 +4063,8 @@
             "name": "status",
             "required": false,
             "in": "query",
-            "description": "状态（0正常 1停用）",
             "schema": {
-              "type": "string"
+              "$ref": "#/components/schemas/StatusEnum"
             }
           }
         ],
@@ -4181,21 +4160,21 @@
             }
           }
         },
-        "tags": [
-          "字典管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "字典类型-列表",
+        "tags": [
+          "字典管理"
         ]
       }
     },
     "/system/dict/type/optionselect": {
       "get": {
-        "operationId": "DictController_findOptionselect",
-        "summary": "字典类型-下拉选项",
         "description": "获取全部字典类型用于下拉选择",
+        "operationId": "DictController_findOptionselect",
         "parameters": [],
         "responses": {
           "200": {
@@ -4292,21 +4271,21 @@
             }
           }
         },
-        "tags": [
-          "字典管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "字典类型-下拉选项",
+        "tags": [
+          "字典管理"
         ]
       }
     },
     "/system/dict/data": {
       "post": {
-        "operationId": "DictController_createDictData",
-        "summary": "字典数据-创建",
         "description": "在指定字典类型下创建字典数据",
+        "operationId": "DictController_createDictData",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -4417,19 +4396,19 @@
             }
           }
         },
-        "tags": [
-          "字典管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "字典数据-创建",
+        "tags": [
+          "字典管理"
         ]
       },
       "put": {
-        "operationId": "DictController_updateDictData",
-        "summary": "字典数据-修改",
         "description": "修改字典数据",
+        "operationId": "DictController_updateDictData",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -4540,21 +4519,21 @@
             }
           }
         },
-        "tags": [
-          "字典管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "字典数据-修改",
+        "tags": [
+          "字典管理"
         ]
       }
     },
     "/system/dict/data/{id}": {
       "delete": {
-        "operationId": "DictController_deleteDictData",
-        "summary": "字典数据-删除",
         "description": "批量删除字典数据，多个ID用逗号分隔",
+        "operationId": "DictController_deleteDictData",
         "parameters": [
           {
             "name": "id",
@@ -4665,19 +4644,19 @@
             }
           }
         },
-        "tags": [
-          "字典管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "字典数据-删除",
+        "tags": [
+          "字典管理"
         ]
       },
       "get": {
-        "operationId": "DictController_findOneDictData",
-        "summary": "字典数据-详情",
         "description": "根据字典编码获取字典数据详情",
+        "operationId": "DictController_findOneDictData",
         "parameters": [
           {
             "name": "id",
@@ -4781,21 +4760,21 @@
             }
           }
         },
-        "tags": [
-          "字典管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "字典数据-详情",
+        "tags": [
+          "字典管理"
         ]
       }
     },
     "/system/dict/data/list": {
       "get": {
-        "operationId": "DictController_findAllData",
-        "summary": "字典数据-列表",
         "description": "查询指定字典类型下的数据列表",
+        "operationId": "DictController_findAllData",
         "parameters": [
           {
             "name": "pageNum",
@@ -4818,19 +4797,12 @@
             }
           },
           {
-            "required": true,
-            "name": "beginTime",
+            "name": "params",
+            "required": false,
             "in": "query",
+            "description": "时间范围",
             "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "required": true,
-            "name": "endTime",
-            "in": "query",
-            "schema": {
-              "type": "string"
+              "$ref": "#/components/schemas/DateParamsDTO"
             }
           },
           {
@@ -4975,21 +4947,21 @@
             }
           }
         },
-        "tags": [
-          "字典管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "字典数据-列表",
+        "tags": [
+          "字典管理"
         ]
       }
     },
     "/system/dict/data/type/{id}": {
       "get": {
-        "operationId": "DictController_findOneDataType",
-        "summary": "字典数据-按类型查询（缓存）",
         "description": "根据字典类型获取字典数据列表，优先使用缓存",
+        "operationId": "DictController_findOneDataType",
         "parameters": [
           {
             "name": "id",
@@ -5096,21 +5068,21 @@
             }
           }
         },
-        "tags": [
-          "字典管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "字典数据-按类型查询（缓存）",
+        "tags": [
+          "字典管理"
         ]
       }
     },
     "/system/dict/type/export": {
       "post": {
-        "operationId": "DictController_export",
-        "summary": "字典类型-导出Excel",
         "description": "导出字典类型为xlsx文件",
+        "operationId": "DictController_export",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -5224,21 +5196,21 @@
             }
           }
         },
-        "tags": [
-          "字典管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "字典类型-导出Excel",
+        "tags": [
+          "字典管理"
         ]
       }
     },
     "/system/dict/data/export": {
       "post": {
-        "operationId": "DictController_exportData",
-        "summary": "字典数据-导出Excel",
         "description": "导出字典数据为xlsx文件",
+        "operationId": "DictController_exportData",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -5352,21 +5324,21 @@
             }
           }
         },
-        "tags": [
-          "字典管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "字典数据-导出Excel",
+        "tags": [
+          "字典管理"
         ]
       }
     },
     "/system/menu": {
       "post": {
-        "operationId": "MenuController_create",
-        "summary": "菜单管理-创建",
         "description": "创建新菜单，支持目录、菜单、按钮三种类型",
+        "operationId": "MenuController_create",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -5487,19 +5459,19 @@
             }
           }
         },
-        "tags": [
-          "菜单管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "菜单管理-创建",
+        "tags": [
+          "菜单管理"
         ]
       },
       "put": {
-        "operationId": "MenuController_update",
-        "summary": "菜单管理-修改",
         "description": "修改菜单信息",
+        "operationId": "MenuController_update",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -5610,21 +5582,21 @@
             }
           }
         },
-        "tags": [
-          "菜单管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "菜单管理-修改",
+        "tags": [
+          "菜单管理"
         ]
       }
     },
     "/system/menu/list": {
       "get": {
-        "operationId": "MenuController_findAll",
-        "summary": "菜单管理-列表",
         "description": "获取菜单列表，支持按名称和状态筛选",
+        "operationId": "MenuController_findAll",
         "parameters": [
           {
             "name": "menuName",
@@ -5740,21 +5712,21 @@
             }
           }
         },
-        "tags": [
-          "菜单管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "菜单管理-列表",
+        "tags": [
+          "菜单管理"
         ]
       }
     },
     "/system/menu/treeselect": {
       "get": {
-        "operationId": "MenuController_treeSelect",
-        "summary": "菜单管理-树形选择",
         "description": "获取菜单树形结构，用于下拉选择",
+        "operationId": "MenuController_treeSelect",
         "parameters": [],
         "responses": {
           "200": {
@@ -5851,21 +5823,21 @@
             }
           }
         },
-        "tags": [
-          "菜单管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "菜单管理-树形选择",
+        "tags": [
+          "菜单管理"
         ]
       }
     },
     "/system/menu/roleMenuTreeselect/{menuId}": {
       "get": {
-        "operationId": "MenuController_roleMenuTreeselect",
-        "summary": "菜单管理-角色菜单树",
         "description": "获取角色已分配的菜单树结构",
+        "operationId": "MenuController_roleMenuTreeselect",
         "parameters": [
           {
             "name": "menuId",
@@ -5969,21 +5941,21 @@
             }
           }
         },
-        "tags": [
-          "菜单管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "菜单管理-角色菜单树",
+        "tags": [
+          "菜单管理"
         ]
       }
     },
     "/system/menu/{menuId}": {
       "get": {
-        "operationId": "MenuController_findOne",
-        "summary": "菜单管理-详情",
         "description": "根据菜单ID获取菜单详细信息",
+        "operationId": "MenuController_findOne",
         "parameters": [
           {
             "name": "menuId",
@@ -6087,19 +6059,19 @@
             }
           }
         },
-        "tags": [
-          "菜单管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "菜单管理-详情",
+        "tags": [
+          "菜单管理"
         ]
       },
       "delete": {
-        "operationId": "MenuController_remove",
-        "summary": "菜单管理-删除",
         "description": "删除菜单，会同时删除子菜单",
+        "operationId": "MenuController_remove",
         "parameters": [
           {
             "name": "menuId",
@@ -6210,21 +6182,21 @@
             }
           }
         },
-        "tags": [
-          "菜单管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "菜单管理-删除",
+        "tags": [
+          "菜单管理"
         ]
       }
     },
     "/system/notice": {
       "post": {
-        "operationId": "NoticeController_create",
-        "summary": "通知公告-创建",
         "description": "发布新的通知公告",
+        "operationId": "NoticeController_create",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -6345,19 +6317,19 @@
             }
           }
         },
-        "tags": [
-          "通知公告"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "通知公告-创建",
+        "tags": [
+          "通知公告"
         ]
       },
       "put": {
-        "operationId": "NoticeController_update",
-        "summary": "通知公告-更新",
         "description": "修改通知公告内容",
+        "operationId": "NoticeController_update",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -6468,21 +6440,21 @@
             }
           }
         },
-        "tags": [
-          "通知公告"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "通知公告-更新",
+        "tags": [
+          "通知公告"
         ]
       }
     },
     "/system/notice/list": {
       "get": {
-        "operationId": "NoticeController_findAll",
-        "summary": "通知公告-列表",
         "description": "分页查询通知公告列表",
+        "operationId": "NoticeController_findAll",
         "parameters": [
           {
             "name": "pageNum",
@@ -6505,19 +6477,12 @@
             }
           },
           {
-            "required": true,
-            "name": "beginTime",
+            "name": "params",
+            "required": false,
             "in": "query",
+            "description": "时间范围",
             "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "required": true,
-            "name": "endTime",
-            "in": "query",
-            "schema": {
-              "type": "string"
+              "$ref": "#/components/schemas/DateParamsDTO"
             }
           },
           {
@@ -6553,9 +6518,8 @@
             "name": "noticeType",
             "required": false,
             "in": "query",
-            "description": "公告类型（1通知 2公告）",
             "schema": {
-              "type": "string"
+              "$ref": "#/components/schemas/NoticeTypeEnum"
             }
           },
           {
@@ -6660,21 +6624,21 @@
             }
           }
         },
-        "tags": [
-          "通知公告"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "通知公告-列表",
+        "tags": [
+          "通知公告"
         ]
       }
     },
     "/system/notice/{id}": {
       "get": {
-        "operationId": "NoticeController_findOne",
-        "summary": "通知公告-详情",
         "description": "根据ID获取通知公告详情",
+        "operationId": "NoticeController_findOne",
         "parameters": [
           {
             "name": "id",
@@ -6778,19 +6742,19 @@
             }
           }
         },
-        "tags": [
-          "通知公告"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "通知公告-详情",
+        "tags": [
+          "通知公告"
         ]
       },
       "delete": {
-        "operationId": "NoticeController_remove",
-        "summary": "通知公告-删除",
         "description": "批量删除通知公告，多个ID用逗号分隔",
+        "operationId": "NoticeController_remove",
         "parameters": [
           {
             "name": "id",
@@ -6901,21 +6865,21 @@
             }
           }
         },
-        "tags": [
-          "通知公告"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "通知公告-删除",
+        "tags": [
+          "通知公告"
         ]
       }
     },
     "/system/post": {
       "post": {
-        "operationId": "PostController_create",
-        "summary": "岗位管理-创建",
         "description": "创建新岗位",
+        "operationId": "PostController_create",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -7036,19 +7000,19 @@
             }
           }
         },
-        "tags": [
-          "岗位管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "岗位管理-创建",
+        "tags": [
+          "岗位管理"
         ]
       },
       "put": {
-        "operationId": "PostController_update",
-        "summary": "岗位管理-更新",
         "description": "修改岗位信息",
+        "operationId": "PostController_update",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -7159,21 +7123,21 @@
             }
           }
         },
-        "tags": [
-          "岗位管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "岗位管理-更新",
+        "tags": [
+          "岗位管理"
         ]
       }
     },
     "/system/post/list": {
       "get": {
-        "operationId": "PostController_findAll",
-        "summary": "岗位管理-列表",
         "description": "分页查询岗位列表",
+        "operationId": "PostController_findAll",
         "parameters": [
           {
             "name": "pageNum",
@@ -7196,19 +7160,12 @@
             }
           },
           {
-            "required": true,
-            "name": "beginTime",
+            "name": "params",
+            "required": false,
             "in": "query",
+            "description": "时间范围",
             "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "required": true,
-            "name": "endTime",
-            "in": "query",
-            "schema": {
-              "type": "string"
+              "$ref": "#/components/schemas/DateParamsDTO"
             }
           },
           {
@@ -7255,9 +7212,8 @@
             "name": "status",
             "required": false,
             "in": "query",
-            "description": "状态（0正常 1停用）",
             "schema": {
-              "type": "string"
+              "$ref": "#/components/schemas/StatusEnum"
             }
           }
         ],
@@ -7353,21 +7309,21 @@
             }
           }
         },
-        "tags": [
-          "岗位管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "岗位管理-列表",
+        "tags": [
+          "岗位管理"
         ]
       }
     },
     "/system/post/{id}": {
       "get": {
-        "operationId": "PostController_findOne",
-        "summary": "岗位管理-详情",
         "description": "根据ID获取岗位详情",
+        "operationId": "PostController_findOne",
         "parameters": [
           {
             "name": "id",
@@ -7471,21 +7427,21 @@
             }
           }
         },
-        "tags": [
-          "岗位管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "岗位管理-详情",
+        "tags": [
+          "岗位管理"
         ]
       }
     },
     "/system/post/{ids}": {
       "delete": {
-        "operationId": "PostController_remove",
-        "summary": "岗位管理-删除",
         "description": "批量删除岗位，多个ID用逗号分隔",
+        "operationId": "PostController_remove",
         "parameters": [
           {
             "name": "ids",
@@ -7596,21 +7552,21 @@
             }
           }
         },
-        "tags": [
-          "岗位管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "岗位管理-删除",
+        "tags": [
+          "岗位管理"
         ]
       }
     },
     "/system/post/export": {
       "post": {
-        "operationId": "PostController_export",
-        "summary": "岗位管理-导出Excel",
         "description": "导出岗位数据为xlsx文件",
+        "operationId": "PostController_export",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -7724,21 +7680,21 @@
             }
           }
         },
-        "tags": [
-          "岗位管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "岗位管理-导出Excel",
+        "tags": [
+          "岗位管理"
         ]
       }
     },
     "/system/role": {
       "post": {
-        "operationId": "RoleController_create",
-        "summary": "角色管理-创建",
         "description": "创建新角色并分配权限",
+        "operationId": "RoleController_create",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -7859,19 +7815,19 @@
             }
           }
         },
-        "tags": [
-          "角色管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "角色管理-创建",
+        "tags": [
+          "角色管理"
         ]
       },
       "put": {
-        "operationId": "RoleController_update",
-        "summary": "角色管理-修改",
         "description": "修改角色信息及权限",
+        "operationId": "RoleController_update",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -7982,21 +7938,21 @@
             }
           }
         },
-        "tags": [
-          "角色管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "角色管理-修改",
+        "tags": [
+          "角色管理"
         ]
       }
     },
     "/system/role/list": {
       "get": {
-        "operationId": "RoleController_findAll",
-        "summary": "角色管理-列表",
         "description": "分页查询角色列表",
+        "operationId": "RoleController_findAll",
         "parameters": [
           {
             "name": "pageNum",
@@ -8019,19 +7975,12 @@
             }
           },
           {
-            "required": true,
-            "name": "beginTime",
+            "name": "params",
+            "required": false,
             "in": "query",
+            "description": "时间范围",
             "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "required": true,
-            "name": "endTime",
-            "in": "query",
-            "schema": {
-              "type": "string"
+              "$ref": "#/components/schemas/DateParamsDTO"
             }
           },
           {
@@ -8056,6 +8005,7 @@
             "name": "roleName",
             "required": false,
             "in": "query",
+            "description": "角色名称",
             "schema": {
               "minLength": 0,
               "maxLength": 30,
@@ -8066,6 +8016,7 @@
             "name": "roleKey",
             "required": false,
             "in": "query",
+            "description": "角色权限字符串",
             "schema": {
               "minLength": 0,
               "maxLength": 100,
@@ -8076,14 +8027,16 @@
             "name": "status",
             "required": false,
             "in": "query",
+            "description": "角色状态（0正常 1停用）",
             "schema": {
-              "type": "string"
+              "$ref": "#/components/schemas/StatusEnum"
             }
           },
           {
             "name": "roleId",
             "required": false,
             "in": "query",
+            "description": "角色ID",
             "schema": {
               "minLength": 0,
               "maxLength": 100,
@@ -8183,21 +8136,21 @@
             }
           }
         },
-        "tags": [
-          "角色管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "角色管理-列表",
+        "tags": [
+          "角色管理"
         ]
       }
     },
     "/system/role/deptTree/{id}": {
       "get": {
-        "operationId": "RoleController_deptTree",
-        "summary": "角色管理-部门树",
         "description": "获取角色数据权限的部门树",
+        "operationId": "RoleController_deptTree",
         "parameters": [
           {
             "name": "id",
@@ -8301,21 +8254,21 @@
             }
           }
         },
-        "tags": [
-          "角色管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "角色管理-部门树",
+        "tags": [
+          "角色管理"
         ]
       }
     },
     "/system/role/{id}": {
       "get": {
-        "operationId": "RoleController_findOne",
-        "summary": "角色管理-详情",
         "description": "根据角色ID获取角色详情",
+        "operationId": "RoleController_findOne",
         "parameters": [
           {
             "name": "id",
@@ -8419,19 +8372,19 @@
             }
           }
         },
-        "tags": [
-          "角色管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "角色管理-详情",
+        "tags": [
+          "角色管理"
         ]
       },
       "delete": {
-        "operationId": "RoleController_remove",
-        "summary": "角色管理-删除",
         "description": "批量删除角色，多个ID用逗号分隔",
+        "operationId": "RoleController_remove",
         "parameters": [
           {
             "name": "id",
@@ -8542,21 +8495,21 @@
             }
           }
         },
-        "tags": [
-          "角色管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "角色管理-删除",
+        "tags": [
+          "角色管理"
         ]
       }
     },
     "/system/role/dataScope": {
       "put": {
-        "operationId": "RoleController_dataScope",
-        "summary": "角色管理-数据权限修改",
         "description": "修改角色的数据权限范围",
+        "operationId": "RoleController_dataScope",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -8667,21 +8620,21 @@
             }
           }
         },
-        "tags": [
-          "角色管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "角色管理-数据权限修改",
+        "tags": [
+          "角色管理"
         ]
       }
     },
     "/system/role/changeStatus": {
       "put": {
-        "operationId": "RoleController_changeStatus",
-        "summary": "角色管理-修改状态",
         "description": "启用或停用角色",
+        "operationId": "RoleController_changeStatus",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -8792,21 +8745,21 @@
             }
           }
         },
-        "tags": [
-          "角色管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "角色管理-修改状态",
+        "tags": [
+          "角色管理"
         ]
       }
     },
     "/system/role/authUser/allocatedList": {
       "get": {
-        "operationId": "RoleController_authUserAllocatedList",
-        "summary": "角色管理-已分配用户列表",
         "description": "获取角色已分配的用户列表",
+        "operationId": "RoleController_authUserAllocatedList",
         "parameters": [
           {
             "name": "pageNum",
@@ -8829,19 +8782,12 @@
             }
           },
           {
-            "required": true,
-            "name": "beginTime",
+            "name": "params",
+            "required": false,
             "in": "query",
+            "description": "时间范围",
             "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "required": true,
-            "name": "endTime",
-            "in": "query",
-            "schema": {
-              "type": "string"
+              "$ref": "#/components/schemas/DateParamsDTO"
             }
           },
           {
@@ -8984,21 +8930,21 @@
             }
           }
         },
-        "tags": [
-          "角色管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "角色管理-已分配用户列表",
+        "tags": [
+          "角色管理"
         ]
       }
     },
     "/system/role/authUser/unallocatedList": {
       "get": {
-        "operationId": "RoleController_authUserUnAllocatedList",
-        "summary": "角色管理-未分配用户列表",
         "description": "获取角色未分配的用户列表",
+        "operationId": "RoleController_authUserUnAllocatedList",
         "parameters": [
           {
             "name": "pageNum",
@@ -9021,19 +8967,12 @@
             }
           },
           {
-            "required": true,
-            "name": "beginTime",
+            "name": "params",
+            "required": false,
             "in": "query",
+            "description": "时间范围",
             "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "required": true,
-            "name": "endTime",
-            "in": "query",
-            "schema": {
-              "type": "string"
+              "$ref": "#/components/schemas/DateParamsDTO"
             }
           },
           {
@@ -9176,21 +9115,21 @@
             }
           }
         },
-        "tags": [
-          "角色管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "角色管理-未分配用户列表",
+        "tags": [
+          "角色管理"
         ]
       }
     },
     "/system/role/authUser/cancel": {
       "put": {
-        "operationId": "RoleController_authUserCancel",
-        "summary": "角色管理-解绑用户",
         "description": "取消用户与角色的绑定关系",
+        "operationId": "RoleController_authUserCancel",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -9301,21 +9240,21 @@
             }
           }
         },
-        "tags": [
-          "角色管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "角色管理-解绑用户",
+        "tags": [
+          "角色管理"
         ]
       }
     },
     "/system/role/authUser/cancelAll": {
       "put": {
-        "operationId": "RoleController_authUserCancelAll",
-        "summary": "角色管理-批量解绑用户",
         "description": "批量取消用户与角色的绑定关系",
+        "operationId": "RoleController_authUserCancelAll",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -9426,21 +9365,21 @@
             }
           }
         },
-        "tags": [
-          "角色管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "角色管理-批量解绑用户",
+        "tags": [
+          "角色管理"
         ]
       }
     },
     "/system/role/authUser/selectAll": {
       "put": {
-        "operationId": "RoleController_authUserSelectAll",
-        "summary": "角色管理-批量绑定用户",
         "description": "批量将用户绑定到角色",
+        "operationId": "RoleController_authUserSelectAll",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -9551,21 +9490,21 @@
             }
           }
         },
-        "tags": [
-          "角色管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "角色管理-批量绑定用户",
+        "tags": [
+          "角色管理"
         ]
       }
     },
     "/system/role/export": {
       "post": {
-        "operationId": "RoleController_export",
-        "summary": "角色管理-导出Excel",
         "description": "导出角色管理数据为xlsx文件",
+        "operationId": "RoleController_export",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -9679,21 +9618,21 @@
             }
           }
         },
-        "tags": [
-          "角色管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "角色管理-导出Excel",
+        "tags": [
+          "角色管理"
         ]
       }
     },
     "/tool/gen/list": {
       "get": {
-        "operationId": "ToolController_findAll",
-        "summary": "数据表列表",
         "description": "分页查询已导入的数据表列表",
+        "operationId": "ToolController_findAll",
         "parameters": [
           {
             "name": "pageNum",
@@ -9716,19 +9655,12 @@
             }
           },
           {
-            "required": true,
-            "name": "beginTime",
+            "name": "params",
+            "required": false,
             "in": "query",
+            "description": "时间范围",
             "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "required": true,
-            "name": "endTime",
-            "in": "query",
-            "schema": {
-              "type": "string"
+              "$ref": "#/components/schemas/DateParamsDTO"
             }
           },
           {
@@ -9849,21 +9781,21 @@
             }
           }
         },
-        "tags": [
-          "系统工具"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "数据表列表",
+        "tags": [
+          "系统工具"
         ]
       }
     },
     "/tool/gen/db/list": {
       "get": {
-        "operationId": "ToolController_genDbList",
-        "summary": "查询数据库表列表",
         "description": "查询数据库中未导入的表",
+        "operationId": "ToolController_genDbList",
         "parameters": [
           {
             "name": "pageNum",
@@ -9886,19 +9818,12 @@
             }
           },
           {
-            "required": true,
-            "name": "beginTime",
+            "name": "params",
+            "required": false,
             "in": "query",
+            "description": "时间范围",
             "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "required": true,
-            "name": "endTime",
-            "in": "query",
-            "schema": {
-              "type": "string"
+              "$ref": "#/components/schemas/DateParamsDTO"
             }
           },
           {
@@ -10019,21 +9944,21 @@
             }
           }
         },
-        "tags": [
-          "系统工具"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "查询数据库表列表",
+        "tags": [
+          "系统工具"
         ]
       }
     },
     "/tool/gen/importTable": {
       "post": {
-        "operationId": "ToolController_genImportTable",
-        "summary": "导入表",
         "description": "将数据库表导入到代码生成列表",
+        "operationId": "ToolController_genImportTable",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -10154,21 +10079,21 @@
             }
           }
         },
-        "tags": [
-          "系统工具"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "导入表",
+        "tags": [
+          "系统工具"
         ]
       }
     },
     "/tool/gen/synchDb/{tableName}": {
       "get": {
-        "operationId": "ToolController_synchDb",
-        "summary": "同步表结构",
         "description": "从数据库同步表字段结构",
+        "operationId": "ToolController_synchDb",
         "parameters": [
           {
             "name": "tableName",
@@ -10279,21 +10204,21 @@
             }
           }
         },
-        "tags": [
-          "系统工具"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "同步表结构",
+        "tags": [
+          "系统工具"
         ]
       }
     },
     "/tool/gen/{id}": {
       "get": {
-        "operationId": "ToolController_gen",
-        "summary": "查询表详细信息",
         "description": "获取代码生成表详情，包含字段信息",
+        "operationId": "ToolController_gen",
         "parameters": [
           {
             "name": "id",
@@ -10404,19 +10329,19 @@
             }
           }
         },
-        "tags": [
-          "系统工具"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "查询表详细信息",
+        "tags": [
+          "系统工具"
         ]
       },
       "delete": {
-        "operationId": "ToolController_remove",
-        "summary": "删除表数据",
         "description": "从代码生成列表中删除表",
+        "operationId": "ToolController_remove",
         "parameters": [
           {
             "name": "id",
@@ -10527,21 +10452,21 @@
             }
           }
         },
-        "tags": [
-          "系统工具"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "删除表数据",
+        "tags": [
+          "系统工具"
         ]
       }
     },
     "/tool/gen": {
       "put": {
-        "operationId": "ToolController_genUpdate",
-        "summary": "修改代码生成信息",
         "description": "修改表的代码生成配置",
+        "operationId": "ToolController_genUpdate",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -10652,21 +10577,21 @@
             }
           }
         },
-        "tags": [
-          "系统工具"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "修改代码生成信息",
+        "tags": [
+          "系统工具"
         ]
       }
     },
     "/tool/gen/batchGenCode/zip": {
       "get": {
-        "operationId": "ToolController_batchGenCode",
-        "summary": "批量生成代码",
         "description": "生成代码并下载为zip压缩包",
+        "operationId": "ToolController_batchGenCode",
         "parameters": [
           {
             "name": "tableNames",
@@ -10777,21 +10702,21 @@
             }
           }
         },
-        "tags": [
-          "系统工具"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "批量生成代码",
+        "tags": [
+          "系统工具"
         ]
       }
     },
     "/tool/gen/preview/{id}": {
       "get": {
-        "operationId": "ToolController_preview",
-        "summary": "预览生成代码",
         "description": "在线预览生成的代码内容",
+        "operationId": "ToolController_preview",
         "parameters": [
           {
             "name": "id",
@@ -10902,21 +10827,21 @@
             }
           }
         },
-        "tags": [
-          "系统工具"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "预览生成代码",
+        "tags": [
+          "系统工具"
         ]
       }
     },
     "/system/user/profile": {
       "get": {
-        "operationId": "UserController_profile",
-        "summary": "个人中心-用户信息",
         "description": "获取当前登录用户的个人信息",
+        "operationId": "UserController_profile",
         "parameters": [],
         "responses": {
           "200": {
@@ -11010,19 +10935,19 @@
             }
           }
         },
-        "tags": [
-          "用户管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "个人中心-用户信息",
+        "tags": [
+          "用户管理"
         ]
       },
       "put": {
-        "operationId": "UserController_updateProfile",
-        "summary": "个人中心-修改用户信息",
         "description": "修改当前用户的个人基本信息",
+        "operationId": "UserController_updateProfile",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -11133,21 +11058,21 @@
             }
           }
         },
-        "tags": [
-          "用户管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "个人中心-修改用户信息",
+        "tags": [
+          "用户管理"
         ]
       }
     },
     "/system/user/profile/avatar": {
       "post": {
-        "operationId": "UserController_avatar",
-        "summary": "个人中心-上传用户头像",
         "description": "上传并更新当前用户头像",
+        "operationId": "UserController_avatar",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -11271,21 +11196,21 @@
             }
           }
         },
-        "tags": [
-          "用户管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "个人中心-上传用户头像",
+        "tags": [
+          "用户管理"
         ]
       }
     },
     "/system/user/profile/updatePwd": {
       "put": {
-        "operationId": "UserController_updatePwd",
-        "summary": "个人中心-修改密码",
         "description": "修改当前用户的登录密码",
+        "operationId": "UserController_updatePwd",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -11396,21 +11321,21 @@
             }
           }
         },
-        "tags": [
-          "用户管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "个人中心-修改密码",
+        "tags": [
+          "用户管理"
         ]
       }
     },
     "/system/user": {
       "post": {
-        "operationId": "UserController_create",
-        "summary": "用户-创建",
         "description": "创建新用户，可分配角色和岗位",
+        "operationId": "UserController_create",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -11531,19 +11456,19 @@
             }
           }
         },
-        "tags": [
-          "用户管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "用户-创建",
+        "tags": [
+          "用户管理"
         ]
       },
       "get": {
-        "operationId": "UserController_findPostAndRoleAll",
-        "summary": "用户-角色和岗位列表",
         "description": "获取所有角色和岗位列表，用于新建/编辑用户时选择",
+        "operationId": "UserController_findPostAndRoleAll",
         "parameters": [],
         "responses": {
           "200": {
@@ -11637,19 +11562,19 @@
             }
           }
         },
-        "tags": [
-          "用户管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "用户-角色和岗位列表",
+        "tags": [
+          "用户管理"
         ]
       },
       "put": {
-        "operationId": "UserController_update",
-        "summary": "用户-更新",
         "description": "更新用户基本信息",
+        "operationId": "UserController_update",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -11760,21 +11685,21 @@
             }
           }
         },
-        "tags": [
-          "用户管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "用户-更新",
+        "tags": [
+          "用户管理"
         ]
       }
     },
     "/system/user/list": {
       "get": {
-        "operationId": "UserController_findAll",
-        "summary": "用户-列表",
         "description": "分页查询用户列表，支持多条件筛选",
+        "operationId": "UserController_findAll",
         "parameters": [
           {
             "name": "pageNum",
@@ -11797,19 +11722,12 @@
             }
           },
           {
-            "required": true,
-            "name": "beginTime",
+            "name": "params",
+            "required": false,
             "in": "query",
+            "description": "时间范围",
             "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "required": true,
-            "name": "endTime",
-            "in": "query",
-            "schema": {
-              "type": "string"
+              "$ref": "#/components/schemas/DateParamsDTO"
             }
           },
           {
@@ -11885,13 +11803,8 @@
             "name": "status",
             "required": false,
             "in": "query",
-            "description": "用户状态（0正常 1停用）",
             "schema": {
-              "enum": [
-                "0",
-                "1"
-              ],
-              "type": "string"
+              "$ref": "#/components/schemas/StatusEnum"
             }
           }
         ],
@@ -11987,21 +11900,21 @@
             }
           }
         },
-        "tags": [
-          "用户管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "用户-列表",
+        "tags": [
+          "用户管理"
         ]
       }
     },
     "/system/user/deptTree": {
       "get": {
-        "operationId": "UserController_deptTree",
-        "summary": "用户-部门树",
         "description": "获取部门树形结构，用于用户筛选",
+        "operationId": "UserController_deptTree",
         "parameters": [],
         "responses": {
           "200": {
@@ -12098,21 +12011,21 @@
             }
           }
         },
-        "tags": [
-          "用户管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "用户-部门树",
+        "tags": [
+          "用户管理"
         ]
       }
     },
     "/system/user/authRole/{id}": {
       "get": {
-        "operationId": "UserController_authRole",
-        "summary": "用户-分配角色详情",
         "description": "获取用户已分配的角色信息",
+        "operationId": "UserController_authRole",
         "parameters": [
           {
             "name": "id",
@@ -12216,21 +12129,21 @@
             }
           }
         },
-        "tags": [
-          "用户管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "用户-分配角色详情",
+        "tags": [
+          "用户管理"
         ]
       }
     },
     "/system/user/authRole": {
       "put": {
-        "operationId": "UserController_updateAuthRole",
-        "summary": "用户-更新角色分配",
         "description": "更新用户的角色分配",
+        "operationId": "UserController_updateAuthRole",
         "parameters": [
           {
             "name": "userId",
@@ -12350,21 +12263,21 @@
             }
           }
         },
-        "tags": [
-          "用户管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "用户-更新角色分配",
+        "tags": [
+          "用户管理"
         ]
       }
     },
     "/system/user/{userId}": {
       "get": {
-        "operationId": "UserController_findOne",
-        "summary": "用户-详情",
         "description": "根据用户ID获取用户详细信息",
+        "operationId": "UserController_findOne",
         "parameters": [
           {
             "name": "userId",
@@ -12468,21 +12381,21 @@
             }
           }
         },
-        "tags": [
-          "用户管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "用户-详情",
+        "tags": [
+          "用户管理"
         ]
       }
     },
     "/system/user/changeStatus": {
       "put": {
-        "operationId": "UserController_changeStatus",
-        "summary": "用户-修改状态",
         "description": "启用或停用用户账号",
+        "operationId": "UserController_changeStatus",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -12593,21 +12506,21 @@
             }
           }
         },
-        "tags": [
-          "用户管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "用户-修改状态",
+        "tags": [
+          "用户管理"
         ]
       }
     },
     "/system/user/resetPwd": {
       "put": {
-        "operationId": "UserController_resetPwd",
-        "summary": "用户-重置密码",
         "description": "管理员重置用户密码",
+        "operationId": "UserController_resetPwd",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -12718,21 +12631,21 @@
             }
           }
         },
-        "tags": [
-          "用户管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "用户-重置密码",
+        "tags": [
+          "用户管理"
         ]
       }
     },
     "/system/user/{id}": {
       "delete": {
-        "operationId": "UserController_remove",
-        "summary": "用户-删除",
         "description": "批量删除用户，多个ID用逗号分隔",
+        "operationId": "UserController_remove",
         "parameters": [
           {
             "name": "id",
@@ -12843,21 +12756,21 @@
             }
           }
         },
-        "tags": [
-          "用户管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "用户-删除",
+        "tags": [
+          "用户管理"
         ]
       }
     },
     "/system/user/export": {
       "post": {
-        "operationId": "UserController_export",
-        "summary": "用户-导出Excel",
         "description": "导出用户信息数据为xlsx文件",
+        "operationId": "UserController_export",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -12971,21 +12884,21 @@
             }
           }
         },
-        "tags": [
-          "用户管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "用户-导出Excel",
+        "tags": [
+          "用户管理"
         ]
       }
     },
     "/monitor/job/list": {
       "get": {
-        "operationId": "JobController_list",
-        "summary": "获取定时任务列表",
         "description": "分页查询定时任务列表",
+        "operationId": "JobController_list",
         "parameters": [],
         "responses": {
           "200": {
@@ -13086,21 +12999,21 @@
             }
           }
         },
-        "tags": [
-          "定时任务管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "获取定时任务列表",
+        "tags": [
+          "定时任务管理"
         ]
       }
     },
     "/monitor/job/{jobId}": {
       "get": {
-        "operationId": "JobController_getInfo",
-        "summary": "获取定时任务详情",
         "description": "根据任务ID获取定时任务详细信息",
+        "operationId": "JobController_getInfo",
         "parameters": [
           {
             "name": "jobId",
@@ -13211,21 +13124,21 @@
             }
           }
         },
-        "tags": [
-          "定时任务管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "获取定时任务详情",
+        "tags": [
+          "定时任务管理"
         ]
       }
     },
     "/monitor/job": {
       "post": {
-        "operationId": "JobController_add",
-        "summary": "创建定时任务",
         "description": "新增定时任务",
+        "operationId": "JobController_add",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -13346,19 +13259,19 @@
             }
           }
         },
-        "tags": [
-          "定时任务管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "创建定时任务",
+        "tags": [
+          "定时任务管理"
         ]
       },
       "put": {
-        "operationId": "JobController_update",
-        "summary": "修改定时任务",
         "description": "更新定时任务信息",
+        "operationId": "JobController_update",
         "parameters": [],
         "responses": {
           "200": {
@@ -13459,21 +13372,21 @@
             }
           }
         },
-        "tags": [
-          "定时任务管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "修改定时任务",
+        "tags": [
+          "定时任务管理"
         ]
       }
     },
     "/monitor/job/changeStatus": {
       "put": {
-        "operationId": "JobController_changeStatus",
-        "summary": "修改任务状态",
         "description": "启用或停用定时任务",
+        "operationId": "JobController_changeStatus",
         "parameters": [],
         "responses": {
           "200": {
@@ -13574,21 +13487,21 @@
             }
           }
         },
-        "tags": [
-          "定时任务管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "修改任务状态",
+        "tags": [
+          "定时任务管理"
         ]
       }
     },
     "/monitor/job/{jobIds}": {
       "delete": {
-        "operationId": "JobController_remove",
-        "summary": "删除定时任务",
         "description": "批量删除定时任务，多个ID用逗号分隔",
+        "operationId": "JobController_remove",
         "parameters": [
           {
             "name": "jobIds",
@@ -13699,21 +13612,21 @@
             }
           }
         },
-        "tags": [
-          "定时任务管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "删除定时任务",
+        "tags": [
+          "定时任务管理"
         ]
       }
     },
     "/monitor/job/run": {
       "put": {
-        "operationId": "JobController_run",
-        "summary": "立即执行一次",
         "description": "手动触发定时任务执行",
+        "operationId": "JobController_run",
         "parameters": [],
         "responses": {
           "200": {
@@ -13814,21 +13727,21 @@
             }
           }
         },
-        "tags": [
-          "定时任务管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "立即执行一次",
+        "tags": [
+          "定时任务管理"
         ]
       }
     },
     "/monitor/job/export": {
       "post": {
-        "operationId": "JobController_export",
-        "summary": "导出定时任务Excel",
         "description": "导出定时任务数据为xlsx文件",
+        "operationId": "JobController_export",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -13942,21 +13855,21 @@
             }
           }
         },
-        "tags": [
-          "定时任务管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "导出定时任务Excel",
+        "tags": [
+          "定时任务管理"
         ]
       }
     },
     "/monitor/jobLog/list": {
       "get": {
-        "operationId": "JobLogController_list",
-        "summary": "获取定时任务日志列表",
         "description": "分页查询定时任务执行日志",
+        "operationId": "JobLogController_list",
         "parameters": [
           {
             "name": "pageNum",
@@ -13979,19 +13892,12 @@
             }
           },
           {
-            "required": true,
-            "name": "beginTime",
+            "name": "params",
+            "required": false,
             "in": "query",
+            "description": "时间范围",
             "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "required": true,
-            "name": "endTime",
-            "in": "query",
-            "schema": {
-              "type": "string"
+              "$ref": "#/components/schemas/DateParamsDTO"
             }
           },
           {
@@ -14141,21 +14047,21 @@
             }
           }
         },
-        "tags": [
-          "定时任务日志管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "获取定时任务日志列表",
+        "tags": [
+          "定时任务日志管理"
         ]
       }
     },
     "/monitor/jobLog/clean": {
       "delete": {
-        "operationId": "JobLogController_clean",
-        "summary": "清空定时任务日志",
         "description": "清除所有定时任务执行日志",
+        "operationId": "JobLogController_clean",
         "parameters": [],
         "responses": {
           "200": {
@@ -14256,21 +14162,21 @@
             }
           }
         },
-        "tags": [
-          "定时任务日志管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "清空定时任务日志",
+        "tags": [
+          "定时任务日志管理"
         ]
       }
     },
     "/monitor/jobLog/export": {
       "post": {
-        "operationId": "JobLogController_export",
-        "summary": "导出调度日志Excel",
         "description": "导出定时任务执行日志为xlsx文件",
+        "operationId": "JobLogController_export",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -14384,21 +14290,21 @@
             }
           }
         },
-        "tags": [
-          "定时任务日志管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "导出调度日志Excel",
+        "tags": [
+          "定时任务日志管理"
         ]
       }
     },
     "/monitor/server": {
       "get": {
-        "operationId": "ServerController_getInfo",
-        "summary": "服务器信息",
         "description": "获取服务器CPU、内存、系统等监控信息",
+        "operationId": "ServerController_getInfo",
         "parameters": [],
         "responses": {
           "200": {
@@ -14492,21 +14398,21 @@
             }
           }
         },
-        "tags": [
-          "系统监控-服务监控"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "服务器信息",
+        "tags": [
+          "系统监控-服务监控"
         ]
       }
     },
     "/monitor/cache": {
       "get": {
-        "operationId": "CacheController_getInfo",
-        "summary": "缓存监控信息",
         "description": "获取Redis缓存监控信息",
+        "operationId": "CacheController_getInfo",
         "parameters": [],
         "responses": {
           "200": {
@@ -14600,21 +14506,21 @@
             }
           }
         },
-        "tags": [
-          "缓存管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "缓存监控信息",
+        "tags": [
+          "缓存管理"
         ]
       }
     },
     "/monitor/cache/getNames": {
       "get": {
-        "operationId": "CacheController_getNames",
-        "summary": "缓存名称列表",
         "description": "获取所有缓存分类名称",
+        "operationId": "CacheController_getNames",
         "parameters": [],
         "responses": {
           "200": {
@@ -14715,21 +14621,21 @@
             }
           }
         },
-        "tags": [
-          "缓存管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "缓存名称列表",
+        "tags": [
+          "缓存管理"
         ]
       }
     },
     "/monitor/cache/getKeys/{id}": {
       "get": {
-        "operationId": "CacheController_getKeys",
-        "summary": "缓存键名列表",
         "description": "根据缓存名称获取所有键名",
+        "operationId": "CacheController_getKeys",
         "parameters": [
           {
             "name": "id",
@@ -14840,21 +14746,21 @@
             }
           }
         },
-        "tags": [
-          "缓存管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "缓存键名列表",
+        "tags": [
+          "缓存管理"
         ]
       }
     },
     "/monitor/cache/getValue/{cacheName}/{cacheKey}": {
       "get": {
-        "operationId": "CacheController_getValue",
-        "summary": "缓存内容",
         "description": "获取指定缓存的内容",
+        "operationId": "CacheController_getValue",
         "parameters": [
           {
             "name": "cacheName",
@@ -14967,21 +14873,21 @@
             }
           }
         },
-        "tags": [
-          "缓存管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "缓存内容",
+        "tags": [
+          "缓存管理"
         ]
       }
     },
     "/monitor/cache/clearCacheName/{cacheName}": {
       "delete": {
-        "operationId": "CacheController_clearCacheName",
-        "summary": "清理缓存名称",
         "description": "清除指定分类下的所有缓存",
+        "operationId": "CacheController_clearCacheName",
         "parameters": [
           {
             "name": "cacheName",
@@ -15092,21 +14998,21 @@
             }
           }
         },
-        "tags": [
-          "缓存管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "清理缓存名称",
+        "tags": [
+          "缓存管理"
         ]
       }
     },
     "/monitor/cache/clearCacheKey/{cacheKey}": {
       "delete": {
-        "operationId": "CacheController_clearCacheKey",
-        "summary": "清理缓存键名",
         "description": "清除指定的缓存键",
+        "operationId": "CacheController_clearCacheKey",
         "parameters": [
           {
             "name": "cacheKey",
@@ -15217,21 +15123,21 @@
             }
           }
         },
-        "tags": [
-          "缓存管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "清理缓存键名",
+        "tags": [
+          "缓存管理"
         ]
       }
     },
     "/monitor/cache/clearCacheAll": {
       "delete": {
-        "operationId": "CacheController_clearCacheAll",
-        "summary": "清理全部缓存",
         "description": "清除所有缓存数据",
+        "operationId": "CacheController_clearCacheAll",
         "parameters": [],
         "responses": {
           "200": {
@@ -15332,21 +15238,21 @@
             }
           }
         },
-        "tags": [
-          "缓存管理"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "清理全部缓存",
+        "tags": [
+          "缓存管理"
         ]
       }
     },
     "/monitor/logininfor/list": {
       "get": {
-        "operationId": "LoginlogController_findAll",
-        "summary": "登录日志-列表",
         "description": "分页查询登录日志列表",
+        "operationId": "LoginlogController_findAll",
         "parameters": [
           {
             "name": "pageNum",
@@ -15369,19 +15275,12 @@
             }
           },
           {
-            "required": true,
-            "name": "beginTime",
+            "name": "params",
+            "required": false,
             "in": "query",
+            "description": "时间范围",
             "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "required": true,
-            "name": "endTime",
-            "in": "query",
-            "schema": {
-              "type": "string"
+              "$ref": "#/components/schemas/DateParamsDTO"
             }
           },
           {
@@ -15428,9 +15327,8 @@
             "name": "status",
             "required": false,
             "in": "query",
-            "description": "登录状态（0成功 1失败）",
             "schema": {
-              "type": "string"
+              "$ref": "#/components/schemas/StatusEnum"
             }
           }
         ],
@@ -15526,21 +15424,21 @@
             }
           }
         },
-        "tags": [
-          "登录日志"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "登录日志-列表",
+        "tags": [
+          "登录日志"
         ]
       }
     },
     "/monitor/logininfor/clean": {
       "delete": {
-        "operationId": "LoginlogController_removeAll",
-        "summary": "登录日志-清除全部日志",
         "description": "清空所有登录日志记录",
+        "operationId": "LoginlogController_removeAll",
         "parameters": [],
         "responses": {
           "200": {
@@ -15641,21 +15539,21 @@
             }
           }
         },
-        "tags": [
-          "登录日志"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "登录日志-清除全部日志",
+        "tags": [
+          "登录日志"
         ]
       }
     },
     "/monitor/logininfor/{id}": {
       "delete": {
-        "operationId": "LoginlogController_remove",
-        "summary": "登录日志-删除日志",
         "description": "批量删除登录日志，多个ID用逗号分隔",
+        "operationId": "LoginlogController_remove",
         "parameters": [
           {
             "name": "id",
@@ -15766,21 +15664,21 @@
             }
           }
         },
-        "tags": [
-          "登录日志"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "登录日志-删除日志",
+        "tags": [
+          "登录日志"
         ]
       }
     },
     "/monitor/logininfor/export": {
       "post": {
-        "operationId": "LoginlogController_export",
-        "summary": "登录日志-导出Excel",
         "description": "导出登录日志数据为xlsx文件",
+        "operationId": "LoginlogController_export",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -15894,21 +15792,21 @@
             }
           }
         },
-        "tags": [
-          "登录日志"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "登录日志-导出Excel",
+        "tags": [
+          "登录日志"
         ]
       }
     },
     "/monitor/online/list": {
       "get": {
-        "operationId": "OnlineController_findAll",
-        "summary": "在线用户-列表",
         "description": "查询当前在线用户列表",
+        "operationId": "OnlineController_findAll",
         "parameters": [],
         "responses": {
           "200": {
@@ -16002,21 +15900,21 @@
             }
           }
         },
-        "tags": [
-          "系统监控-在线用户"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "在线用户-列表",
+        "tags": [
+          "系统监控-在线用户"
         ]
       }
     },
     "/monitor/online/{token}": {
       "delete": {
-        "operationId": "OnlineController_delete",
-        "summary": "在线用户-强退",
         "description": "强制用户下线",
+        "operationId": "OnlineController_delete",
         "parameters": [
           {
             "name": "token",
@@ -16127,21 +16025,21 @@
             }
           }
         },
-        "tags": [
-          "系统监控-在线用户"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "在线用户-强退",
+        "tags": [
+          "系统监控-在线用户"
         ]
       }
     },
     "/monitor/operlog/clean": {
       "delete": {
-        "operationId": "OperlogController_removeAll",
-        "summary": "操作日志-清除全部日志",
         "description": "清空所有操作日志记录",
+        "operationId": "OperlogController_removeAll",
         "parameters": [],
         "responses": {
           "200": {
@@ -16242,21 +16140,21 @@
             }
           }
         },
-        "tags": [
-          "操作日志"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "操作日志-清除全部日志",
+        "tags": [
+          "操作日志"
         ]
       }
     },
     "/monitor/operlog/list": {
       "get": {
-        "operationId": "OperlogController_findAll",
-        "summary": "操作日志-列表",
         "description": "分页查询操作日志列表",
+        "operationId": "OperlogController_findAll",
         "parameters": [
           {
             "name": "operId",
@@ -16399,11 +16297,11 @@
             "in": "query",
             "description": "登录状态",
             "schema": {
+              "type": "string",
               "enum": [
                 "0",
                 "1"
-              ],
-              "type": "string"
+              ]
             }
           },
           {
@@ -16436,19 +16334,12 @@
             }
           },
           {
-            "required": true,
-            "name": "beginTime",
+            "name": "params",
+            "required": false,
             "in": "query",
+            "description": "时间范围",
             "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "required": true,
-            "name": "endTime",
-            "in": "query",
-            "schema": {
-              "type": "string"
+              "$ref": "#/components/schemas/DateParamsDTO"
             }
           },
           {
@@ -16562,21 +16453,21 @@
             }
           }
         },
-        "tags": [
-          "操作日志"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "操作日志-列表",
+        "tags": [
+          "操作日志"
         ]
       }
     },
     "/monitor/operlog/{operId}": {
       "get": {
-        "operationId": "OperlogController_findOne",
-        "summary": "操作日志-详情",
         "description": "根据日志ID获取操作日志详情",
+        "operationId": "OperlogController_findOne",
         "parameters": [
           {
             "name": "operId",
@@ -16680,19 +16571,19 @@
             }
           }
         },
-        "tags": [
-          "操作日志"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "操作日志-详情",
+        "tags": [
+          "操作日志"
         ]
       },
       "delete": {
-        "operationId": "OperlogController_remove",
-        "summary": "操作日志-删除",
         "description": "删除指定操作日志记录",
+        "operationId": "OperlogController_remove",
         "parameters": [
           {
             "name": "operId",
@@ -16803,21 +16694,21 @@
             }
           }
         },
-        "tags": [
-          "操作日志"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "操作日志-删除",
+        "tags": [
+          "操作日志"
         ]
       }
     },
     "/monitor/operlog/export": {
       "post": {
-        "operationId": "OperlogController_exportData",
-        "summary": "操作日志-导出Excel",
         "description": "导出操作日志数据为xlsx文件",
+        "operationId": "OperlogController_exportData",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -16931,22 +16822,31 @@
             }
           }
         },
-        "tags": [
-          "操作日志"
-        ],
         "security": [
           {
             "Authorization": []
           }
+        ],
+        "summary": "操作日志-导出Excel",
+        "tags": [
+          "操作日志"
         ]
       }
     }
   },
   "info": {
     "title": "Nest-Admin",
-    "description": "Nest-Admin 接口文档",
+    "description": "\n## Nest-Admin 后台管理系统 API 文档\n\n### 接口说明\n- 所有接口返回统一格式: `{ code: number, msg: string, data: any }`\n- code=200 表示成功，其他表示失败\n- 需要认证的接口请在请求头携带 `Authorization: Bearer <token>`\n\n### 版本历史\n- v2.0.0 (2024-01) - 重构优化，Enum 统一管理，DTO/VO 文件拆分\n- v1.0.0 (2023-01) - 初始版本\n  ",
     "version": "2.0.0",
-    "contact": {}
+    "contact": {
+      "name": "Nest-Admin",
+      "url": "https://github.com/linlingqin77/Nest-Admin",
+      "email": ""
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
   },
   "tags": [],
   "servers": [
@@ -17077,6 +16977,23 @@
           "img"
         ]
       },
+      "SexEnum": {
+        "type": "string",
+        "description": "性别枚举\n- MAN (0): 男\n- WOMAN (1): 女\n- UNKNOWN (2): 未知",
+        "enum": [
+          "0",
+          "1",
+          "2"
+        ]
+      },
+      "StatusEnum": {
+        "type": "string",
+        "description": "数据状态枚举\n- NORMAL (0): 正常/启用\n- STOP (1): 停用/禁用",
+        "enum": [
+          "0",
+          "1"
+        ]
+      },
       "RoleInfoVo": {
         "type": "object",
         "properties": {
@@ -17131,16 +17048,24 @@
             "description": "手机号码"
           },
           "sex": {
-            "type": "string",
-            "description": "用户性别（0男 1女 2未知）"
+            "description": "用户性别",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SexEnum"
+              }
+            ]
           },
           "avatar": {
             "type": "string",
             "description": "头像地址"
           },
           "status": {
-            "type": "string",
-            "description": "帐号状态（0正常 1停用）"
+            "description": "帐号状态",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StatusEnum"
+              }
+            ]
           },
           "loginIp": {
             "type": "string",
@@ -17165,14 +17090,16 @@
             "type": "object",
             "properties": {
               "deptId": {
-                "required": true,
                 "type": "number"
               },
               "deptName": {
-                "required": true,
                 "type": "string"
               }
-            }
+            },
+            "required": [
+              "deptId",
+              "deptName"
+            ]
           },
           "roles": {
             "description": "角色列表",
@@ -17196,8 +17123,7 @@
           "loginIp",
           "loginDate",
           "createTime",
-          "updateTime",
-          "dept"
+          "updateTime"
         ]
       },
       "GetInfoVo": {
@@ -17330,6 +17256,14 @@
           "fileName"
         ]
       },
+      "ConfigTypeEnum": {
+        "type": "string",
+        "description": "系统参数类型枚举\n- YES (Y): 是（系统内置）\n- NO (N): 否",
+        "enum": [
+          "Y",
+          "N"
+        ]
+      },
       "CreateConfigDto": {
         "type": "object",
         "properties": {
@@ -17352,8 +17286,11 @@
             "description": "参数键名"
           },
           "configType": {
-            "type": "string",
-            "description": "系统内置（Y是 N否）"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ConfigTypeEnum"
+              }
+            ]
           },
           "remark": {
             "type": "string",
@@ -17362,8 +17299,11 @@
             "description": "备注"
           },
           "status": {
-            "type": "string",
-            "description": "状态（0正常 1停用）"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StatusEnum"
+              }
+            ]
           }
         },
         "required": [
@@ -17394,8 +17334,12 @@
             "description": "参数键值"
           },
           "configType": {
-            "type": "string",
-            "description": "系统内置（Y是 N否）"
+            "description": "系统内置",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ConfigTypeEnum"
+              }
+            ]
           },
           "remark": {
             "type": "string",
@@ -17443,6 +17387,21 @@
           "total"
         ]
       },
+      "DateParamsDTO": {
+        "type": "object",
+        "properties": {
+          "beginTime": {
+            "type": "string"
+          },
+          "endTime": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "beginTime",
+          "endTime"
+        ]
+      },
       "UpdateConfigDto": {
         "type": "object",
         "properties": {
@@ -17465,8 +17424,11 @@
             "description": "参数键名"
           },
           "configType": {
-            "type": "string",
-            "description": "系统内置（Y是 N否）"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ConfigTypeEnum"
+              }
+            ]
           },
           "remark": {
             "type": "string",
@@ -17475,8 +17437,11 @@
             "description": "备注"
           },
           "status": {
-            "type": "string",
-            "description": "状态（0正常 1停用）"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StatusEnum"
+              }
+            ]
           },
           "configId": {
             "type": "number",
@@ -17490,21 +17455,6 @@
           "configType",
           "remark",
           "configId"
-        ]
-      },
-      "DateParamsDTO": {
-        "type": "object",
-        "properties": {
-          "beginTime": {
-            "type": "string"
-          },
-          "endTime": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "beginTime",
-          "endTime"
         ]
       },
       "ListConfigDto": {
@@ -17549,8 +17499,11 @@
             "description": "参数键名"
           },
           "configType": {
-            "type": "string",
-            "description": "系统内置（Y是 N否）"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ConfigTypeEnum"
+              }
+            ]
           }
         },
         "required": [
@@ -17588,11 +17541,15 @@
           },
           "email": {
             "type": "string",
+            "format": "email",
             "description": "邮箱"
           },
           "status": {
-            "type": "string",
-            "description": "部门状态（0正常 1停用）"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StatusEnum"
+              }
+            ]
           }
         },
         "required": [
@@ -17707,11 +17664,15 @@
           },
           "email": {
             "type": "string",
+            "format": "email",
             "description": "邮箱"
           },
           "status": {
-            "type": "string",
-            "description": "部门状态（0正常 1停用）"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StatusEnum"
+              }
+            ]
           },
           "deptId": {
             "type": "number",
@@ -17746,8 +17707,11 @@
             "description": "备注"
           },
           "status": {
-            "type": "string",
-            "description": "状态（0正常 1停用）"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StatusEnum"
+              }
+            ]
           }
         },
         "required": [
@@ -17778,8 +17742,11 @@
             "description": "备注"
           },
           "status": {
-            "type": "string",
-            "description": "状态（0正常 1停用）"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StatusEnum"
+              }
+            ]
           },
           "dictId": {
             "type": "number",
@@ -17901,8 +17868,11 @@
             "description": "备注"
           },
           "status": {
-            "type": "string",
-            "description": "状态（0正常 1停用）"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StatusEnum"
+              }
+            ]
           }
         },
         "required": [
@@ -17956,8 +17926,11 @@
             "description": "备注"
           },
           "status": {
-            "type": "string",
-            "description": "状态（0正常 1停用）"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StatusEnum"
+              }
+            ]
           },
           "dictCode": {
             "type": "number",
@@ -18103,13 +18076,25 @@
             "description": "字典类型"
           },
           "status": {
-            "type": "string",
-            "description": "状态（0正常 1停用）"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StatusEnum"
+              }
+            ]
           }
         },
         "required": [
           "pageNum",
           "pageSize"
+        ]
+      },
+      "MenuTypeEnum": {
+        "type": "string",
+        "description": "菜单类型枚举\n- M: 目录\n- C: 菜单\n- F: 按钮",
+        "enum": [
+          "M",
+          "C",
+          "F"
         ]
       },
       "CreateMenuDto": {
@@ -18154,8 +18139,11 @@
             "description": "菜单图标"
           },
           "menuType": {
-            "type": "string",
-            "description": "菜单类型（M目录 C菜单 F按钮）"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/MenuTypeEnum"
+              }
+            ]
           },
           "isCache": {
             "type": "string",
@@ -18216,24 +18204,44 @@
             "description": "路由参数"
           },
           "isFrame": {
-            "type": "string",
-            "description": "是否为外链（0是 1否）"
+            "description": "是否为外链（0是 1否）",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StatusEnum"
+              }
+            ]
           },
           "isCache": {
-            "type": "string",
-            "description": "是否缓存（0缓存 1不缓存）"
+            "description": "是否缓存（0缓存 1不缓存）",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StatusEnum"
+              }
+            ]
           },
           "menuType": {
-            "type": "string",
-            "description": "菜单类型（M目录 C菜单 F按钮）"
+            "description": "菜单类型",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/MenuTypeEnum"
+              }
+            ]
           },
           "visible": {
-            "type": "string",
-            "description": "菜单状态（0显示 1隐藏）"
+            "description": "显示状态（0显示 1隐藏）",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StatusEnum"
+              }
+            ]
           },
           "status": {
-            "type": "string",
-            "description": "菜单状态（0正常 1停用）"
+            "description": "菜单状态",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StatusEnum"
+              }
+            ]
           },
           "perms": {
             "type": "string",
@@ -18367,8 +18375,11 @@
             "description": "菜单图标"
           },
           "menuType": {
-            "type": "string",
-            "description": "菜单类型（M目录 C菜单 F按钮）"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/MenuTypeEnum"
+              }
+            ]
           },
           "isCache": {
             "type": "string",
@@ -18402,6 +18413,14 @@
           "menuId"
         ]
       },
+      "NoticeTypeEnum": {
+        "type": "string",
+        "description": "通知公告类型枚举\n- NOTICE (1): 通知\n- ANNOUNCEMENT (2): 公告",
+        "enum": [
+          "1",
+          "2"
+        ]
+      },
       "CreateNoticeDto": {
         "type": "object",
         "properties": {
@@ -18412,8 +18431,11 @@
             "description": "公告标题"
           },
           "noticeType": {
-            "type": "string",
-            "description": "公告类型（1通知 2公告）"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/NoticeTypeEnum"
+              }
+            ]
           },
           "remark": {
             "type": "string",
@@ -18422,8 +18444,11 @@
             "description": "备注"
           },
           "status": {
-            "type": "string",
-            "description": "状态（0正常 1停用）"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StatusEnum"
+              }
+            ]
           },
           "noticeContent": {
             "type": "string",
@@ -18448,16 +18473,24 @@
             "description": "公告标题"
           },
           "noticeType": {
-            "type": "string",
-            "description": "公告类型（1通知 2公告）"
+            "description": "公告类型",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/NoticeTypeEnum"
+              }
+            ]
           },
           "noticeContent": {
             "type": "string",
             "description": "公告内容"
           },
           "status": {
-            "type": "string",
-            "description": "公告状态（0正常 1关闭）"
+            "description": "公告状态",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StatusEnum"
+              }
+            ]
           },
           "createBy": {
             "type": "string",
@@ -18520,8 +18553,11 @@
             "description": "公告标题"
           },
           "noticeType": {
-            "type": "string",
-            "description": "公告类型（1通知 2公告）"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/NoticeTypeEnum"
+              }
+            ]
           },
           "remark": {
             "type": "string",
@@ -18530,8 +18566,11 @@
             "description": "备注"
           },
           "status": {
-            "type": "string",
-            "description": "状态（0正常 1停用）"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StatusEnum"
+              }
+            ]
           },
           "noticeContent": {
             "type": "string",
@@ -18565,8 +18604,11 @@
             "description": "岗位编码"
           },
           "status": {
-            "type": "string",
-            "description": "状态（0正常 1停用）"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StatusEnum"
+              }
+            ]
           },
           "remark": {
             "type": "string",
@@ -18670,8 +18712,11 @@
             "description": "岗位编码"
           },
           "status": {
-            "type": "string",
-            "description": "状态（0正常 1停用）"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StatusEnum"
+              }
+            ]
           },
           "remark": {
             "type": "string",
@@ -18737,8 +18782,11 @@
             "description": "岗位编码"
           },
           "status": {
-            "type": "string",
-            "description": "状态（0正常 1停用）"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StatusEnum"
+              }
+            ]
           }
         },
         "required": [
@@ -18761,13 +18809,31 @@
             "maxLength": 100,
             "description": "角色权限字符串"
           },
+          "menuIds": {
+            "description": "菜单ID列表",
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "deptIds": {
+            "description": "部门ID列表",
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
           "roleSort": {
             "type": "number",
             "description": "角色排序"
           },
           "status": {
-            "type": "string",
-            "description": "角色状态（0正常 1停用）"
+            "description": "角色状态（0正常 1停用）",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StatusEnum"
+              }
+            ]
           },
           "dataScope": {
             "type": "string",
@@ -18779,29 +18845,30 @@
             "maxLength": 500,
             "description": "备注"
           },
-          "menuIds": {
-            "type": "array",
-            "items": {
-              "type": "number"
-            }
-          },
-          "deptIds": {
-            "type": "array",
-            "items": {
-              "type": "number"
-            }
-          },
           "menuCheckStrictly": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "菜单树选择项是否关联显示"
           },
           "deptCheckStrictly": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "部门树选择项是否关联显示"
           }
         },
         "required": [
           "roleName",
           "roleKey",
           "roleSort"
+        ]
+      },
+      "DataScopeEnum": {
+        "type": "string",
+        "description": "数据权限范围枚举\n- DATA_SCOPE_ALL (1): 全部数据权限\n- DATA_SCOPE_CUSTOM (2): 自定数据权限\n- DATA_SCOPE_DEPT (3): 本部门数据权限\n- DATA_SCOPE_DEPT_AND_CHILD (4): 本部门及以下数据权限\n- DATA_SCOPE_SELF (5): 仅本人数据权限",
+        "enum": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
         ]
       },
       "RoleVo": {
@@ -18824,8 +18891,12 @@
             "description": "显示顺序"
           },
           "dataScope": {
-            "type": "string",
-            "description": "数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限）"
+            "description": "数据范围",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/DataScopeEnum"
+              }
+            ]
           },
           "menuCheckStrictly": {
             "type": "boolean",
@@ -18836,8 +18907,12 @@
             "description": "部门树选择项是否关联显示"
           },
           "status": {
-            "type": "string",
-            "description": "角色状态（0正常 1停用）"
+            "description": "角色状态",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StatusEnum"
+              }
+            ]
           },
           "delFlag": {
             "type": "string",
@@ -18955,13 +19030,31 @@
             "maxLength": 100,
             "description": "角色权限字符串"
           },
+          "menuIds": {
+            "description": "菜单ID列表",
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "deptIds": {
+            "description": "部门ID列表",
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
           "roleSort": {
             "type": "number",
             "description": "角色排序"
           },
           "status": {
-            "type": "string",
-            "description": "角色状态（0正常 1停用）"
+            "description": "角色状态（0正常 1停用）",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StatusEnum"
+              }
+            ]
           },
           "dataScope": {
             "type": "string",
@@ -18973,27 +19066,17 @@
             "maxLength": 500,
             "description": "备注"
           },
+          "menuCheckStrictly": {
+            "type": "boolean",
+            "description": "菜单树选择项是否关联显示"
+          },
+          "deptCheckStrictly": {
+            "type": "boolean",
+            "description": "部门树选择项是否关联显示"
+          },
           "roleId": {
             "type": "number",
             "description": "角色ID"
-          },
-          "menuIds": {
-            "type": "array",
-            "items": {
-              "type": "number"
-            }
-          },
-          "deptIds": {
-            "type": "array",
-            "items": {
-              "type": "number"
-            }
-          },
-          "menuCheckStrictly": {
-            "type": "boolean"
-          },
-          "deptCheckStrictly": {
-            "type": "boolean"
           }
         },
         "required": [
@@ -19011,11 +19094,10 @@
             "description": "用户ID"
           },
           "status": {
-            "type": "string",
-            "description": "用户状态（0正常 1停用）",
-            "enum": [
-              "0",
-              "1"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StatusEnum"
+              }
             ]
           }
         },
@@ -19127,20 +19209,28 @@
           "roleName": {
             "type": "string",
             "minLength": 0,
-            "maxLength": 30
+            "maxLength": 30,
+            "description": "角色名称"
           },
           "roleKey": {
             "type": "string",
             "minLength": 0,
-            "maxLength": 100
+            "maxLength": 100,
+            "description": "角色权限字符串"
           },
           "status": {
-            "type": "string"
+            "description": "角色状态（0正常 1停用）",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StatusEnum"
+              }
+            ]
           },
           "roleId": {
             "type": "string",
             "minLength": 0,
-            "maxLength": 100
+            "maxLength": 100,
+            "description": "角色ID"
           }
         },
         "required": [
@@ -19204,16 +19294,24 @@
             "description": "手机号码"
           },
           "sex": {
-            "type": "string",
-            "description": "用户性别（0男 1女 2未知）"
+            "description": "用户性别",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SexEnum"
+              }
+            ]
           },
           "avatar": {
             "type": "string",
             "description": "头像地址"
           },
           "status": {
-            "type": "string",
-            "description": "帐号状态（0正常 1停用）"
+            "description": "帐号状态",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StatusEnum"
+              }
+            ]
           },
           "delFlag": {
             "type": "string",
@@ -19246,38 +19344,40 @@
             "type": "object",
             "properties": {
               "deptId": {
-                "required": true,
                 "type": "number"
               },
               "parentId": {
-                "required": true,
                 "type": "number"
               },
               "deptName": {
-                "required": true,
                 "type": "string"
               },
               "orderNum": {
-                "required": true,
                 "type": "number"
               },
               "leader": {
-                "required": true,
                 "type": "string"
               },
               "phone": {
-                "required": true,
                 "type": "string"
               },
               "email": {
-                "required": true,
                 "type": "string"
               },
               "status": {
-                "required": true,
                 "type": "string"
               }
-            }
+            },
+            "required": [
+              "deptId",
+              "parentId",
+              "deptName",
+              "orderNum",
+              "leader",
+              "phone",
+              "email",
+              "status"
+            ]
           },
           "roles": {
             "description": "角色列表",
@@ -19303,8 +19403,7 @@
           "loginDate",
           "remark",
           "createTime",
-          "updateTime",
-          "dept"
+          "updateTime"
         ]
       },
       "UpdateProfileDto": {
@@ -19318,6 +19417,7 @@
           },
           "email": {
             "type": "string",
+            "format": "email",
             "minLength": 0,
             "maxLength": 50,
             "description": "邮箱地址"
@@ -19327,11 +19427,10 @@
             "description": "手机号码"
           },
           "sex": {
-            "type": "string",
-            "description": "用户性别（0男 1女 2未知）",
-            "enum": [
-              "0",
-              "1"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SexEnum"
+              }
             ]
           },
           "avatar": {
@@ -19429,19 +19528,17 @@
             }
           },
           "status": {
-            "type": "string",
-            "description": "用户状态（0正常 1停用）",
-            "enum": [
-              "0",
-              "1"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StatusEnum"
+              }
             ]
           },
           "sex": {
-            "type": "string",
-            "description": "用户性别（0男 1女 2未知）",
-            "enum": [
-              "0",
-              "1"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SexEnum"
+              }
             ]
           },
           "remark": {
@@ -19600,19 +19697,17 @@
             }
           },
           "status": {
-            "type": "string",
-            "description": "用户状态（0正常 1停用）",
-            "enum": [
-              "0",
-              "1"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StatusEnum"
+              }
             ]
           },
           "sex": {
-            "type": "string",
-            "description": "用户性别（0男 1女 2未知）",
-            "enum": [
-              "0",
-              "1"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SexEnum"
+              }
             ]
           },
           "remark": {
@@ -19709,11 +19804,10 @@
             "description": "手机号码"
           },
           "status": {
-            "type": "string",
-            "description": "用户状态（0正常 1停用）",
-            "enum": [
-              "0",
-              "1"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StatusEnum"
+              }
             ]
           }
         },
@@ -19847,101 +19941,109 @@
             "type": "object",
             "properties": {
               "cpuNum": {
-                "required": true,
                 "type": "number"
               },
               "total": {
-                "required": true,
                 "type": "number"
               },
               "sys": {
-                "required": true,
                 "type": "number"
               },
               "used": {
-                "required": true,
                 "type": "number"
               },
               "wait": {
-                "required": true,
                 "type": "number"
               },
               "free": {
-                "required": true,
                 "type": "number"
               }
-            }
+            },
+            "required": [
+              "cpuNum",
+              "total",
+              "sys",
+              "used",
+              "wait",
+              "free"
+            ]
           },
           "mem": {
             "type": "object",
             "properties": {
               "total": {
-                "required": true,
                 "type": "number"
               },
               "used": {
-                "required": true,
                 "type": "number"
               },
               "free": {
-                "required": true,
                 "type": "number"
               },
               "usage": {
-                "required": true,
                 "type": "number"
               }
-            }
+            },
+            "required": [
+              "total",
+              "used",
+              "free",
+              "usage"
+            ]
           },
           "jvm": {
             "type": "object",
             "properties": {
               "total": {
-                "required": true,
                 "type": "number"
               },
               "max": {
-                "required": true,
                 "type": "number"
               },
               "free": {
-                "required": true,
                 "type": "number"
               },
               "version": {
-                "required": true,
                 "type": "string"
               },
               "home": {
-                "required": true,
                 "type": "string"
               }
-            }
+            },
+            "required": [
+              "total",
+              "max",
+              "free",
+              "version",
+              "home"
+            ]
           },
           "sys": {
             "type": "object",
             "properties": {
               "computerName": {
-                "required": true,
                 "type": "string"
               },
               "computerIp": {
-                "required": true,
                 "type": "string"
               },
               "userDir": {
-                "required": true,
                 "type": "string"
               },
               "osName": {
-                "required": true,
                 "type": "string"
               },
               "osArch": {
-                "required": true,
                 "type": "string"
               }
-            }
+            },
+            "required": [
+              "computerName",
+              "computerIp",
+              "userDir",
+              "osName",
+              "osArch"
+            ]
           },
           "sysFiles": {
             "description": "磁盘信息",
@@ -20126,8 +20228,11 @@
             "description": "用户名"
           },
           "status": {
-            "type": "string",
-            "description": "登录状态（0成功 1失败）"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StatusEnum"
+              }
+            ]
           }
         },
         "required": [

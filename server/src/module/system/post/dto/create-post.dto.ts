@@ -1,0 +1,35 @@
+import { IsString, IsEnum, Length, IsOptional, IsNumber } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { StatusEnum, StatusEnumSchema } from 'src/common/enum';
+
+export class CreatePostDto {
+  @ApiProperty({ required: true, description: '岗位名称' })
+  @IsString()
+  @Length(0, 50)
+  postName: string;
+
+  @ApiProperty({ required: true, description: '岗位编码' })
+  @IsString()
+  @Length(0, 64)
+  postCode: string;
+
+  @ApiProperty({ enum: StatusEnum, enumName: 'StatusEnum', enumSchema: StatusEnumSchema, required: false })
+  @IsOptional()
+  @IsString()
+  @IsEnum(StatusEnum)
+  status?: string;
+
+  @ApiProperty({
+    required: false,
+    description: '备注',
+  })
+  @IsOptional()
+  @IsString()
+  @Length(0, 500)
+  remark?: string;
+
+  @ApiProperty({ required: true, description: '岗位排序' })
+  @IsOptional()
+  @IsNumber()
+  postSort?: number;
+}

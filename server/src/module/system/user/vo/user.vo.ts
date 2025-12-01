@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { StatusEnum, StatusEnumSchema, SexEnum, SexEnumSchema, DataScopeEnum, DataScopeEnumSchema } from 'src/common/enum';
 
 /**
  * 岗位信息
@@ -30,10 +31,10 @@ export class RoleVo {
   @ApiProperty({ description: '显示顺序' })
   roleSort: number;
 
-  @ApiProperty({ description: '数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限）' })
+  @ApiProperty({ description: '数据范围', enum: DataScopeEnum, enumName: 'DataScopeEnum', enumSchema: DataScopeEnumSchema })
   dataScope: string;
 
-  @ApiProperty({ description: '角色状态（0正常 1停用）' })
+  @ApiProperty({ description: '角色状态', enum: StatusEnum, enumName: 'StatusEnum', enumSchema: StatusEnumSchema })
   status: string;
 }
 
@@ -62,13 +63,13 @@ export class UserVo {
   @ApiProperty({ description: '手机号码' })
   phonenumber: string;
 
-  @ApiProperty({ description: '用户性别（0男 1女 2未知）' })
+  @ApiProperty({ description: '用户性别', enum: SexEnum, enumName: 'SexEnum', enumSchema: SexEnumSchema })
   sex: string;
 
   @ApiProperty({ description: '头像地址' })
   avatar: string;
 
-  @ApiProperty({ description: '帐号状态（0正常 1停用）' })
+  @ApiProperty({ description: '帐号状态', enum: StatusEnum, enumName: 'StatusEnum', enumSchema: StatusEnumSchema })
   status: string;
 
   @ApiProperty({ description: '删除标志（0代表存在 2代表删除）' })

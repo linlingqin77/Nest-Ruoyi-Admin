@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { ConfigTypeEnum, ConfigTypeEnumSchema } from 'src/common/enum';
 
 /**
  * 系统配置基础信息
@@ -16,7 +17,7 @@ export class ConfigVo {
   @ApiProperty({ description: '参数键值' })
   configValue: string;
 
-  @ApiProperty({ description: '系统内置（Y是 N否）' })
+  @ApiProperty({ description: '系统内置', enum: ConfigTypeEnum, enumName: 'ConfigTypeEnum', enumSchema: ConfigTypeEnumSchema })
   configType: string;
 
   @ApiProperty({ description: '备注' })

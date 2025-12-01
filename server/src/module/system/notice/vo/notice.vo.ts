@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { StatusEnum, StatusEnumSchema, NoticeTypeEnum, NoticeTypeEnumSchema } from 'src/common/enum';
 
 /**
  * 通知公告基础信息
@@ -10,13 +11,13 @@ export class NoticeVo {
   @ApiProperty({ description: '公告标题' })
   noticeTitle: string;
 
-  @ApiProperty({ description: '公告类型（1通知 2公告）' })
+  @ApiProperty({ description: '公告类型', enum: NoticeTypeEnum, enumName: 'NoticeTypeEnum', enumSchema: NoticeTypeEnumSchema })
   noticeType: string;
 
   @ApiProperty({ description: '公告内容' })
   noticeContent: string;
 
-  @ApiProperty({ description: '公告状态（0正常 1关闭）' })
+  @ApiProperty({ description: '公告状态', enum: StatusEnum, enumName: 'StatusEnum', enumSchema: StatusEnumSchema })
   status: string;
 
   @ApiProperty({ description: '创建者' })

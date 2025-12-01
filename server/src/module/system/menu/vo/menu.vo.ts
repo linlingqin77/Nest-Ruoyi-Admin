@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { StatusEnum, StatusEnumSchema, MenuTypeEnum, MenuTypeEnumSchema } from 'src/common/enum';
 
 /**
  * 菜单基础信息
@@ -25,19 +26,19 @@ export class MenuVo {
   @ApiProperty({ description: '路由参数' })
   query: string;
 
-  @ApiProperty({ description: '是否为外链（0是 1否）' })
+  @ApiProperty({ description: '是否为外链（0是 1否）', enum: StatusEnum, enumName: 'StatusEnum', enumSchema: StatusEnumSchema })
   isFrame: string;
 
-  @ApiProperty({ description: '是否缓存（0缓存 1不缓存）' })
+  @ApiProperty({ description: '是否缓存（0缓存 1不缓存）', enum: StatusEnum, enumName: 'StatusEnum', enumSchema: StatusEnumSchema })
   isCache: string;
 
-  @ApiProperty({ description: '菜单类型（M目录 C菜单 F按钮）' })
+  @ApiProperty({ description: '菜单类型', enum: MenuTypeEnum, enumName: 'MenuTypeEnum', enumSchema: MenuTypeEnumSchema })
   menuType: string;
 
-  @ApiProperty({ description: '菜单状态（0显示 1隐藏）' })
+  @ApiProperty({ description: '显示状态（0显示 1隐藏）', enum: StatusEnum, enumName: 'StatusEnum', enumSchema: StatusEnumSchema })
   visible: string;
 
-  @ApiProperty({ description: '菜单状态（0正常 1停用）' })
+  @ApiProperty({ description: '菜单状态', enum: StatusEnum, enumName: 'StatusEnum', enumSchema: StatusEnumSchema })
   status: string;
 
   @ApiProperty({ description: '权限标识' })

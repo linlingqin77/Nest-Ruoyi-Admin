@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { StatusEnum, StatusEnumSchema, SexEnum, SexEnumSchema } from 'src/common/enum';
 
 /**
  * 角色简要信息
@@ -39,13 +40,13 @@ export class UserProfileVo {
   @ApiProperty({ description: '手机号码' })
   phonenumber: string;
 
-  @ApiProperty({ description: '用户性别（0男 1女 2未知）' })
+  @ApiProperty({ description: '用户性别', enum: SexEnum, enumName: 'SexEnum', enumSchema: SexEnumSchema })
   sex: string;
 
   @ApiProperty({ description: '头像地址' })
   avatar: string;
 
-  @ApiProperty({ description: '帐号状态（0正常 1停用）' })
+  @ApiProperty({ description: '帐号状态', enum: StatusEnum, enumName: 'StatusEnum', enumSchema: StatusEnumSchema })
   status: string;
 
   @ApiProperty({ description: '最后登录IP' })
