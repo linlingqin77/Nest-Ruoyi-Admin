@@ -35,7 +35,7 @@ export class OnlineService {
       };
     });
     return ResultData.ok({
-      list,
+      rows: list,
       total: data.length,
     });
   }

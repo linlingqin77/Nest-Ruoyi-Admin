@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "paths": {
-    "/login": {
+    "/api/login": {
       "post": {
         "description": "用户登录接口，需要用户名、密码和验证码",
         "operationId": "MainController_login",
@@ -120,7 +120,7 @@
         ]
       }
     },
-    "/logout": {
+    "/api/logout": {
       "post": {
         "description": "退出当前登录状态，清除登录令牌",
         "operationId": "MainController_logout",
@@ -235,7 +235,7 @@
         ]
       }
     },
-    "/register": {
+    "/api/register": {
       "post": {
         "description": "新用户注册接口，需要用户名、密码和验证码",
         "operationId": "MainController_register",
@@ -361,7 +361,7 @@
         ]
       }
     },
-    "/registerUser": {
+    "/api/registerUser": {
       "get": {
         "description": "查询系统是否开启用户自主注册功能",
         "operationId": "MainController_registerUser",
@@ -477,7 +477,7 @@
         ]
       }
     },
-    "/captchaImage": {
+    "/api/captchaImage": {
       "get": {
         "description": "获取登录/注册所需的图形验证码，返回 Base64 图片和 UUID",
         "operationId": "MainController_captchaImage",
@@ -586,7 +586,7 @@
         ]
       }
     },
-    "/getInfo": {
+    "/api/getInfo": {
       "get": {
         "description": "获取当前登录用户的基本信息、角色和权限",
         "operationId": "MainController_getInfo",
@@ -694,7 +694,7 @@
         ]
       }
     },
-    "/getRouters": {
+    "/api/getRouters": {
       "get": {
         "description": "获取当前用户的前端路由菜单数据",
         "operationId": "MainController_getRouters",
@@ -805,7 +805,847 @@
         ]
       }
     },
-    "/common/upload": {
+    "/api/auth/tenant/list": {
+      "get": {
+        "description": "获取系统中所有可用的租户列表，用于登录时选择租户",
+        "operationId": "AuthController_getTenantList",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ResultData"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/LoginTenantVo"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "未登录或登录已过期",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 401
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "请先登录"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "无权限访问",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 403
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "没有操作权限"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 500
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "系统异常"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          },
+          {}
+        ],
+        "summary": "获取租户列表 - GET /auth/tenant/list\n对应前端: fetchTenantList()",
+        "tags": [
+          "认证模块"
+        ]
+      }
+    },
+    "/api/auth/code": {
+      "get": {
+        "description": "获取登录/注册所需的图形验证码",
+        "operationId": "AuthController_getCaptchaCode",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ResultData"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/CaptchaCodeVo"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "未登录或登录已过期",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 401
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "请先登录"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "无权限访问",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 403
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "没有操作权限"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 500
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "系统异常"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          },
+          {}
+        ],
+        "summary": "获取验证码 - GET /auth/code\n对应前端: fetchCaptchaCode()",
+        "tags": [
+          "认证模块"
+        ]
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "description": "用户登录接口，支持租户、验证码验证",
+        "operationId": "AuthController_login",
+        "parameters": [
+          {
+            "name": "tenant-id",
+            "required": false,
+            "in": "header",
+            "description": "租户ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthLoginDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ResultData"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/LoginTokenVo"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "未登录或登录已过期",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 401
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "请先登录"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "无权限访问",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 403
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "没有操作权限"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 500
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "系统异常"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          },
+          {}
+        ],
+        "summary": "用户登录 - POST /auth/login\n对应前端: fetchLogin()",
+        "tags": [
+          "认证模块"
+        ]
+      }
+    },
+    "/api/auth/register": {
+      "post": {
+        "description": "新用户注册接口",
+        "operationId": "AuthController_register",
+        "parameters": [
+          {
+            "name": "tenant-id",
+            "required": false,
+            "in": "header",
+            "description": "租户ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthRegisterDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ResultData"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "properties": {
+                            "value": {
+                              "type": "boolean",
+                              "default": true
+                            }
+                          },
+                          "nullable": true
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "未登录或登录已过期",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 401
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "请先登录"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "无权限访问",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 403
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "没有操作权限"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 500
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "系统异常"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          },
+          {}
+        ],
+        "summary": "用户注册 - POST /auth/register\n对应前端: fetchRegister()",
+        "tags": [
+          "认证模块"
+        ]
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "description": "退出当前登录状态",
+        "operationId": "AuthController_logout",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ResultData"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "properties": {
+                            "value": {
+                              "type": "boolean",
+                              "default": true
+                            }
+                          },
+                          "nullable": true
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "未登录或登录已过期",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 401
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "请先登录"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "无权限访问",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 403
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "没有操作权限"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 500
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "系统异常"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ],
+        "summary": "退出登录 - POST /auth/logout\n对应前端: fetchLogout()",
+        "tags": [
+          "认证模块"
+        ]
+      }
+    },
+    "/api/auth/social/callback": {
+      "post": {
+        "description": "第三方社交平台登录回调处理",
+        "operationId": "AuthController_socialCallback",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SocialLoginDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ResultData"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "properties": {
+                            "value": {
+                              "type": "boolean",
+                              "default": true
+                            }
+                          },
+                          "nullable": true
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "未登录或登录已过期",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 401
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "请先登录"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "无权限访问",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 403
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "没有操作权限"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 500
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "系统异常"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          },
+          {}
+        ],
+        "summary": "社交登录回调 - POST /auth/social/callback\n对应前端: fetchSocialLoginCallback()",
+        "tags": [
+          "认证模块"
+        ]
+      }
+    },
+    "/api/auth/publicKey": {
+      "get": {
+        "description": "获取RSA公钥用于数据加密",
+        "operationId": "AuthController_getPublicKey",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ResultData"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "properties": {
+                            "value": {
+                              "type": "boolean",
+                              "default": true
+                            }
+                          },
+                          "nullable": true
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "未登录或登录已过期",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 401
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "请先登录"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "无权限访问",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 403
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "没有操作权限"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 500
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "系统异常"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          },
+          {}
+        ],
+        "summary": "获取加密公钥 - GET /auth/publicKey\n用于前端加密数据",
+        "tags": [
+          "认证模块"
+        ]
+      }
+    },
+    "/api/common/upload": {
       "post": {
         "description": "上传单个文件",
         "operationId": "UploadController_singleFileUpload",
@@ -940,7 +1780,7 @@
         ]
       }
     },
-    "/common/upload/chunk/uploadId": {
+    "/api/common/upload/chunk/uploadId": {
       "get": {
         "description": "初始化切片上传，获取任务ID",
         "operationId": "UploadController_getChunkUploadId",
@@ -1055,7 +1895,7 @@
         ]
       }
     },
-    "/common/upload/chunk": {
+    "/api/common/upload/chunk": {
       "post": {
         "description": "上传文件分片",
         "operationId": "UploadController_chunkFileUpload",
@@ -1190,7 +2030,7 @@
         ]
       }
     },
-    "/common/upload/chunk/merge": {
+    "/api/common/upload/chunk/merge": {
       "post": {
         "description": "合并所有分片为完整文件",
         "operationId": "UploadController_chunkMergeFile",
@@ -1315,7 +2155,7 @@
         ]
       }
     },
-    "/common/upload/chunk/result": {
+    "/api/common/upload/chunk/result": {
       "get": {
         "description": "查询切片上传任务的状态",
         "operationId": "UploadController_getChunkUploadResult",
@@ -1440,7 +2280,7 @@
         ]
       }
     },
-    "/common/upload/cos/authorization": {
+    "/api/common/upload/cos/authorization": {
       "get": {
         "description": "获取腾讯云COS上传临时授权密钥",
         "operationId": "UploadController_getAuthorization",
@@ -1565,7 +2405,7 @@
         ]
       }
     },
-    "/system/config": {
+    "/api/system/config": {
       "post": {
         "description": "创建系统参数配置",
         "operationId": "ConfigController_create",
@@ -1823,7 +2663,7 @@
         ]
       }
     },
-    "/system/config/list": {
+    "/api/system/config/list": {
       "get": {
         "description": "分页查询系统参数列表",
         "operationId": "ConfigController_findAll",
@@ -2009,7 +2849,7 @@
         ]
       }
     },
-    "/system/config/{id}": {
+    "/api/system/config/{id}": {
       "get": {
         "description": "根据ID获取参数详情",
         "operationId": "ConfigController_findOne",
@@ -2250,7 +3090,7 @@
         ]
       }
     },
-    "/system/config/configKey/{id}": {
+    "/api/system/config/configKey/{id}": {
       "get": {
         "description": "根据参数键获取参数值，优先使用缓存",
         "operationId": "ConfigController_findOneByconfigKey",
@@ -2375,7 +3215,132 @@
         ]
       }
     },
-    "/system/config/refreshCache": {
+    "/api/system/config/updateByKey": {
+      "put": {
+        "description": "根据参数键名修改参数值",
+        "operationId": "ConfigController_updateByKey",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateConfigDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ResultData"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "properties": {
+                            "value": {
+                              "type": "boolean",
+                              "default": true
+                            }
+                          },
+                          "nullable": true
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "未登录或登录已过期",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 401
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "请先登录"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "无权限访问",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 403
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "没有操作权限"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 500
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "系统异常"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ],
+        "summary": "参数设置-按Key更新",
+        "tags": [
+          "参数设置"
+        ]
+      }
+    },
+    "/api/system/config/refreshCache": {
       "delete": {
         "description": "清除并重新加载参数配置缓存",
         "operationId": "ConfigController_refreshCache",
@@ -2490,7 +3455,7 @@
         ]
       }
     },
-    "/system/config/export": {
+    "/api/system/config/export": {
       "post": {
         "description": "导出参数管理数据为xlsx文件",
         "operationId": "ConfigController_export",
@@ -2618,7 +3583,7 @@
         ]
       }
     },
-    "/system/dept": {
+    "/api/system/dept": {
       "post": {
         "description": "创建新部门，需要指定父部门ID",
         "operationId": "DeptController_create",
@@ -2866,7 +3831,7 @@
         ]
       }
     },
-    "/system/dept/list": {
+    "/api/system/dept/list": {
       "get": {
         "description": "获取部门列表，支持按名称和状态筛选",
         "operationId": "DeptController_findAll",
@@ -2996,7 +3961,118 @@
         ]
       }
     },
-    "/system/dept/{id}": {
+    "/api/system/dept/optionselect": {
+      "get": {
+        "description": "获取部门选择框列表",
+        "operationId": "DeptController_optionselect",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ResultData"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/DeptVo"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "未登录或登录已过期",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 401
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "请先登录"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "无权限访问",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 403
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "没有操作权限"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 500
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "系统异常"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ],
+        "summary": "部门管理-选择框列表",
+        "tags": [
+          "部门管理"
+        ]
+      }
+    },
+    "/api/system/dept/{id}": {
       "get": {
         "description": "根据部门ID获取部门详细信息",
         "operationId": "DeptController_findOne",
@@ -3260,7 +4336,7 @@
         ]
       }
     },
-    "/system/dept/list/exclude/{id}": {
+    "/api/system/dept/list/exclude/{id}": {
       "get": {
         "description": "查询部门列表（排除指定节点及其子节点），用于编辑时选择父部门",
         "operationId": "DeptController_findListExclude",
@@ -3381,7 +4457,7 @@
         ]
       }
     },
-    "/system/dict/type": {
+    "/api/system/dict/type": {
       "post": {
         "description": "创建字典类型",
         "operationId": "DictController_createType",
@@ -3629,7 +4705,7 @@
         ]
       }
     },
-    "/system/dict/type/refreshCache": {
+    "/api/system/dict/type/refreshCache": {
       "delete": {
         "description": "清除并重新加载字典数据缓存",
         "operationId": "DictController_refreshCache",
@@ -3744,7 +4820,7 @@
         ]
       }
     },
-    "/system/dict/type/{id}": {
+    "/api/system/dict/type/{id}": {
       "delete": {
         "description": "批量删除字典类型，多个ID用逗号分隔",
         "operationId": "DictController_deleteType",
@@ -3985,7 +5061,7 @@
         ]
       }
     },
-    "/system/dict/type/list": {
+    "/api/system/dict/type/list": {
       "get": {
         "description": "分页查询字典类型列表",
         "operationId": "DictController_findAllType",
@@ -4171,7 +5247,7 @@
         ]
       }
     },
-    "/system/dict/type/optionselect": {
+    "/api/system/dict/type/optionselect": {
       "get": {
         "description": "获取全部字典类型用于下拉选择",
         "operationId": "DictController_findOptionselect",
@@ -4282,7 +5358,7 @@
         ]
       }
     },
-    "/system/dict/data": {
+    "/api/system/dict/data": {
       "post": {
         "description": "在指定字典类型下创建字典数据",
         "operationId": "DictController_createDictData",
@@ -4530,7 +5606,7 @@
         ]
       }
     },
-    "/system/dict/data/{id}": {
+    "/api/system/dict/data/{id}": {
       "delete": {
         "description": "批量删除字典数据，多个ID用逗号分隔",
         "operationId": "DictController_deleteDictData",
@@ -4771,7 +5847,7 @@
         ]
       }
     },
-    "/system/dict/data/list": {
+    "/api/system/dict/data/list": {
       "get": {
         "description": "查询指定字典类型下的数据列表",
         "operationId": "DictController_findAllData",
@@ -4958,7 +6034,7 @@
         ]
       }
     },
-    "/system/dict/data/type/{id}": {
+    "/api/system/dict/data/type/{id}": {
       "get": {
         "description": "根据字典类型获取字典数据列表，优先使用缓存",
         "operationId": "DictController_findOneDataType",
@@ -5079,7 +6155,7 @@
         ]
       }
     },
-    "/system/dict/type/export": {
+    "/api/system/dict/type/export": {
       "post": {
         "description": "导出字典类型为xlsx文件",
         "operationId": "DictController_export",
@@ -5207,7 +6283,7 @@
         ]
       }
     },
-    "/system/dict/data/export": {
+    "/api/system/dict/data/export": {
       "post": {
         "description": "导出字典数据为xlsx文件",
         "operationId": "DictController_exportData",
@@ -5335,7 +6411,118 @@
         ]
       }
     },
-    "/system/menu": {
+    "/api/system/menu/getRouters": {
+      "get": {
+        "description": "获取当前用户的路由菜单",
+        "operationId": "MenuController_getRouters",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ResultData"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/MenuVo"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "未登录或登录已过期",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 401
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "请先登录"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "无权限访问",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 403
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "没有操作权限"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 500
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "系统异常"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ],
+        "summary": "菜单管理-获取路由",
+        "tags": [
+          "菜单管理"
+        ]
+      }
+    },
+    "/api/system/menu": {
       "post": {
         "description": "创建新菜单，支持目录、菜单、按钮三种类型",
         "operationId": "MenuController_create",
@@ -5593,7 +6780,7 @@
         ]
       }
     },
-    "/system/menu/list": {
+    "/api/system/menu/list": {
       "get": {
         "description": "获取菜单列表，支持按名称和状态筛选",
         "operationId": "MenuController_findAll",
@@ -5723,7 +6910,7 @@
         ]
       }
     },
-    "/system/menu/treeselect": {
+    "/api/system/menu/treeselect": {
       "get": {
         "description": "获取菜单树形结构，用于下拉选择",
         "operationId": "MenuController_treeSelect",
@@ -5834,7 +7021,7 @@
         ]
       }
     },
-    "/system/menu/roleMenuTreeselect/{menuId}": {
+    "/api/system/menu/roleMenuTreeselect/{menuId}": {
       "get": {
         "description": "获取角色已分配的菜单树结构",
         "operationId": "MenuController_roleMenuTreeselect",
@@ -5952,7 +7139,125 @@
         ]
       }
     },
-    "/system/menu/{menuId}": {
+    "/api/system/menu/tenantPackageMenuTreeselect/{packageId}": {
+      "get": {
+        "description": "获取租户套餐已分配的菜单树结构",
+        "operationId": "MenuController_tenantPackageMenuTreeselect",
+        "parameters": [
+          {
+            "name": "packageId",
+            "required": true,
+            "in": "path",
+            "description": "套餐ID",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ResultData"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/RoleMenuTreeSelectVo"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "未登录或登录已过期",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 401
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "请先登录"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "无权限访问",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 403
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "没有操作权限"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 500
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "系统异常"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ],
+        "summary": "菜单管理-租户套餐菜单树",
+        "tags": [
+          "菜单管理"
+        ]
+      }
+    },
+    "/api/system/menu/{menuId}": {
       "get": {
         "description": "根据菜单ID获取菜单详细信息",
         "operationId": "MenuController_findOne",
@@ -6193,7 +7498,132 @@
         ]
       }
     },
-    "/system/notice": {
+    "/api/system/menu/cascade/{menuIds}": {
+      "delete": {
+        "description": "级联删除菜单，多个ID用逗号分隔",
+        "operationId": "MenuController_cascadeRemove",
+        "parameters": [
+          {
+            "name": "menuIds",
+            "required": true,
+            "in": "path",
+            "description": "菜单ID，多个用逗号分隔",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ResultData"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "properties": {
+                            "value": {
+                              "type": "boolean",
+                              "default": true
+                            }
+                          },
+                          "nullable": true
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "未登录或登录已过期",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 401
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "请先登录"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "无权限访问",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 403
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "没有操作权限"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 500
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "系统异常"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ],
+        "summary": "菜单管理-级联删除",
+        "tags": [
+          "菜单管理"
+        ]
+      }
+    },
+    "/api/system/notice": {
       "post": {
         "description": "发布新的通知公告",
         "operationId": "NoticeController_create",
@@ -6451,7 +7881,7 @@
         ]
       }
     },
-    "/system/notice/list": {
+    "/api/system/notice/list": {
       "get": {
         "description": "分页查询通知公告列表",
         "operationId": "NoticeController_findAll",
@@ -6635,7 +8065,7 @@
         ]
       }
     },
-    "/system/notice/{id}": {
+    "/api/system/notice/{id}": {
       "get": {
         "description": "根据ID获取通知公告详情",
         "operationId": "NoticeController_findOne",
@@ -6876,7 +8306,7 @@
         ]
       }
     },
-    "/system/post": {
+    "/api/system/post": {
       "post": {
         "description": "创建新岗位",
         "operationId": "PostController_create",
@@ -7134,7 +8564,7 @@
         ]
       }
     },
-    "/system/post/list": {
+    "/api/system/post/list": {
       "get": {
         "description": "分页查询岗位列表",
         "operationId": "PostController_findAll",
@@ -7320,7 +8750,250 @@
         ]
       }
     },
-    "/system/post/{id}": {
+    "/api/system/post/optionselect": {
+      "get": {
+        "description": "获取岗位选择框列表",
+        "operationId": "PostController_optionselect",
+        "parameters": [
+          {
+            "name": "deptId",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "postIds",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ResultData"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/PostVo"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "未登录或登录已过期",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 401
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "请先登录"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "无权限访问",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 403
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "没有操作权限"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 500
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "系统异常"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ],
+        "summary": "岗位管理-选择框列表",
+        "tags": [
+          "岗位管理"
+        ]
+      }
+    },
+    "/api/system/post/deptTree": {
+      "get": {
+        "description": "获取部门树形结构",
+        "operationId": "PostController_deptTree",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ResultData"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "properties": {
+                            "value": {
+                              "type": "boolean",
+                              "default": true
+                            }
+                          },
+                          "nullable": true
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "未登录或登录已过期",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 401
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "请先登录"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "无权限访问",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 403
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "没有操作权限"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 500
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "系统异常"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ],
+        "summary": "岗位管理-部门树",
+        "tags": [
+          "岗位管理"
+        ]
+      }
+    },
+    "/api/system/post/{id}": {
       "get": {
         "description": "根据ID获取岗位详情",
         "operationId": "PostController_findOne",
@@ -7438,7 +9111,7 @@
         ]
       }
     },
-    "/system/post/{ids}": {
+    "/api/system/post/{ids}": {
       "delete": {
         "description": "批量删除岗位，多个ID用逗号分隔",
         "operationId": "PostController_remove",
@@ -7563,7 +9236,7 @@
         ]
       }
     },
-    "/system/post/export": {
+    "/api/system/post/export": {
       "post": {
         "description": "导出岗位数据为xlsx文件",
         "operationId": "PostController_export",
@@ -7691,7 +9364,7 @@
         ]
       }
     },
-    "/system/role": {
+    "/api/system/role": {
       "post": {
         "description": "创建新角色并分配权限",
         "operationId": "RoleController_create",
@@ -7949,7 +9622,7 @@
         ]
       }
     },
-    "/system/role/list": {
+    "/api/system/role/list": {
       "get": {
         "description": "分页查询角色列表",
         "operationId": "RoleController_findAll",
@@ -8147,7 +9820,127 @@
         ]
       }
     },
-    "/system/role/deptTree/{id}": {
+    "/api/system/role/optionselect": {
+      "get": {
+        "description": "获取角色选择框列表",
+        "operationId": "RoleController_optionselect",
+        "parameters": [
+          {
+            "name": "roleIds",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ResultData"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/RoleVo"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "未登录或登录已过期",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 401
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "请先登录"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "无权限访问",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 403
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "没有操作权限"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 500
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "系统异常"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ],
+        "summary": "角色管理-选择框列表",
+        "tags": [
+          "角色管理"
+        ]
+      }
+    },
+    "/api/system/role/deptTree/{id}": {
       "get": {
         "description": "获取角色数据权限的部门树",
         "operationId": "RoleController_deptTree",
@@ -8265,7 +10058,7 @@
         ]
       }
     },
-    "/system/role/{id}": {
+    "/api/system/role/{id}": {
       "get": {
         "description": "根据角色ID获取角色详情",
         "operationId": "RoleController_findOne",
@@ -8506,7 +10299,7 @@
         ]
       }
     },
-    "/system/role/dataScope": {
+    "/api/system/role/dataScope": {
       "put": {
         "description": "修改角色的数据权限范围",
         "operationId": "RoleController_dataScope",
@@ -8631,7 +10424,7 @@
         ]
       }
     },
-    "/system/role/changeStatus": {
+    "/api/system/role/changeStatus": {
       "put": {
         "description": "启用或停用角色",
         "operationId": "RoleController_changeStatus",
@@ -8756,7 +10549,7 @@
         ]
       }
     },
-    "/system/role/authUser/allocatedList": {
+    "/api/system/role/authUser/allocatedList": {
       "get": {
         "description": "获取角色已分配的用户列表",
         "operationId": "RoleController_authUserAllocatedList",
@@ -8941,7 +10734,7 @@
         ]
       }
     },
-    "/system/role/authUser/unallocatedList": {
+    "/api/system/role/authUser/unallocatedList": {
       "get": {
         "description": "获取角色未分配的用户列表",
         "operationId": "RoleController_authUserUnAllocatedList",
@@ -9126,7 +10919,7 @@
         ]
       }
     },
-    "/system/role/authUser/cancel": {
+    "/api/system/role/authUser/cancel": {
       "put": {
         "description": "取消用户与角色的绑定关系",
         "operationId": "RoleController_authUserCancel",
@@ -9251,7 +11044,7 @@
         ]
       }
     },
-    "/system/role/authUser/cancelAll": {
+    "/api/system/role/authUser/cancelAll": {
       "put": {
         "description": "批量取消用户与角色的绑定关系",
         "operationId": "RoleController_authUserCancelAll",
@@ -9376,7 +11169,7 @@
         ]
       }
     },
-    "/system/role/authUser/selectAll": {
+    "/api/system/role/authUser/selectAll": {
       "put": {
         "description": "批量将用户绑定到角色",
         "operationId": "RoleController_authUserSelectAll",
@@ -9501,7 +11294,7 @@
         ]
       }
     },
-    "/system/role/export": {
+    "/api/system/role/export": {
       "post": {
         "description": "导出角色管理数据为xlsx文件",
         "operationId": "RoleController_export",
@@ -9629,7 +11422,7 @@
         ]
       }
     },
-    "/tool/gen/list": {
+    "/api/tool/gen/list": {
       "get": {
         "description": "分页查询已导入的数据表列表",
         "operationId": "ToolController_findAll",
@@ -9792,7 +11585,7 @@
         ]
       }
     },
-    "/tool/gen/db/list": {
+    "/api/tool/gen/db/list": {
       "get": {
         "description": "查询数据库中未导入的表",
         "operationId": "ToolController_genDbList",
@@ -9955,7 +11748,7 @@
         ]
       }
     },
-    "/tool/gen/importTable": {
+    "/api/tool/gen/importTable": {
       "post": {
         "description": "将数据库表导入到代码生成列表",
         "operationId": "ToolController_genImportTable",
@@ -10090,7 +11883,7 @@
         ]
       }
     },
-    "/tool/gen/synchDb/{tableName}": {
+    "/api/tool/gen/synchDb/{tableName}": {
       "get": {
         "description": "从数据库同步表字段结构",
         "operationId": "ToolController_synchDb",
@@ -10215,7 +12008,7 @@
         ]
       }
     },
-    "/tool/gen/{id}": {
+    "/api/tool/gen/{id}": {
       "get": {
         "description": "获取代码生成表详情，包含字段信息",
         "operationId": "ToolController_gen",
@@ -10463,7 +12256,7 @@
         ]
       }
     },
-    "/tool/gen": {
+    "/api/tool/gen": {
       "put": {
         "description": "修改表的代码生成配置",
         "operationId": "ToolController_genUpdate",
@@ -10588,7 +12381,7 @@
         ]
       }
     },
-    "/tool/gen/batchGenCode/zip": {
+    "/api/tool/gen/batchGenCode/zip": {
       "get": {
         "description": "生成代码并下载为zip压缩包",
         "operationId": "ToolController_batchGenCode",
@@ -10713,7 +12506,7 @@
         ]
       }
     },
-    "/tool/gen/preview/{id}": {
+    "/api/tool/gen/preview/{id}": {
       "get": {
         "description": "在线预览生成的代码内容",
         "operationId": "ToolController_preview",
@@ -10838,7 +12631,122 @@
         ]
       }
     },
-    "/system/user/profile": {
+    "/api/system/user/getInfo": {
+      "get": {
+        "description": "获取当前登录用户的详细信息、角色和权限",
+        "operationId": "UserController_getInfo",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ResultData"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "properties": {
+                            "value": {
+                              "type": "boolean",
+                              "default": true
+                            }
+                          },
+                          "nullable": true
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "未登录或登录已过期",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 401
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "请先登录"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "无权限访问",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 403
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "没有操作权限"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 500
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "系统异常"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ],
+        "summary": "获取当前登录用户信息 - 供 Soybean 前端调用\nGET /system/user/getInfo",
+        "tags": [
+          "用户管理"
+        ]
+      }
+    },
+    "/api/system/user/profile": {
       "get": {
         "description": "获取当前登录用户的个人信息",
         "operationId": "UserController_profile",
@@ -11069,7 +12977,7 @@
         ]
       }
     },
-    "/system/user/profile/avatar": {
+    "/api/system/user/profile/avatar": {
       "post": {
         "description": "上传并更新当前用户头像",
         "operationId": "UserController_avatar",
@@ -11207,7 +13115,7 @@
         ]
       }
     },
-    "/system/user/profile/updatePwd": {
+    "/api/system/user/profile/updatePwd": {
       "put": {
         "description": "修改当前用户的登录密码",
         "operationId": "UserController_updatePwd",
@@ -11332,7 +13240,7 @@
         ]
       }
     },
-    "/system/user": {
+    "/api/system/user": {
       "post": {
         "description": "创建新用户，可分配角色和岗位",
         "operationId": "UserController_create",
@@ -11696,7 +13604,7 @@
         ]
       }
     },
-    "/system/user/list": {
+    "/api/system/user/list": {
       "get": {
         "description": "分页查询用户列表，支持多条件筛选",
         "operationId": "UserController_findAll",
@@ -11911,7 +13819,7 @@
         ]
       }
     },
-    "/system/user/deptTree": {
+    "/api/system/user/deptTree": {
       "get": {
         "description": "获取部门树形结构，用于用户筛选",
         "operationId": "UserController_deptTree",
@@ -12022,7 +13930,7 @@
         ]
       }
     },
-    "/system/user/authRole/{id}": {
+    "/api/system/user/authRole/{id}": {
       "get": {
         "description": "获取用户已分配的角色信息",
         "operationId": "UserController_authRole",
@@ -12140,7 +14048,7 @@
         ]
       }
     },
-    "/system/user/authRole": {
+    "/api/system/user/authRole": {
       "put": {
         "description": "更新用户的角色分配",
         "operationId": "UserController_updateAuthRole",
@@ -12274,7 +14182,247 @@
         ]
       }
     },
-    "/system/user/{userId}": {
+    "/api/system/user/optionselect": {
+      "get": {
+        "description": "获取用户选择框列表",
+        "operationId": "UserController_optionselect",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ResultData"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "properties": {
+                            "value": {
+                              "type": "boolean",
+                              "default": true
+                            }
+                          },
+                          "nullable": true
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "未登录或登录已过期",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 401
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "请先登录"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "无权限访问",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 403
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "没有操作权限"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 500
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "系统异常"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ],
+        "summary": "用户-选择框列表",
+        "tags": [
+          "用户管理"
+        ]
+      }
+    },
+    "/api/system/user/list/dept/{deptId}": {
+      "get": {
+        "description": "获取指定部门的用户列表",
+        "operationId": "UserController_findByDeptId",
+        "parameters": [
+          {
+            "name": "deptId",
+            "required": true,
+            "in": "path",
+            "description": "部门ID",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ResultData"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "properties": {
+                            "value": {
+                              "type": "boolean",
+                              "default": true
+                            }
+                          },
+                          "nullable": true
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "未登录或登录已过期",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 401
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "请先登录"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "无权限访问",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 403
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "没有操作权限"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 500
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "系统异常"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ],
+        "summary": "用户-部门用户列表",
+        "tags": [
+          "用户管理"
+        ]
+      }
+    },
+    "/api/system/user/{userId}": {
       "get": {
         "description": "根据用户ID获取用户详细信息",
         "operationId": "UserController_findOne",
@@ -12392,7 +14540,7 @@
         ]
       }
     },
-    "/system/user/changeStatus": {
+    "/api/system/user/changeStatus": {
       "put": {
         "description": "启用或停用用户账号",
         "operationId": "UserController_changeStatus",
@@ -12517,7 +14665,7 @@
         ]
       }
     },
-    "/system/user/resetPwd": {
+    "/api/system/user/resetPwd": {
       "put": {
         "description": "管理员重置用户密码",
         "operationId": "UserController_resetPwd",
@@ -12642,7 +14790,7 @@
         ]
       }
     },
-    "/system/user/{id}": {
+    "/api/system/user/{id}": {
       "delete": {
         "description": "批量删除用户，多个ID用逗号分隔",
         "operationId": "UserController_remove",
@@ -12767,7 +14915,7 @@
         ]
       }
     },
-    "/system/user/export": {
+    "/api/system/user/export": {
       "post": {
         "description": "导出用户信息数据为xlsx文件",
         "operationId": "UserController_export",
@@ -12895,7 +15043,7 @@
         ]
       }
     },
-    "/monitor/job/list": {
+    "/api/monitor/job/list": {
       "get": {
         "description": "分页查询定时任务列表",
         "operationId": "JobController_list",
@@ -13010,7 +15158,7 @@
         ]
       }
     },
-    "/monitor/job/{jobId}": {
+    "/api/monitor/job/{jobId}": {
       "get": {
         "description": "根据任务ID获取定时任务详细信息",
         "operationId": "JobController_getInfo",
@@ -13135,7 +15283,7 @@
         ]
       }
     },
-    "/monitor/job": {
+    "/api/monitor/job": {
       "post": {
         "description": "新增定时任务",
         "operationId": "JobController_add",
@@ -13383,7 +15531,7 @@
         ]
       }
     },
-    "/monitor/job/changeStatus": {
+    "/api/monitor/job/changeStatus": {
       "put": {
         "description": "启用或停用定时任务",
         "operationId": "JobController_changeStatus",
@@ -13498,7 +15646,7 @@
         ]
       }
     },
-    "/monitor/job/{jobIds}": {
+    "/api/monitor/job/{jobIds}": {
       "delete": {
         "description": "批量删除定时任务，多个ID用逗号分隔",
         "operationId": "JobController_remove",
@@ -13623,7 +15771,7 @@
         ]
       }
     },
-    "/monitor/job/run": {
+    "/api/monitor/job/run": {
       "put": {
         "description": "手动触发定时任务执行",
         "operationId": "JobController_run",
@@ -13738,7 +15886,7 @@
         ]
       }
     },
-    "/monitor/job/export": {
+    "/api/monitor/job/export": {
       "post": {
         "description": "导出定时任务数据为xlsx文件",
         "operationId": "JobController_export",
@@ -13866,7 +16014,7 @@
         ]
       }
     },
-    "/monitor/jobLog/list": {
+    "/api/monitor/jobLog/list": {
       "get": {
         "description": "分页查询定时任务执行日志",
         "operationId": "JobLogController_list",
@@ -14058,7 +16206,7 @@
         ]
       }
     },
-    "/monitor/jobLog/clean": {
+    "/api/monitor/jobLog/clean": {
       "delete": {
         "description": "清除所有定时任务执行日志",
         "operationId": "JobLogController_clean",
@@ -14173,7 +16321,7 @@
         ]
       }
     },
-    "/monitor/jobLog/export": {
+    "/api/monitor/jobLog/export": {
       "post": {
         "description": "导出定时任务执行日志为xlsx文件",
         "operationId": "JobLogController_export",
@@ -14301,7 +16449,7 @@
         ]
       }
     },
-    "/monitor/server": {
+    "/api/monitor/server": {
       "get": {
         "description": "获取服务器CPU、内存、系统等监控信息",
         "operationId": "ServerController_getInfo",
@@ -14409,7 +16557,7 @@
         ]
       }
     },
-    "/monitor/cache": {
+    "/api/monitor/cache": {
       "get": {
         "description": "获取Redis缓存监控信息",
         "operationId": "CacheController_getInfo",
@@ -14517,7 +16665,7 @@
         ]
       }
     },
-    "/monitor/cache/getNames": {
+    "/api/monitor/cache/getNames": {
       "get": {
         "description": "获取所有缓存分类名称",
         "operationId": "CacheController_getNames",
@@ -14632,7 +16780,7 @@
         ]
       }
     },
-    "/monitor/cache/getKeys/{id}": {
+    "/api/monitor/cache/getKeys/{id}": {
       "get": {
         "description": "根据缓存名称获取所有键名",
         "operationId": "CacheController_getKeys",
@@ -14757,7 +16905,7 @@
         ]
       }
     },
-    "/monitor/cache/getValue/{cacheName}/{cacheKey}": {
+    "/api/monitor/cache/getValue/{cacheName}/{cacheKey}": {
       "get": {
         "description": "获取指定缓存的内容",
         "operationId": "CacheController_getValue",
@@ -14884,7 +17032,7 @@
         ]
       }
     },
-    "/monitor/cache/clearCacheName/{cacheName}": {
+    "/api/monitor/cache/clearCacheName/{cacheName}": {
       "delete": {
         "description": "清除指定分类下的所有缓存",
         "operationId": "CacheController_clearCacheName",
@@ -15009,7 +17157,7 @@
         ]
       }
     },
-    "/monitor/cache/clearCacheKey/{cacheKey}": {
+    "/api/monitor/cache/clearCacheKey/{cacheKey}": {
       "delete": {
         "description": "清除指定的缓存键",
         "operationId": "CacheController_clearCacheKey",
@@ -15134,7 +17282,7 @@
         ]
       }
     },
-    "/monitor/cache/clearCacheAll": {
+    "/api/monitor/cache/clearCacheAll": {
       "delete": {
         "description": "清除所有缓存数据",
         "operationId": "CacheController_clearCacheAll",
@@ -15249,7 +17397,7 @@
         ]
       }
     },
-    "/monitor/logininfor/list": {
+    "/api/monitor/logininfor/list": {
       "get": {
         "description": "分页查询登录日志列表",
         "operationId": "LoginlogController_findAll",
@@ -15435,7 +17583,7 @@
         ]
       }
     },
-    "/monitor/logininfor/clean": {
+    "/api/monitor/logininfor/clean": {
       "delete": {
         "description": "清空所有登录日志记录",
         "operationId": "LoginlogController_removeAll",
@@ -15550,7 +17698,132 @@
         ]
       }
     },
-    "/monitor/logininfor/{id}": {
+    "/api/monitor/logininfor/unlock/{username}": {
+      "get": {
+        "description": "解锁被锁定的用户账号",
+        "operationId": "LoginlogController_unlock",
+        "parameters": [
+          {
+            "name": "username",
+            "required": true,
+            "in": "path",
+            "description": "用户名",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ResultData"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "properties": {
+                            "value": {
+                              "type": "boolean",
+                              "default": true
+                            }
+                          },
+                          "nullable": true
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "未登录或登录已过期",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 401
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "请先登录"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "无权限访问",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 403
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "没有操作权限"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 500
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": "系统异常"
+                    },
+                    "data": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ],
+        "summary": "登录日志-解锁用户",
+        "tags": [
+          "登录日志"
+        ]
+      }
+    },
+    "/api/monitor/logininfor/{id}": {
       "delete": {
         "description": "批量删除登录日志，多个ID用逗号分隔",
         "operationId": "LoginlogController_remove",
@@ -15675,7 +17948,7 @@
         ]
       }
     },
-    "/monitor/logininfor/export": {
+    "/api/monitor/logininfor/export": {
       "post": {
         "description": "导出登录日志数据为xlsx文件",
         "operationId": "LoginlogController_export",
@@ -15803,7 +18076,7 @@
         ]
       }
     },
-    "/monitor/online/list": {
+    "/api/monitor/online/list": {
       "get": {
         "description": "查询当前在线用户列表",
         "operationId": "OnlineController_findAll",
@@ -15911,7 +18184,7 @@
         ]
       }
     },
-    "/monitor/online/{token}": {
+    "/api/monitor/online/{token}": {
       "delete": {
         "description": "强制用户下线",
         "operationId": "OnlineController_delete",
@@ -16036,7 +18309,7 @@
         ]
       }
     },
-    "/monitor/operlog/clean": {
+    "/api/monitor/operlog/clean": {
       "delete": {
         "description": "清空所有操作日志记录",
         "operationId": "OperlogController_removeAll",
@@ -16151,7 +18424,7 @@
         ]
       }
     },
-    "/monitor/operlog/list": {
+    "/api/monitor/operlog/list": {
       "get": {
         "description": "分页查询操作日志列表",
         "operationId": "OperlogController_findAll",
@@ -16464,7 +18737,7 @@
         ]
       }
     },
-    "/monitor/operlog/{operId}": {
+    "/api/monitor/operlog/{operId}": {
       "get": {
         "description": "根据日志ID获取操作日志详情",
         "operationId": "OperlogController_findOne",
@@ -16705,7 +18978,7 @@
         ]
       }
     },
-    "/monitor/operlog/export": {
+    "/api/monitor/operlog/export": {
       "post": {
         "description": "导出操作日志数据为xlsx文件",
         "operationId": "OperlogController_exportData",
@@ -17237,6 +19510,226 @@
           "hidden",
           "component",
           "meta"
+        ]
+      },
+      "TenantVo": {
+        "type": "object",
+        "properties": {
+          "tenantId": {
+            "type": "string",
+            "description": "租户ID"
+          },
+          "companyName": {
+            "type": "string",
+            "description": "企业名称"
+          },
+          "domain": {
+            "type": "string",
+            "description": "域名"
+          }
+        },
+        "required": [
+          "tenantId",
+          "companyName"
+        ]
+      },
+      "LoginTenantVo": {
+        "type": "object",
+        "properties": {
+          "tenantEnabled": {
+            "type": "boolean",
+            "description": "是否开启租户"
+          },
+          "voList": {
+            "description": "租户列表",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TenantVo"
+            }
+          }
+        },
+        "required": [
+          "tenantEnabled",
+          "voList"
+        ]
+      },
+      "CaptchaCodeVo": {
+        "type": "object",
+        "properties": {
+          "captchaEnabled": {
+            "type": "boolean",
+            "description": "是否开启验证码"
+          },
+          "uuid": {
+            "type": "string",
+            "description": "验证码唯一标识"
+          },
+          "img": {
+            "type": "string",
+            "description": "验证码图片(Base64)"
+          }
+        },
+        "required": [
+          "captchaEnabled"
+        ]
+      },
+      "LoginTokenVo": {
+        "type": "object",
+        "properties": {
+          "access_token": {
+            "type": "string",
+            "description": "授权令牌"
+          },
+          "refresh_token": {
+            "type": "string",
+            "description": "刷新令牌"
+          },
+          "expire_in": {
+            "type": "number",
+            "description": "令牌有效期(秒)"
+          },
+          "refresh_expire_in": {
+            "type": "number",
+            "description": "刷新令牌有效期(秒)"
+          },
+          "client_id": {
+            "type": "string",
+            "description": "客户端ID"
+          },
+          "scope": {
+            "type": "string",
+            "description": "令牌权限"
+          },
+          "openid": {
+            "type": "string",
+            "description": "用户openid"
+          }
+        },
+        "required": [
+          "access_token",
+          "expire_in"
+        ]
+      },
+      "AuthLoginDto": {
+        "type": "object",
+        "properties": {
+          "tenantId": {
+            "type": "string",
+            "description": "租户ID",
+            "default": "000000"
+          },
+          "username": {
+            "type": "string",
+            "description": "用户名"
+          },
+          "password": {
+            "type": "string",
+            "description": "密码"
+          },
+          "code": {
+            "type": "string",
+            "description": "验证码"
+          },
+          "uuid": {
+            "type": "string",
+            "description": "验证码唯一标识"
+          },
+          "clientId": {
+            "type": "string",
+            "description": "客户端ID",
+            "default": "pc"
+          },
+          "grantType": {
+            "type": "string",
+            "description": "授权类型",
+            "default": "password"
+          },
+          "rememberMe": {
+            "type": "boolean",
+            "description": "记住我"
+          }
+        },
+        "required": [
+          "username",
+          "password"
+        ]
+      },
+      "AuthRegisterDto": {
+        "type": "object",
+        "properties": {
+          "tenantId": {
+            "type": "string",
+            "description": "租户ID",
+            "default": "000000"
+          },
+          "username": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 20,
+            "description": "用户名"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 20,
+            "description": "密码"
+          },
+          "confirmPassword": {
+            "type": "string",
+            "description": "确认密码"
+          },
+          "code": {
+            "type": "string",
+            "description": "验证码"
+          },
+          "uuid": {
+            "type": "string",
+            "description": "验证码唯一标识"
+          },
+          "userType": {
+            "type": "string",
+            "description": "用户类型"
+          }
+        },
+        "required": [
+          "username",
+          "password",
+          "confirmPassword",
+          "code",
+          "uuid"
+        ]
+      },
+      "SocialLoginDto": {
+        "type": "object",
+        "properties": {
+          "tenantId": {
+            "type": "string",
+            "description": "租户ID"
+          },
+          "source": {
+            "type": "string",
+            "description": "社交平台来源"
+          },
+          "socialCode": {
+            "type": "string",
+            "description": "社交平台授权码"
+          },
+          "socialState": {
+            "type": "string",
+            "description": "社交平台状态码"
+          },
+          "clientId": {
+            "type": "string",
+            "description": "客户端ID"
+          },
+          "grantType": {
+            "type": "string",
+            "description": "授权类型"
+          }
+        },
+        "required": [
+          "source",
+          "socialCode"
         ]
       },
       "ChunkMergeFileDto": {
@@ -18097,81 +20590,6 @@
           "F"
         ]
       },
-      "CreateMenuDto": {
-        "type": "object",
-        "properties": {
-          "menuName": {
-            "type": "string",
-            "minLength": 0,
-            "maxLength": 50,
-            "description": "菜单名称"
-          },
-          "orderNum": {
-            "type": "number",
-            "description": "显示顺序"
-          },
-          "parentId": {
-            "type": "number",
-            "description": "父菜单ID"
-          },
-          "path": {
-            "type": "string",
-            "minLength": 0,
-            "maxLength": 200,
-            "description": "路由地址"
-          },
-          "query": {
-            "type": "string",
-            "minLength": 0,
-            "maxLength": 200,
-            "description": "路由参数"
-          },
-          "component": {
-            "type": "string",
-            "minLength": 0,
-            "maxLength": 255,
-            "description": "组件路径"
-          },
-          "icon": {
-            "type": "string",
-            "minLength": 0,
-            "maxLength": 100,
-            "description": "菜单图标"
-          },
-          "menuType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/MenuTypeEnum"
-              }
-            ]
-          },
-          "isCache": {
-            "type": "string",
-            "description": "是否缓存（0缓存 1不缓存）"
-          },
-          "isFrame": {
-            "type": "string",
-            "description": "是否为外链（0是 1否）"
-          },
-          "status": {
-            "type": "string",
-            "description": "菜单状态（0正常 1停用）"
-          },
-          "visible": {
-            "type": "string",
-            "description": "显示状态（0显示 1隐藏）"
-          },
-          "perms": {
-            "type": "string",
-            "description": "权限标识"
-          }
-        },
-        "required": [
-          "menuName",
-          "parentId",
-          "isFrame"
-        ]
-      },
       "MenuVo": {
         "type": "object",
         "properties": {
@@ -18284,6 +20702,81 @@
           "remark",
           "createTime",
           "updateTime"
+        ]
+      },
+      "CreateMenuDto": {
+        "type": "object",
+        "properties": {
+          "menuName": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 50,
+            "description": "菜单名称"
+          },
+          "orderNum": {
+            "type": "number",
+            "description": "显示顺序"
+          },
+          "parentId": {
+            "type": "number",
+            "description": "父菜单ID"
+          },
+          "path": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 200,
+            "description": "路由地址"
+          },
+          "query": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 200,
+            "description": "路由参数"
+          },
+          "component": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 255,
+            "description": "组件路径"
+          },
+          "icon": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 100,
+            "description": "菜单图标"
+          },
+          "menuType": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/MenuTypeEnum"
+              }
+            ]
+          },
+          "isCache": {
+            "type": "string",
+            "description": "是否缓存（0缓存 1不缓存）"
+          },
+          "isFrame": {
+            "type": "string",
+            "description": "是否为外链（0是 1否）"
+          },
+          "status": {
+            "type": "string",
+            "description": "菜单状态（0正常 1停用）"
+          },
+          "visible": {
+            "type": "string",
+            "description": "显示状态（0显示 1隐藏）"
+          },
+          "perms": {
+            "type": "string",
+            "description": "权限标识"
+          }
+        },
+        "required": [
+          "menuName",
+          "parentId",
+          "isFrame"
         ]
       },
       "MenuTreeVo": {

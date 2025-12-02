@@ -71,6 +71,17 @@ export class ConfigController {
   }
 
   @Api({
+    summary: '参数设置-按Key更新',
+    description: '根据参数键名修改参数值',
+    body: UpdateConfigDto,
+  })
+  @RequirePermission('system:config:edit')
+  @Put('/updateByKey')
+  updateByKey(@Body() updateConfigDto: UpdateConfigDto) {
+    return this.configService.updateByKey(updateConfigDto);
+  }
+
+  @Api({
     summary: '参数设置-刷新缓存',
     description: '清除并重新加载参数配置缓存',
   })

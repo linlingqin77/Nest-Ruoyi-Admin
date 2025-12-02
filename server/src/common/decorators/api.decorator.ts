@@ -126,7 +126,7 @@ export interface ApiOptions {
   isArray?: boolean;
 
   /**
-   * 是否为分页格式 { list: T[], total: number }
+   * 是否为分页格式 { rows: T[], total: number }
    */
   isPager?: boolean;
 
@@ -230,12 +230,12 @@ function buildDataSchema(type?: Type<any>, isArray?: boolean, isPager?: boolean)
   const isBaseType = baseTypeNames.includes(type.name);
   const items = isBaseType ? { type: type.name.toLowerCase() } : { $ref: getSchemaPath(type) };
 
-  // 分页格式: { list: T[], total: number }
+  // 分页格式: { rows: T[], total: number }
   if (isArray && isPager) {
     return {
       type: 'object',
       properties: {
-        list: {
+        rows: {
           type: 'array',
           items,
         },

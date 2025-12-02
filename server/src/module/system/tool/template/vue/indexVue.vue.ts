@@ -73,8 +73,8 @@ const indexScript = (options) => {
 
     const getList = () => {
         loading.value = true
-        list${BusinessName}(queryParams.value).then(({data}) => {
-           ${businessName}List.value = data.list;
+          list${BusinessName}(queryParams.value).then(({data}) => {
+            ${businessName}List.value = data.rows;
            total.value = data.total;
            loading.value = false
          });

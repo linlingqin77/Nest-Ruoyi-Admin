@@ -88,7 +88,7 @@ export class RoleService {
     ]);
 
     return ResultData.ok({
-      list,
+      rows: list,
       total,
     });
   }
@@ -213,6 +213,24 @@ export class RoleService {
   }
 
   /**
+   * 获取角色选择框列表
+   */
+  async optionselect(roleIds?: number[]) {
+    const where: Prisma.SysRoleWhereInput = {
+      delFlag: '0',
+      status: '0',
+    };
+    if (roleIds && roleIds.length > 0) {
+      where.roleId = { in: roleIds };
+    }
+    const list = await this.prisma.sysRole.findMany({
+      where,
+      orderBy: { roleSort: 'asc' },
+    });
+    return ResultData.ok(list);
+  }
+
+  /**
    * 根据角色ID异步查找与之关联的部门ID列表。
    *
    * @param roleId - 角色的ID，用于查询与该角色关联的部门。
@@ -240,7 +258,7 @@ export class RoleService {
     const list = await this.findAll(body);
     const options = {
       sheetName: '角色数据',
-      data: list.data.list,
+      data: list.data.rows,
       header: [
         { title: '角色编号', dataIndex: 'roleId' },
         { title: '角色名称', dataIndex: 'roleName', width: 15 },

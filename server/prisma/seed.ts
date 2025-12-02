@@ -10,6 +10,110 @@ async function main() {
   const salt = bcrypt.genSaltSync(10);
   const passwordHash = bcrypt.hashSync('admin123', salt);
 
+  // 0. 创建租户套餐数据
+  console.log('创建租户套餐数据...');
+  await prisma.sysTenantPackage.upsert({
+    where: { packageId: 1 },
+    update: {},
+    create: {
+      packageId: 1,
+      packageName: '默认套餐',
+      menuIds: '1,2,3,4,5,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117',
+      remark: '系统默认租户套餐，包含所有基础功能',
+      menuCheckStrictly: true,
+      status: '0',
+      delFlag: '0',
+      createBy: 'admin',
+      createTime: new Date(),
+    },
+  });
+
+  // 0.1 创建默认租户（平台管理员）
+  console.log('创建默认租户...');
+  await prisma.sysTenant.upsert({
+    where: { id: 1 },
+    update: {},
+    create: {
+      id: 1,
+      tenantId: '000000',
+      companyName: '平台管理',
+      contactUserName: '管理员',
+      contactPhone: '15888888888',
+      address: '',
+      domain: '',
+      packageId: 1,
+      expireTime: new Date('2099-12-31'),
+      accountCount: -1, // -1 表示无限制
+      status: '0',
+      delFlag: '0',
+      createBy: 'admin',
+      createTime: new Date(),
+    },
+  });
+
+  // 0.2 创建示例租户
+  console.log('创建示例租户...');
+  await prisma.sysTenant.upsert({
+    where: { id: 2 },
+    update: {},
+    create: {
+      id: 2,
+      tenantId: '000001',
+      companyName: '示例企业A',
+      contactUserName: '张三',
+      contactPhone: '15888888889',
+      address: '深圳市南山区',
+      domain: '',
+      packageId: 1,
+      expireTime: new Date('2025-12-31'),
+      accountCount: 100,
+      status: '0',
+      delFlag: '0',
+      createBy: 'admin',
+      createTime: new Date(),
+    },
+  });
+
+  // 0.3 创建客户端配置
+  console.log('创建客户端配置...');
+  await prisma.sysClient.upsert({
+    where: { id: 1 },
+    update: {},
+    create: {
+      id: 1,
+      clientId: 'pc',
+      clientKey: 'pc',
+      clientSecret: 'pc123',
+      grantTypeList: 'password,social',
+      deviceType: 'pc',
+      activeTimeout: 7200,
+      timeout: 86400,
+      status: '0',
+      delFlag: '0',
+      createBy: 'admin',
+      createTime: new Date(),
+    },
+  });
+
+  await prisma.sysClient.upsert({
+    where: { id: 2 },
+    update: {},
+    create: {
+      id: 2,
+      clientId: 'app',
+      clientKey: 'app',
+      clientSecret: 'app123',
+      grantTypeList: 'password,social,sms',
+      deviceType: 'app',
+      activeTimeout: 7200,
+      timeout: 604800, // 7天
+      status: '0',
+      delFlag: '0',
+      createBy: 'admin',
+      createTime: new Date(),
+    },
+  });
+
   // 1. 创建部门数据
   console.log('创建部门数据...');
   const depts = await prisma.$transaction([

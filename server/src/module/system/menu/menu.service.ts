@@ -94,6 +94,32 @@ export class MenuService {
     });
   }
 
+  /**
+   * 租户套餐菜单树
+   */
+  async tenantPackageMenuTreeselect(packageId: number): Promise<any> {
+    const res = await this.prisma.sysMenu.findMany({
+      where: {
+        delFlag: '0',
+      },
+      orderBy: [
+        { orderNum: 'asc' },
+        { parentId: 'asc' },
+      ],
+    });
+    const tree = ListToTree(
+      res,
+      (m) => m.menuId,
+      (m) => m.menuName,
+    );
+    // 查询租户套餐关联的菜单ID（如果有对应的表）
+    // 暂时返回空数组作为 checkedKeys
+    return ResultData.ok({
+      menus: tree,
+      checkedKeys: [],
+    });
+  }
+
   async findOne(menuId: number) {
     const res = await this.prisma.sysMenu.findUnique({
       where: {
@@ -116,6 +142,23 @@ export class MenuService {
       },
     });
     return ResultData.ok(data);
+  }
+
+  /**
+   * 级联删除菜单
+   */
+  async cascadeRemove(menuIds: number[]) {
+    const data = await this.prisma.sysMenu.updateMany({
+      where: {
+        menuId: {
+          in: menuIds,
+        },
+      },
+      data: {
+        delFlag: '1',
+      },
+    });
+    return ResultData.ok(data.count);
   }
 
   async findMany(args: Prisma.SysMenuFindManyArgs) {
@@ -158,7 +201,7 @@ export class MenuService {
     }
 
     if (menuIds.length === 0) {
-      return [];
+      return ResultData.ok([]);
     }
 
     const menuList = await this.prisma.sysMenu.findMany({
@@ -175,6 +218,6 @@ export class MenuService {
     });
     // 构建前端需要的菜单树
     const menuTree = buildMenus(menuList);
-    return menuTree;
+    return ResultData.ok(menuTree);
   }
 }

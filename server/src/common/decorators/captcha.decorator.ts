@@ -25,7 +25,8 @@ export function Captcha(CACHE_KEY: string) {
 
         if (!user.code) return ResultData.fail(500, `请输入验证码`);
         if (!code) return ResultData.fail(500, `验证码已过期`);
-        if (code !== user.code) return ResultData.fail(500, `验证码错误`);
+        // 验证码比较时忽略大小写
+        if (code !== user.code?.toLowerCase()) return ResultData.fail(500, `验证码错误`);
       }
 
       const result = await originMethod.apply(this, args);

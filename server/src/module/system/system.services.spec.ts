@@ -43,7 +43,7 @@ describe('System module services', () => {
     it('should paginate config list', async () => {
       prisma.$transaction.mockResolvedValue([[{ configId: 1 }], 1]);
       const res = await service.findAll({ pageNum: 1, pageSize: 10 } as any);
-      expect(res.data).toEqual({ list: [{ configId: 1 }], total: 1 });
+      expect(res.data).toEqual({ rows: [{ configId: 1 }], total: 1 });
     });
 
     it('should reset cache by chaining helpers', async () => {
@@ -188,7 +188,7 @@ describe('System module services', () => {
     });
 
     it('should export post list', async () => {
-      jest.spyOn(service, 'findAll').mockResolvedValue(ResultData.ok({ list: [], total: 0 }));
+      jest.spyOn(service, 'findAll').mockResolvedValue(ResultData.ok({ rows: [], total: 0 }));
       await service.export({} as any, {} as any);
       expect(ExportTable).toHaveBeenCalled();
     });

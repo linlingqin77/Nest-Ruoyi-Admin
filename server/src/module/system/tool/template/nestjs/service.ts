@@ -50,7 +50,7 @@ ${selectLine}    };
     ]);
 
     return ResultData.ok({
-      list,
+      rows: list,
       total,
     });
   }

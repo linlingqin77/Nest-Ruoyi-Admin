@@ -35,6 +35,17 @@ export class LoginlogController {
   }
 
   @Api({
+    summary: '登录日志-解锁用户',
+    description: '解锁被锁定的用户账号',
+    params: [{ name: 'username', description: '用户名' }],
+  })
+  @RequirePermission('monitor:logininfor:unlock')
+  @Get('/unlock/:username')
+  unlock(@Param('username') username: string) {
+    return this.loginlogService.unlock(username);
+  }
+
+  @Api({
     summary: '登录日志-删除日志',
     description: '批量删除登录日志，多个ID用逗号分隔',
     params: [{ name: 'id', description: '登录日志ID，多个用逗号分隔' }],

@@ -36,6 +36,27 @@ export class PostController {
   }
 
   @Api({
+    summary: '岗位管理-选择框列表',
+    description: '获取岗位选择框列表',
+    type: PostVo,
+    isArray: true,
+  })
+  @Get('/optionselect')
+  optionselect(@Query('deptId') deptId?: string, @Query('postIds') postIds?: string) {
+    const ids = postIds ? postIds.split(',').map(id => +id) : undefined;
+    return this.postService.optionselect(deptId ? +deptId : undefined, ids);
+  }
+
+  @Api({
+    summary: '岗位管理-部门树',
+    description: '获取部门树形结构',
+  })
+  @Get('/deptTree')
+  deptTree() {
+    return this.postService.deptTree();
+  }
+
+  @Api({
     summary: '岗位管理-详情',
     description: '根据ID获取岗位详情',
     type: PostVo,

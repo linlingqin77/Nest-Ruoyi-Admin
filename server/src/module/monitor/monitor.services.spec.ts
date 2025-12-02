@@ -131,7 +131,7 @@ describe('Monitor module services', () => {
     });
 
     it('should export job list to excel', async () => {
-      jest.spyOn(service, 'list').mockResolvedValue(ResultData.ok({ list: [], total: 0 }));
+      jest.spyOn(service, 'list').mockResolvedValue(ResultData.ok({ rows: [], total: 0 }));
       await service.export({} as any, {} as any);
       expect(ExportTable).toHaveBeenCalled();
     });
@@ -222,7 +222,7 @@ describe('Monitor module services', () => {
       ]);
       const res = await service.findAll({ pageNum: 1, pageSize: 10 });
       expect(res.data.total).toBe(1);
-      expect(res.data.list[0].tokenId).toBe('1');
+      expect(res.data.rows[0].tokenId).toBe('1');
     });
 
     it('should delete session token from redis', async () => {
@@ -258,7 +258,7 @@ describe('Monitor module services', () => {
     });
 
     it('should export logs via ExportTable', async () => {
-      jest.spyOn(service, 'findAll').mockResolvedValue(ResultData.ok({ list: [], total: 0 }));
+      jest.spyOn(service, 'findAll').mockResolvedValue(ResultData.ok({ rows: [], total: 0 }));
       await service.export({} as any, {} as any);
       expect(ExportTable).toHaveBeenCalled();
     });

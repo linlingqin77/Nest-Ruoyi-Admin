@@ -24,6 +24,28 @@ export class UserController {
     private readonly uploadService: UploadService,
   ) {}
 
+  /**
+   * 获取当前登录用户信息 - 供 Soybean 前端调用
+   * GET /system/user/getInfo
+   */
+  @Api({
+    summary: '获取当前用户信息',
+    description: '获取当前登录用户的详细信息、角色和权限',
+  })
+  @Get('getInfo')
+  getInfo(@User() user: UserDto) {
+    // 移除敏感字段
+    const safeUser = { ...user.user };
+    delete safeUser.password;
+    
+    // 返回 Soybean 前端期望的格式
+    return ResultData.ok({
+      user: safeUser,
+      roles: user.roles || [],
+      permissions: user.permissions || [],
+    });
+  }
+
   @Api({
     summary: '个人中心-用户信息',
     description: '获取当前登录用户的个人信息',
@@ -147,6 +169,25 @@ export class UserController {
   @Put('authRole')
   updateAuthRole(@Query() query) {
     return this.userService.updateAuthRole(query);
+  }
+
+  @Api({
+    summary: '用户-选择框列表',
+    description: '获取用户选择框列表',
+  })
+  @Get('optionselect')
+  optionselect() {
+    return this.userService.optionselect();
+  }
+
+  @Api({
+    summary: '用户-部门用户列表',
+    description: '获取指定部门的用户列表',
+    params: [{ name: 'deptId', description: '部门ID', type: 'number' }],
+  })
+  @Get('list/dept/:deptId')
+  findByDeptId(@Param('deptId') deptId: string) {
+    return this.userService.findByDeptId(+deptId);
   }
 
   @Api({

@@ -43,6 +43,18 @@ export class RoleController {
   }
 
   @Api({
+    summary: '角色管理-选择框列表',
+    description: '获取角色选择框列表',
+    type: RoleVo,
+    isArray: true,
+  })
+  @Get('optionselect')
+  optionselect(@Query('roleIds') roleIds?: string) {
+    const ids = roleIds ? roleIds.split(',').map(id => +id) : undefined;
+    return this.roleService.optionselect(ids);
+  }
+
+  @Api({
     summary: '角色管理-部门树',
     description: '获取角色数据权限的部门树',
     type: RoleDeptTreeVo,

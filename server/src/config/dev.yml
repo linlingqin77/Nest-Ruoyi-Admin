@@ -1,6 +1,6 @@
 # 开发环境配置
 app:
-  prefix: ''
+  prefix: '/api'
   port: 8080
   logger:
     # 项目日志存储路径，相对路径（相对本项目根目录）或绝对路径
@@ -61,9 +61,41 @@ perm:
         { path: '/logout', method: 'POST' },
         { path: '/perm/{id}', method: 'GET' },
         { path: '/upload', method: 'POST' },
+        # Soybean 前端认证 API
+        { path: '/auth/tenant/list', method: 'GET' },
+        { path: '/auth/code', method: 'GET' },
+        { path: '/auth/login', method: 'POST' },
+        { path: '/auth/register', method: 'POST' },
+        { path: '/auth/logout', method: 'POST' },
+        { path: '/auth/publicKey', method: 'GET' },
       ]
 
 # 用户相关
 # 初始密码， 重置密码
 user:
   initialPassword: '123456'
+
+# 多租户配置
+tenant:
+  # 是否启用多租户
+  enabled: true
+  # 超级管理员租户ID (该租户可以访问所有租户数据)
+  superTenantId: '000000'
+  # 默认租户ID (新用户注册时的默认租户)
+  defaultTenantId: '000000'
+
+# 加解密配置
+crypto:
+  # 是否启用加解密
+  enabled: false
+  # RSA 公钥 (PEM 格式，留空则自动生成)
+  rsaPublicKey: ''
+  # RSA 私钥 (PEM 格式，留空则自动生成)
+  rsaPrivateKey: ''
+
+# 客户端配置 (用于 OAuth2 / 多端登录)
+client:
+  # 默认客户端ID
+  defaultClientId: 'pc'
+  # 默认授权类型
+  defaultGrantType: 'password'

@@ -80,7 +80,7 @@ export class DictService {
     ]);
 
     return ResultData.ok({
-      list,
+      rows: list,
       total,
     });
   }
@@ -181,7 +181,7 @@ export class DictService {
     ]);
 
     return ResultData.ok({
-      list,
+      rows: list,
       total,
     });
   }
@@ -234,7 +234,7 @@ export class DictService {
     const list = await this.findAllType(body);
     const options = {
       sheetName: '字典数据',
-      data: list.data.list,
+      data: list.data.rows,
       header: [
         { title: '字典主键', dataIndex: 'dictId' },
         { title: '字典名称', dataIndex: 'dictName' },
@@ -255,7 +255,7 @@ export class DictService {
     const list = await this.findAllData(body);
     const options = {
       sheetName: '字典数据',
-      data: list.data.list,
+      data: list.data.rows,
       header: [
         { title: '字典主键', dataIndex: 'dictCode' },
         { title: '字典名称', dataIndex: 'dictLabel' },

@@ -109,7 +109,7 @@ export class ToolService {
       this.prisma.genTable.count({ where }),
     ]);
     return ResultData.ok({
-      list,
+      rows: list,
       total: total,
     });
   }

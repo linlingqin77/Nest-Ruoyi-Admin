@@ -64,7 +64,7 @@ export class ConfigService {
     ]);
 
     return ResultData.ok({
-      list,
+      rows: list,
       total,
     });
   }
@@ -111,6 +111,30 @@ export class ConfigService {
     return ResultData.ok();
   }
 
+  /**
+   * 根据Key更新配置
+   */
+  async updateByKey(updateConfigDto: UpdateConfigDto) {
+    const config = await this.prisma.sysConfig.findFirst({
+      where: {
+        configKey: updateConfigDto.configKey,
+        delFlag: '0',
+      },
+    });
+    if (!config) {
+      return ResultData.fail(500, '参数不存在');
+    }
+    await this.prisma.sysConfig.update({
+      where: {
+        configId: config.configId,
+      },
+      data: {
+        configValue: updateConfigDto.configValue,
+      },
+    });
+    return ResultData.ok();
+  }
+
   async remove(configIds: number[]) {
     const list = await this.prisma.sysConfig.findMany({
       where: {
@@ -151,7 +175,7 @@ export class ConfigService {
     const list = await this.findAll(body);
     const options = {
       sheetName: '参数管理',
-      data: list.data.list,
+      data: list.data.rows,
       header: [
         { title: '参数主键', dataIndex: 'configId' },
         { title: '参数名称', dataIndex: 'configName' },

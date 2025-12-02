@@ -104,7 +104,7 @@ export class OperlogService {
     ]);
 
     return ResultData.ok({
-      list,
+      rows: list,
       total,
     });
   }
@@ -202,7 +202,7 @@ export class OperlogService {
     });
     const options = {
       sheetName: '操作日志数据',
-      data: list.data.list,
+      data: list.data.rows,
       header: [
         { title: '日志编号', dataIndex: 'operId' },
         { title: '系统模块', dataIndex: 'title', width: 15 },

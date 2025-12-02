@@ -41,6 +41,17 @@ export class DeptController {
   }
 
   @Api({
+    summary: '部门管理-选择框列表',
+    description: '获取部门选择框列表',
+    type: DeptVo,
+    isArray: true,
+  })
+  @Get('/optionselect')
+  optionselect() {
+    return this.deptService.optionselect();
+  }
+
+  @Api({
     summary: '部门管理-详情',
     description: '根据部门ID获取部门详细信息',
     type: DeptVo,

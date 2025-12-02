@@ -59,7 +59,7 @@ export class JobService {
       this.prisma.sysJob.count({ where }),
     ]);
 
-    return ResultData.ok({ list, total });
+    return ResultData.ok({ rows: list, total });
   }
 
   // 获取单个任务
@@ -227,7 +227,7 @@ export class JobService {
     const list = await this.list(body);
     const options = {
       sheetName: '定时任务',
-      data: list.data.list,
+      data: list.data.rows,
       header: [
         { title: '任务编号', dataIndex: 'jobId' },
         { title: '任务名称', dataIndex: 'jobName' },

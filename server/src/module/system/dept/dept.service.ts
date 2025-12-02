@@ -158,6 +158,20 @@ export class DeptService {
   }
 
   /**
+   * 获取部门选择框列表
+   */
+  async optionselect() {
+    const list = await this.prisma.sysDept.findMany({
+      where: {
+        delFlag: '0',
+        status: '0',
+      },
+      orderBy: { orderNum: 'asc' },
+    });
+    return ResultData.ok(list);
+  }
+
+  /**
    * 部门树
    * @returns
    */

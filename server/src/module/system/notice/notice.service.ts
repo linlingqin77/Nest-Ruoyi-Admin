@@ -54,7 +54,7 @@ export class NoticeService {
     ]);
 
     return ResultData.ok({
-      list,
+      rows: list,
       total,
     });
   }

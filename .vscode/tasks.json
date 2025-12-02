@@ -1,0 +1,12 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Start NestJS Server",
+			"type": "shell",
+			"command": "cd /Users/mac/Documents/project/nest-admin/server && NODE_ENV=development npx nest start --watch",
+			"isBackground": true,
+			"problemMatcher": []
+		}
+	]
+}

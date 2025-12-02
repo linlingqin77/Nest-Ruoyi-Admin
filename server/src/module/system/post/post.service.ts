@@ -1,14 +1,19 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject, forwardRef } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { ResultData } from 'src/common/utils/result';
 import { ExportTable } from 'src/common/utils/export';
 import { Response } from 'express';
 import { CreatePostDto, UpdatePostDto, ListPostDto } from './dto/index';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { DeptService } from '../dept/dept.service';
 
 @Injectable()
 export class PostService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    @Inject(forwardRef(() => DeptService))
+    private readonly deptService: DeptService,
+  ) {}
   async create(createPostDto: CreatePostDto) {
     await this.prisma.sysPost.create({
       data: {
@@ -58,7 +63,7 @@ export class PostService {
     ]);
 
     return ResultData.ok({
-      list,
+      rows: list,
       total,
     });
   }
@@ -93,6 +98,31 @@ export class PostService {
   }
 
   /**
+   * 获取岗位选择框列表
+   */
+  async optionselect(deptId?: number, postIds?: number[]) {
+    const where: Prisma.SysPostWhereInput = {
+      delFlag: '0',
+      status: '0',
+    };
+    if (postIds && postIds.length > 0) {
+      where.postId = { in: postIds };
+    }
+    const list = await this.prisma.sysPost.findMany({
+      where,
+      orderBy: { postSort: 'asc' },
+    });
+    return ResultData.ok(list);
+  }
+
+  /**
+   * 获取部门树
+   */
+  async deptTree() {
+    return this.deptService.findAll({});
+  }
+
+  /**
    * 导出岗位管理数据为xlsx文件
    * @param res
    */
@@ -102,7 +132,7 @@ export class PostService {
     const list = await this.findAll(body);
     const options = {
       sheetName: '岗位数据',
-      data: list.data.list,
+      data: list.data.rows,
       header: [
         { title: '岗位序号', dataIndex: 'postId' },
         { title: '岗位编码', dataIndex: 'postCode' },

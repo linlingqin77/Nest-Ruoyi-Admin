@@ -245,7 +245,7 @@ export class UserService {
 		const listWithDept = await this.attachDeptInfo(list);
 
 		return ResultData.ok({
-			list: listWithDept,
+			rows: listWithDept,
 			total,
 		});
 	}
@@ -668,7 +668,7 @@ export class UserService {
 			select: { userId: true },
 		});
 		if (!relations.length) {
-			return ResultData.ok({ list: [], total: 0 });
+			return ResultData.ok({ rows: [], total: 0 });
 		}
 		const userIds = relations.map((item) => item.userId);
 		const where: Prisma.SysUserWhereInput = {
@@ -692,7 +692,7 @@ export class UserService {
 
 		const listWithDept = await this.attachDeptInfo(list);
 
-		return ResultData.ok({ list: listWithDept, total });
+		return ResultData.ok({ rows: listWithDept, total });
 	}
 
 	async unallocatedList(query: AllocatedListDto) {
@@ -729,7 +729,7 @@ export class UserService {
 
 		const listWithDept = await this.attachDeptInfo(list);
 
-		return ResultData.ok({ list: listWithDept, total });
+		return ResultData.ok({ rows: listWithDept, total });
 	}
 
 	async authUserCancel(data: AuthUserCancelDto) {
@@ -788,13 +788,44 @@ export class UserService {
 		return ResultData.ok();
 	}
 
+	/**
+	 * 获取用户选择框列表
+	 */
+	async optionselect() {
+		const list = await this.prisma.sysUser.findMany({
+			where: {
+				delFlag: '0',
+				status: '0',
+			},
+			select: {
+				userId: true,
+				userName: true,
+				nickName: true,
+			},
+		});
+		return ResultData.ok(list);
+	}
+
+	/**
+	 * 根据部门ID获取用户列表
+	 */
+	async findByDeptId(deptId: number) {
+		const list = await this.prisma.sysUser.findMany({
+			where: {
+				deptId,
+				delFlag: '0',
+			},
+		});
+		return ResultData.ok(list);
+	}
+
 	async export(res: Response, body: ListUserDto, user: UserType['user']) {
 		delete body.pageNum;
 		delete body.pageSize;
 		const list = await this.findAll(body, user);
 		const options = {
 			sheetName: '用户数据',
-			data: list.data.list,
+			data: list.data.rows,
 			header: [
 				{ title: '用户序号', dataIndex: 'userId' },
 				{ title: '登录名称', dataIndex: 'userName' },

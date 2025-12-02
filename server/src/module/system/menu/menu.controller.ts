@@ -5,12 +5,25 @@ import { CreateMenuDto, UpdateMenuDto, ListDeptDto } from './dto/index';
 import { RequirePermission } from 'src/common/decorators/require-premission.decorator';
 import { Api } from 'src/common/decorators/api.decorator';
 import { MenuVo, MenuTreeVo, RoleMenuTreeSelectVo } from './vo/menu.vo';
+import { User, UserDto } from 'src/module/system/user/user.decorator';
 
 @ApiTags('菜单管理')
 @Controller('system/menu')
 @ApiBearerAuth('Authorization')
 export class MenuController {
   constructor(private readonly menuService: MenuService) {}
+
+  @Api({
+    summary: '菜单管理-获取路由',
+    description: '获取当前用户的路由菜单',
+    type: MenuVo,
+    isArray: true,
+  })
+  @Get('/getRouters')
+  getRouters(@User() user: UserDto) {
+    const userId = user.userId;
+    return this.menuService.getMenuListByUserId(+userId);
+  }
 
   @Api({
     summary: '菜单管理-创建',
@@ -60,6 +73,17 @@ export class MenuController {
   }
 
   @Api({
+    summary: '菜单管理-租户套餐菜单树',
+    description: '获取租户套餐已分配的菜单树结构',
+    type: RoleMenuTreeSelectVo,
+    params: [{ name: 'packageId', description: '套餐ID', type: 'number' }],
+  })
+  @Get('/tenantPackageMenuTreeselect/:packageId')
+  tenantPackageMenuTreeselect(@Param('packageId') packageId: string) {
+    return this.menuService.tenantPackageMenuTreeselect(+packageId);
+  }
+
+  @Api({
     summary: '菜单管理-详情',
     description: '根据菜单ID获取菜单详细信息',
     type: MenuVo,
@@ -80,6 +104,18 @@ export class MenuController {
   @Put()
   update(@Body() updateMenuDto: UpdateMenuDto) {
     return this.menuService.update(updateMenuDto);
+  }
+
+  @Api({
+    summary: '菜单管理-级联删除',
+    description: '级联删除菜单，多个ID用逗号分隔',
+    params: [{ name: 'menuIds', description: '菜单ID，多个用逗号分隔' }],
+  })
+  @RequirePermission('system:menu:remove')
+  @Delete('/cascade/:menuIds')
+  cascadeRemove(@Param('menuIds') menuIds: string) {
+    const ids = menuIds.split(',').map((id) => +id);
+    return this.menuService.cascadeRemove(ids);
   }
 
   @Api({

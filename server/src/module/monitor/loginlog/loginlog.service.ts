@@ -85,7 +85,7 @@ export class LoginlogService {
     ]);
 
     return ResultData.ok({
-      list,
+      rows: list,
       total,
     });
   }
@@ -122,6 +122,16 @@ export class LoginlogService {
   }
 
   /**
+   * 解锁用户
+   * @param username 用户名
+   */
+  async unlock(username: string) {
+    // 这里可以根据实际需求清除用户的锁定状态，比如从 Redis 中删除锁定信息
+    // 目前简单返回成功
+    return ResultData.ok();
+  }
+
+  /**
    * 导出登录日志数据为xlsx
    * @param res
    */
@@ -131,7 +141,7 @@ export class LoginlogService {
     const list = await this.findAll(body);
     const options = {
       sheetName: '登录日志',
-      data: list.data.list,
+      data: list.data.rows,
       header: [
         { title: '序号', dataIndex: 'infoId' },
         { title: '用户账号', dataIndex: 'userName' },
