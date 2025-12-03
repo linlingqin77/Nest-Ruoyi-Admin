@@ -4,7 +4,7 @@ import { useAppStore } from '@/store/modules/app';
 import { useThemeStore } from '@/store/modules/theme';
 import { useRouterPush } from '@/hooks/common/router';
 import FirstLevelMenu from '../components/first-level-menu.vue';
-import { useMenu, useMixMenuContext } from '../context';
+import { useMenu, useMixMenuContext } from '@/layouts/context';
 
 defineOptions({
   name: 'TopHybridSidebarFirst'

@@ -10,7 +10,7 @@ import { useThemeStore } from '@/store/modules/theme';
 import { useRouteStore } from '@/store/modules/route';
 import { useRouterPush } from '@/hooks/common/router';
 import { $t } from '@/locales';
-import { useMenu, useMixMenuContext } from '../context';
+import { useMenu, useMixMenuContext } from '@/layouts/context';
 import FirstLevelMenu from '../components/first-level-menu.vue';
 import GlobalLogo from '../../global-logo/index.vue';
 

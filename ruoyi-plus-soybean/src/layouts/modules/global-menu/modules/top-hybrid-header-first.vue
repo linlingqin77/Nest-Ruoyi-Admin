@@ -7,7 +7,7 @@ import { useAppStore } from '@/store/modules/app';
 import { useThemeStore } from '@/store/modules/theme';
 import { useRouteStore } from '@/store/modules/route';
 import { useRouterPush } from '@/hooks/common/router';
-import { useMenu, useMixMenuContext } from '../context';
+import { useMenu, useMixMenuContext } from '@/layouts/context';
 
 defineOptions({
   name: 'TopHybridHeaderFirst'
