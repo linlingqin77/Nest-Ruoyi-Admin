@@ -5,6 +5,8 @@ import { RequirePermission } from 'src/common/decorators/require-premission.deco
 import { ListJobLogDto } from './dto/create-job.dto';
 import { Response } from 'express';
 import { Api } from 'src/common/decorators/api.decorator';
+import { Operlog } from 'src/common/decorators/operlog.decorator';
+import { BusinessType } from 'src/common/constant/business.constant';
 
 @ApiTags('定时任务日志管理')
 @Controller('monitor/jobLog')
@@ -28,6 +30,7 @@ export class JobLogController {
   })
   @Delete('clean')
   @RequirePermission('monitor:job:remove')
+  @Operlog({ businessType: BusinessType.CLEAN })
   clean() {
     return this.jobLogService.clean();
   }
@@ -39,6 +42,7 @@ export class JobLogController {
     produces: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
   })
   @RequirePermission('monitor:job:export')
+  @Operlog({ businessType: BusinessType.EXPORT })
   @Post('/export')
   async export(@Res() res: Response, @Body() body: ListJobLogDto): Promise<void> {
     return this.jobLogService.export(res, body);

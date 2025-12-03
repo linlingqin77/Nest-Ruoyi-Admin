@@ -5,6 +5,8 @@ import { JobService } from './job.service';
 import { CreateJobDto, ListJobDto } from './dto/create-job.dto';
 import { RequirePermission } from 'src/common/decorators/require-premission.decorator';
 import { Api } from 'src/common/decorators/api.decorator';
+import { Operlog } from 'src/common/decorators/operlog.decorator';
+import { BusinessType } from 'src/common/constant/business.constant';
 
 @ApiTags('定时任务管理')
 @Controller('monitor/job')
@@ -40,6 +42,7 @@ export class JobController {
   })
   @Post()
   @RequirePermission('monitor:job:add')
+  @Operlog({ businessType: BusinessType.INSERT })
   add(@Body() createJobDto: CreateJobDto, @Req() req: any) {
     return this.jobService.create(createJobDto, req.user?.userName);
   }
@@ -50,6 +53,7 @@ export class JobController {
   })
   @Put('changeStatus')
   @RequirePermission('monitor:job:changeStatus')
+  @Operlog({ businessType: BusinessType.UPDATE })
   changeStatus(@Body('jobId') jobId: number, @Body('status') status: string, @Req() req: any) {
     return this.jobService.changeStatus(jobId, status, req.user?.userName);
   }
@@ -60,6 +64,7 @@ export class JobController {
   })
   @Put('')
   @RequirePermission('monitor:job:edit')
+  @Operlog({ businessType: BusinessType.UPDATE })
   update(@Body('jobId') jobId: number, @Body() updateJobDto: Partial<CreateJobDto>, @Req() req: any) {
     return this.jobService.update(jobId, updateJobDto, req.user?.userName);
   }
@@ -71,6 +76,7 @@ export class JobController {
   })
   @Delete(':jobIds')
   @RequirePermission('monitor:job:remove')
+  @Operlog({ businessType: BusinessType.DELETE })
   remove(@Param('jobIds') jobIds: string) {
     return this.jobService.remove(jobIds.split(',').map((id) => +id));
   }
@@ -81,6 +87,7 @@ export class JobController {
   })
   @Put('/run')
   @RequirePermission('monitor:job:changeStatus')
+  @Operlog({ businessType: BusinessType.UPDATE })
   run(@Body('jobId') jobId: number) {
     return this.jobService.run(jobId);
   }
@@ -92,6 +99,7 @@ export class JobController {
     produces: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
   })
   @RequirePermission('monitor:job:export')
+  @Operlog({ businessType: BusinessType.EXPORT })
   @Post('/export')
   async export(@Res() res: Response, @Body() body: ListJobDto): Promise<void> {
     return this.jobService.export(res, body);

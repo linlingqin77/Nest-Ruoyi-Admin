@@ -6,6 +6,8 @@ import { RequirePermission } from 'src/common/decorators/require-premission.deco
 import { GetNowDate } from 'src/common/utils';
 import { Api } from 'src/common/decorators/api.decorator';
 import { NoticeVo, NoticeListVo } from './vo/notice.vo';
+import { Operlog } from 'src/common/decorators/operlog.decorator';
+import { BusinessType } from 'src/common/constant/business.constant';
 
 @ApiTags('通知公告')
 @Controller('system/notice')
@@ -19,6 +21,7 @@ export class NoticeController {
     body: CreateNoticeDto,
   })
   @RequirePermission('system:notice:add')
+  @Operlog({ businessType: BusinessType.INSERT })
   @Post()
   create(@Body() createConfigDto: CreateNoticeDto, @Request() req) {
     createConfigDto['createBy'] = req.user.userName;
@@ -54,6 +57,7 @@ export class NoticeController {
     body: UpdateNoticeDto,
   })
   @RequirePermission('system:notice:edit')
+  @Operlog({ businessType: BusinessType.UPDATE })
   @Put()
   update(@Body() updateNoticeDto: UpdateNoticeDto) {
     return this.noticeService.update(updateNoticeDto);
@@ -65,6 +69,7 @@ export class NoticeController {
     params: [{ name: 'id', description: '公告ID，多个用逗号分隔' }],
   })
   @RequirePermission('system:notice:remove')
+  @Operlog({ businessType: BusinessType.DELETE })
   @Delete(':id')
   remove(@Param('id') ids: string) {
     const noticeIds = ids.split(',').map((id) => +id);

@@ -55,6 +55,7 @@ export class OperlogController {
     params: [{ name: 'operId', description: '操作日志ID', type: 'number' }],
   })
   @RequirePermission('monitor:operlog:remove')
+  @Operlog({ businessType: BusinessType.DELETE })
   @Delete(':operId')
   remove(@Param('operId') operId: string) {
     return this.operlogService.remove(+operId);
@@ -67,6 +68,7 @@ export class OperlogController {
     produces: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
   })
   @RequirePermission('monitor:operlog:export')
+  @Operlog({ businessType: BusinessType.EXPORT })
   @Post('/export')
   async exportData(@Res() res: Response, @Body() body: QueryOperLogDto): Promise<void> {
     return this.operlogService.export(res, body);

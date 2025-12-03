@@ -6,6 +6,8 @@ import { ListLoginlogDto } from './dto/index';
 import { RequirePermission } from 'src/common/decorators/require-premission.decorator';
 import { Api } from 'src/common/decorators/api.decorator';
 import { LoginLogListVo } from 'src/module/monitor/vo/monitor.vo';
+import { Operlog } from 'src/common/decorators/operlog.decorator';
+import { BusinessType } from 'src/common/constant/business.constant';
 
 @ApiTags('登录日志')
 @Controller('monitor/logininfor')
@@ -29,6 +31,7 @@ export class LoginlogController {
     description: '清空所有登录日志记录',
   })
   @RequirePermission('monitor:logininfor:remove')
+  @Operlog({ businessType: BusinessType.CLEAN })
   @Delete('/clean')
   removeAll() {
     return this.loginlogService.removeAll();
@@ -40,6 +43,7 @@ export class LoginlogController {
     params: [{ name: 'username', description: '用户名' }],
   })
   @RequirePermission('monitor:logininfor:unlock')
+  @Operlog({ businessType: BusinessType.UPDATE })
   @Get('/unlock/:username')
   unlock(@Param('username') username: string) {
     return this.loginlogService.unlock(username);
@@ -51,6 +55,7 @@ export class LoginlogController {
     params: [{ name: 'id', description: '登录日志ID，多个用逗号分隔' }],
   })
   @RequirePermission('monitor:logininfor:remove')
+  @Operlog({ businessType: BusinessType.DELETE })
   @Delete(':id')
   remove(@Param('id') ids: string) {
     const infoIds = ids.split(',').map((id) => id);
@@ -64,6 +69,7 @@ export class LoginlogController {
     produces: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
   })
   @RequirePermission('system:config:export')
+  @Operlog({ businessType: BusinessType.EXPORT })
   @Post('/export')
   async export(@Res() res: Response, @Body() body: ListLoginlogDto): Promise<void> {
     return this.loginlogService.export(res, body);

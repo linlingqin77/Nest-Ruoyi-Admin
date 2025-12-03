@@ -106,6 +106,7 @@ export class UserController {
     body: CreateUserDto,
   })
   @RequirePermission('system:user:add')
+  @Operlog({ businessType: BusinessType.INSERT })
   @Post()
   create(@Body() createUserDto: CreateUserDto, @UserTool() { injectCreate }: UserToolType) {
     return this.userService.create(injectCreate(createUserDto));
@@ -208,6 +209,7 @@ export class UserController {
     body: ChangeStatusDto,
   })
   @RequireRole('admin')
+  @Operlog({ businessType: BusinessType.UPDATE })
   @Put('changeStatus')
   changeStatus(@Body() changeStatusDto: ChangeStatusDto) {
     return this.userService.changeStatus(changeStatusDto);
@@ -219,6 +221,7 @@ export class UserController {
     body: UpdateUserDto,
   })
   @RequirePermission('system:user:edit')
+  @Operlog({ businessType: BusinessType.UPDATE })
   @Put()
   async update(@Body() updateUserDto: UpdateUserDto, @User() user: UserDto) {
     const activeUserId = user.userId;
@@ -234,6 +237,7 @@ export class UserController {
     body: ResetPwdDto,
   })
   @RequireRole('admin')
+  @Operlog({ businessType: BusinessType.UPDATE })
   @Put('resetPwd')
   resetPwd(@Body() body: ResetPwdDto) {
     return this.userService.resetPwd(body);
@@ -245,6 +249,7 @@ export class UserController {
     params: [{ name: 'id', description: '用户ID，多个用逗号分隔' }],
   })
   @RequireRole('admin')
+  @Operlog({ businessType: BusinessType.DELETE })
   @Delete(':id')
   remove(@Param('id') ids: string) {
     const menuIds = ids.split(',').map((id) => +id);
@@ -258,6 +263,7 @@ export class UserController {
     produces: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
   })
   @RequirePermission('system:user:export')
+  @Operlog({ businessType: BusinessType.EXPORT })
   @Post('/export')
   async export(@Res() res: Response, @Body() body: ListUserDto, @User() user: UserDto): Promise<void> {
     return this.userService.export(res, body, user.user);

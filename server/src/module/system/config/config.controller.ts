@@ -6,6 +6,8 @@ import { CreateConfigDto, UpdateConfigDto, ListConfigDto } from './dto/index';
 import { RequirePermission } from 'src/common/decorators/require-premission.decorator';
 import { Api } from 'src/common/decorators/api.decorator';
 import { ConfigVo, ConfigListVo } from './vo/config.vo';
+import { Operlog } from 'src/common/decorators/operlog.decorator';
+import { BusinessType } from 'src/common/constant/business.constant';
 
 @ApiTags('参数设置')
 @Controller('system/config')
@@ -19,6 +21,7 @@ export class ConfigController {
     body: CreateConfigDto,
   })
   @RequirePermission('system:config:add')
+  @Operlog({ businessType: BusinessType.INSERT })
   @Post()
   create(@Body() createConfigDto: CreateConfigDto, @Request() req) {
     createConfigDto['createBy'] = req.user.userName;
@@ -65,6 +68,7 @@ export class ConfigController {
     body: UpdateConfigDto,
   })
   @RequirePermission('system:config:edit')
+  @Operlog({ businessType: BusinessType.UPDATE })
   @Put()
   update(@Body() updateConfigDto: UpdateConfigDto) {
     return this.configService.update(updateConfigDto);
@@ -76,6 +80,7 @@ export class ConfigController {
     body: UpdateConfigDto,
   })
   @RequirePermission('system:config:edit')
+  @Operlog({ businessType: BusinessType.UPDATE })
   @Put('/updateByKey')
   updateByKey(@Body() updateConfigDto: UpdateConfigDto) {
     return this.configService.updateByKey(updateConfigDto);
@@ -86,6 +91,7 @@ export class ConfigController {
     description: '清除并重新加载参数配置缓存',
   })
   @RequirePermission('system:config:remove')
+  @Operlog({ businessType: BusinessType.CLEAN })
   @Delete('/refreshCache')
   refreshCache() {
     return this.configService.resetConfigCache();
@@ -97,6 +103,7 @@ export class ConfigController {
     params: [{ name: 'id', description: '参数ID，多个用逗号分隔' }],
   })
   @RequirePermission('system:config:remove')
+  @Operlog({ businessType: BusinessType.DELETE })
   @Delete(':id')
   remove(@Param('id') ids: string) {
     const configIds = ids.split(',').map((id) => +id);
@@ -110,6 +117,7 @@ export class ConfigController {
     produces: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
   })
   @RequirePermission('system:config:export')
+  @Operlog({ businessType: BusinessType.EXPORT })
   @Post('/export')
   async export(@Res() res: Response, @Body() body: ListConfigDto): Promise<void> {
     return this.configService.export(res, body);

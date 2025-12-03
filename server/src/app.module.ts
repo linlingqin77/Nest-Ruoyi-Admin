@@ -13,6 +13,7 @@ import { UploadModule } from './module/upload/upload.module';
 import { SystemModule } from './module/system/system.module';
 import { CommonModule } from './module/common/common.module';
 import { MonitorModule } from './module/monitor/monitor.module';
+import { ResourceModule } from './module/resource/resource.module';
 import { PrismaModule } from './prisma/prisma.module';
 
 @Global()
@@ -37,6 +38,7 @@ import { PrismaModule } from './prisma/prisma.module';
     CommonModule,
     SystemModule,
     MonitorModule,
+    ResourceModule,
   ],
   providers: [
     // 解密拦截器 (最先执行)

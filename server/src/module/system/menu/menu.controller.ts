@@ -6,6 +6,8 @@ import { RequirePermission } from 'src/common/decorators/require-premission.deco
 import { Api } from 'src/common/decorators/api.decorator';
 import { MenuVo, MenuTreeVo, RoleMenuTreeSelectVo } from './vo/menu.vo';
 import { User, UserDto } from 'src/module/system/user/user.decorator';
+import { Operlog } from 'src/common/decorators/operlog.decorator';
+import { BusinessType } from 'src/common/constant/business.constant';
 
 @ApiTags('菜单管理')
 @Controller('system/menu')
@@ -31,6 +33,7 @@ export class MenuController {
     body: CreateMenuDto,
   })
   @RequirePermission('system:menu:add')
+  @Operlog({ businessType: BusinessType.INSERT })
   @Post()
   create(@Body() createMenuDto: CreateMenuDto) {
     return this.menuService.create(createMenuDto);
@@ -101,6 +104,7 @@ export class MenuController {
     body: UpdateMenuDto,
   })
   @RequirePermission('system:menu:edit')
+  @Operlog({ businessType: BusinessType.UPDATE })
   @Put()
   update(@Body() updateMenuDto: UpdateMenuDto) {
     return this.menuService.update(updateMenuDto);
@@ -112,6 +116,7 @@ export class MenuController {
     params: [{ name: 'menuIds', description: '菜单ID，多个用逗号分隔' }],
   })
   @RequirePermission('system:menu:remove')
+  @Operlog({ businessType: BusinessType.DELETE })
   @Delete('/cascade/:menuIds')
   cascadeRemove(@Param('menuIds') menuIds: string) {
     const ids = menuIds.split(',').map((id) => +id);
@@ -124,6 +129,7 @@ export class MenuController {
     params: [{ name: 'menuId', description: '菜单ID', type: 'number' }],
   })
   @RequirePermission('system:menu:remove')
+  @Operlog({ businessType: BusinessType.DELETE })
   @Delete(':menuId')
   remove(@Param('menuId') menuId: string) {
     return this.menuService.remove(+menuId);

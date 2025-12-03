@@ -5,6 +5,8 @@ import { TableName, GenDbTableList, GenTableList, GenTableUpdate } from './dto/c
 import { Response } from 'express';
 import { User, UserDto } from 'src/module/system/user/user.decorator';
 import { Api } from 'src/common/decorators/api.decorator';
+import { Operlog } from 'src/common/decorators/operlog.decorator';
+import { BusinessType } from 'src/common/constant/business.constant';
 
 @ApiTags('系统工具')
 @Controller('tool')
@@ -35,6 +37,7 @@ export class ToolController {
     description: '将数据库表导入到代码生成列表',
     body: TableName,
   })
+  @Operlog({ businessType: BusinessType.IMPORT })
   @Post('/gen/importTable')
   genImportTable(@Body() table: TableName, @User() user: UserDto) {
     return this.toolService.importTable(table, user);
@@ -45,6 +48,7 @@ export class ToolController {
     description: '从数据库同步表字段结构',
     params: [{ name: 'tableName', description: '表名称' }],
   })
+  @Operlog({ businessType: BusinessType.UPDATE })
   @Get('/gen/synchDb/:tableName')
   synchDb(@Param('tableName') tableName: string) {
     return this.toolService.synchDb(tableName);
@@ -65,6 +69,7 @@ export class ToolController {
     description: '修改表的代码生成配置',
     body: GenTableUpdate,
   })
+  @Operlog({ businessType: BusinessType.UPDATE })
   @Put('/gen')
   genUpdate(@Body() genTableUpdate: GenTableUpdate) {
     return this.toolService.genUpdate(genTableUpdate);
@@ -75,6 +80,7 @@ export class ToolController {
     description: '从代码生成列表中删除表',
     params: [{ name: 'id', description: '表ID', type: 'number' }],
   })
+  @Operlog({ businessType: BusinessType.DELETE })
   @Delete('/gen/:id')
   remove(@Param('id') id: string) {
     return this.toolService.remove(+id);
@@ -85,6 +91,7 @@ export class ToolController {
     description: '生成代码并下载为zip压缩包',
     produces: ['application/zip'],
   })
+  @Operlog({ businessType: BusinessType.GENCODE })
   @Get('/gen/batchGenCode/zip')
   batchGenCode(@Query() tables: TableName, @Res() res: Response) {
     return this.toolService.batchGenCode(tables, res);

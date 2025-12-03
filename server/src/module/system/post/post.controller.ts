@@ -6,6 +6,8 @@ import { RequirePermission } from 'src/common/decorators/require-premission.deco
 import { Response } from 'express';
 import { Api } from 'src/common/decorators/api.decorator';
 import { PostVo, PostListVo } from './vo/post.vo';
+import { Operlog } from 'src/common/decorators/operlog.decorator';
+import { BusinessType } from 'src/common/constant/business.constant';
 
 @ApiTags('岗位管理')
 @Controller('system/post')
@@ -19,6 +21,7 @@ export class PostController {
     body: CreatePostDto,
   })
   @RequirePermission('system:post:add')
+  @Operlog({ businessType: BusinessType.INSERT })
   @Post('/')
   create(@Body() createPostDto: CreatePostDto) {
     return this.postService.create(createPostDto);
@@ -74,6 +77,7 @@ export class PostController {
     body: UpdatePostDto,
   })
   @RequirePermission('system:post:edit')
+  @Operlog({ businessType: BusinessType.UPDATE })
   @Put('/')
   update(@Body() updatePostDto: UpdatePostDto) {
     return this.postService.update(updatePostDto);
@@ -85,6 +89,7 @@ export class PostController {
     params: [{ name: 'ids', description: '岗位ID，多个用逗号分隔' }],
   })
   @RequirePermission('system:post:remove')
+  @Operlog({ businessType: BusinessType.DELETE })
   @Delete('/:ids')
   remove(@Param('ids') ids: string) {
     const menuIds = ids.split(',').map((id) => id);
@@ -98,6 +103,7 @@ export class PostController {
     produces: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
   })
   @RequirePermission('system:post:export')
+  @Operlog({ businessType: BusinessType.EXPORT })
   @Post('/export')
   async export(@Res() res: Response, @Body() body: ListPostDto): Promise<void> {
     return this.postService.export(res, body);

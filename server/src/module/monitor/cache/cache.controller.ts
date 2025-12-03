@@ -3,6 +3,8 @@ import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { CacheService } from './cache.service';
 import { Api } from 'src/common/decorators/api.decorator';
 import { CacheInfoVo, CacheKeyVo } from 'src/module/monitor/vo/monitor.vo';
+import { Operlog } from 'src/common/decorators/operlog.decorator';
+import { BusinessType } from 'src/common/constant/business.constant';
 
 @ApiTags('缓存管理')
 @Controller('monitor/cache')
@@ -58,6 +60,7 @@ export class CacheController {
     description: '清除指定分类下的所有缓存',
     params: [{ name: 'cacheName', description: '缓存名称' }],
   })
+  @Operlog({ businessType: BusinessType.CLEAN })
   @Delete('/clearCacheName/:cacheName')
   clearCacheName(@Param('cacheName') cacheName: string) {
     return this.cacheService.clearCacheName(cacheName);
@@ -68,6 +71,7 @@ export class CacheController {
     description: '清除指定的缓存键',
     params: [{ name: 'cacheKey', description: '缓存键名' }],
   })
+  @Operlog({ businessType: BusinessType.CLEAN })
   @Delete('/clearCacheKey/:cacheKey')
   clearCacheKey(@Param('cacheKey') cacheKey: string) {
     return this.cacheService.clearCacheKey(cacheKey);
@@ -77,6 +81,7 @@ export class CacheController {
     summary: '清理全部缓存',
     description: '清除所有缓存数据',
   })
+  @Operlog({ businessType: BusinessType.CLEAN })
   @Delete('/clearCacheAll')
   clearCacheAll() {
     return this.cacheService.clearCacheAll();

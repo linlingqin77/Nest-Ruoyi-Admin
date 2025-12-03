@@ -5,6 +5,8 @@ import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { ChunkFileDto, ChunkMergeFileDto, FileUploadDto, uploadIdDto } from './dto/index';
 import { ResultData } from 'src/common/utils/result';
 import { Api } from 'src/common/decorators/api.decorator';
+import { Operlog } from 'src/common/decorators/operlog.decorator';
+import { BusinessType } from 'src/common/constant/business.constant';
 
 @ApiTags('通用-文件上传')
 @Controller('common/upload')
@@ -26,6 +28,7 @@ export class UploadController {
     },
   })
   @HttpCode(200)
+  @Operlog({ businessType: BusinessType.IMPORT })
   @Post()
   @UseInterceptors(FileInterceptor('file'))
   async singleFileUpload(@UploadedFile() file: Express.Multer.File) {
@@ -62,6 +65,7 @@ export class UploadController {
     },
   })
   @HttpCode(200)
+  @Operlog({ businessType: BusinessType.IMPORT })
   @Post('/chunk')
   @UseInterceptors(FileInterceptor('file'))
   chunkFileUpload(@UploadedFile() file: Express.Multer.File, @Body() body: ChunkFileDto) {

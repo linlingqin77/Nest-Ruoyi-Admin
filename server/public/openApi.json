@@ -19114,6 +19114,158 @@
           "操作日志"
         ]
       }
+    },
+    "/api/resource/sse": {
+      "get": {
+        "operationId": "SseController_sse",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "clientid",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ],
+        "summary": "SSE连接",
+        "tags": [
+          "SSE消息推送"
+        ]
+      }
+    },
+    "/api/resource/sse/close": {
+      "post": {
+        "operationId": "SseController_closeSse",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResultData"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ],
+        "summary": "关闭SSE连接",
+        "tags": [
+          "SSE消息推送"
+        ]
+      }
+    },
+    "/api/resource/sse/send": {
+      "post": {
+        "operationId": "SseController_sendMessage",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResultData"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ],
+        "summary": "发送消息给指定用户",
+        "tags": [
+          "SSE消息推送"
+        ]
+      }
+    },
+    "/api/resource/sse/broadcast": {
+      "post": {
+        "operationId": "SseController_broadcast",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResultData"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ],
+        "summary": "广播消息给所有用户",
+        "tags": [
+          "SSE消息推送"
+        ]
+      }
+    },
+    "/api/resource/sse/count": {
+      "post": {
+        "operationId": "SseController_getCount",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResultData"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ],
+        "summary": "获取在线连接数",
+        "tags": [
+          "SSE消息推送"
+        ]
+      }
     }
   },
   "info": {
