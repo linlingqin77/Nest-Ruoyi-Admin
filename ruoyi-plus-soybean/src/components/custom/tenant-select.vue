@@ -45,7 +45,7 @@ const showTenantSelect = computed<boolean>(() => {
 async function closeAndRefresh(msg: string, val: CommonType.IdType = '') {
   lastSelected.value = val;
   window.$message?.success(msg);
-  clearTabs([], true);
+  clearTabs([]);
   toHome();
   appStore.reloadPage(500);
 }

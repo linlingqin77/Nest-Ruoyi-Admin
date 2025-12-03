@@ -112,10 +112,8 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
       await switchRouteByTab(nextTab);
     }
 
-    // reset route cache if cache strategy is close
-    if (themeStore.resetCacheStrategy === 'close') {
-      routeStore.resetRouteCache(removedTabRouteKey);
-    }
+    // reset route cache
+    routeStore.resetRouteCache(removedTabRouteKey);
   }
 
   /** remove active tab */
@@ -140,17 +138,15 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
    *
    * @param excludes Exclude tab ids
    */
-  async function clearTabs(excludes: string[] = [], clearCache: boolean = false) {
+  async function clearTabs(excludes: string[] = []) {
     const remainTabIds = [...getFixedTabIds(tabs.value), ...excludes];
 
     // Identify tabs to be removed and collect their routeKeys if strategy is 'close'
     const tabsToRemove = tabs.value.filter(tab => !remainTabIds.includes(tab.id));
     const routeKeysToReset: RouteKey[] = [];
 
-    if (themeStore.resetCacheStrategy === 'close') {
-      for (const tab of tabsToRemove) {
-        routeKeysToReset.push(tab.routeKey);
-      }
+    for (const tab of tabsToRemove) {
+      routeKeysToReset.push(tab.routeKey);
     }
 
     const removedTabsIds = tabsToRemove.map(tab => tab.id);
@@ -163,16 +159,6 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
     const isRemoveActiveTab = removedTabsIds.includes(activeTabId.value);
     // filterTabsByIds returns tabs NOT in removedTabsIds, so these are the tabs that will remain
     const updatedTabs = filterTabsByIds(removedTabsIds, tabs.value);
-
-    if (clearCache) {
-      // 清除缓存
-      removedTabsIds.forEach(tabId => {
-        const tab = tabs.value.find(t => t.id === tabId);
-        if (tab) {
-          routeStore.resetRouteCache(tab.routeKey);
-        }
-      });
-    }
 
     function update() {
       tabs.value = updatedTabs;
