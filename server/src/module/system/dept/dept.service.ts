@@ -190,4 +190,25 @@ export class DeptService {
     );
     return tree;
   }
+
+  /**
+   * 获取指定部门及其所有子部门的ID列表
+   * @param deptId 部门ID
+   * @returns 部门ID数组
+   */
+  async getChildDeptIds(deptId: number): Promise<number[]> {
+    const depts = await this.prisma.sysDept.findMany({
+      where: {
+        delFlag: '0',
+        OR: [
+          { deptId },
+          { ancestors: { contains: `,${deptId}` } },
+          { ancestors: { startsWith: `${deptId},` } },
+          { ancestors: { contains: `,${deptId},` } },
+        ],
+      },
+      select: { deptId: true },
+    });
+    return depts.map((d) => d.deptId);
+  }
 }

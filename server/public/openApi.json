@@ -8645,6 +8645,15 @@
             "schema": {
               "$ref": "#/components/schemas/StatusEnum"
             }
+          },
+          {
+            "name": "belongDeptId",
+            "required": false,
+            "in": "query",
+            "description": "所属部门ID",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -21084,6 +21093,10 @@
       "CreatePostDto": {
         "type": "object",
         "properties": {
+          "deptId": {
+            "type": "number",
+            "description": "部门ID"
+          },
           "postName": {
             "type": "string",
             "minLength": 0,
@@ -21095,6 +21108,12 @@
             "minLength": 0,
             "maxLength": 64,
             "description": "岗位编码"
+          },
+          "postCategory": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 100,
+            "description": "类别编码"
           },
           "status": {
             "allOf": [
@@ -21116,8 +21135,7 @@
         },
         "required": [
           "postName",
-          "postCode",
-          "postSort"
+          "postCode"
         ]
       },
       "PostVo": {
@@ -21192,6 +21210,10 @@
       "UpdatePostDto": {
         "type": "object",
         "properties": {
+          "deptId": {
+            "type": "number",
+            "description": "部门ID"
+          },
           "postName": {
             "type": "string",
             "minLength": 0,
@@ -21203,6 +21225,12 @@
             "minLength": 0,
             "maxLength": 64,
             "description": "岗位编码"
+          },
+          "postCategory": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 100,
+            "description": "类别编码"
           },
           "status": {
             "allOf": [
@@ -21229,7 +21257,6 @@
         "required": [
           "postName",
           "postCode",
-          "postSort",
           "postId"
         ]
       },
@@ -21280,6 +21307,10 @@
                 "$ref": "#/components/schemas/StatusEnum"
               }
             ]
+          },
+          "belongDeptId": {
+            "type": "string",
+            "description": "所属部门ID"
           }
         },
         "required": [

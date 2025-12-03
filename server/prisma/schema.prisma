@@ -330,7 +330,9 @@ model SysOperLog {
 model SysPost {
   postId    Int       @id @default(autoincrement()) @map("post_id")
   tenantId  String    @default("000000") @map("tenant_id") @db.VarChar(20)
+  deptId    Int?      @map("dept_id")
   postCode  String    @map("post_code") @db.VarChar(64)
+  postCategory String? @map("post_category") @db.VarChar(100)
   postName  String    @map("post_name") @db.VarChar(50)
   postSort  Int       @default(0) @map("post_sort")
   status    String    @default("0") @db.Char(1)

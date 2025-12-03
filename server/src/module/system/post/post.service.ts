@@ -17,9 +17,13 @@ export class PostService {
   async create(createPostDto: CreatePostDto) {
     await this.prisma.sysPost.create({
       data: {
-        ...createPostDto,
+        deptId: createPostDto.deptId,
+        postCode: createPostDto.postCode,
+        postCategory: createPostDto.postCategory,
+        postName: createPostDto.postName,
         postSort: createPostDto.postSort ?? 0,
         status: createPostDto.status ?? '0',
+        remark: createPostDto.remark ?? '',
         createBy: '',
         updateBy: '',
         delFlag: '0',
@@ -47,6 +51,12 @@ export class PostService {
 
     if (query.status) {
       where.status = query.status;
+    }
+
+    if (query.belongDeptId) {
+      // 获取该部门及其所有子部门的ID
+      const deptIds = await this.deptService.getChildDeptIds(+query.belongDeptId);
+      where.deptId = { in: deptIds };
     }
 
     const pageSize = Number(query.pageSize ?? 10);
@@ -119,7 +129,8 @@ export class PostService {
    * 获取部门树
    */
   async deptTree() {
-    return this.deptService.findAll({});
+    const tree = await this.deptService.deptTree();
+    return ResultData.ok(tree);
   }
 
   /**
