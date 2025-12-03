@@ -82,93 +82,155 @@ const local: App.I18n.Schema = {
     tokenExpired: 'The requested token has expired'
   },
   theme: {
-    themeSchema: {
-      title: 'Theme Schema',
-      light: 'Light',
-      dark: 'Dark',
-      auto: 'Follow System'
+    themeDrawerTitle: 'Theme Configuration',
+    tabs: {
+      appearance: 'Appearance',
+      layout: 'Layout',
+      general: 'General',
+      preset: 'Preset'
     },
-    grayscale: 'Grayscale',
-    colourWeakness: 'Colour Weakness',
-    layoutMode: {
-      title: 'Layout Mode',
-      vertical: 'Vertical Menu Mode',
-      horizontal: 'Horizontal Menu Mode',
-      'vertical-mix': 'Vertical Mix Menu Mode',
-      'horizontal-mix': 'Horizontal Mix menu Mode',
-      reverseHorizontalMix: 'Reverse first level menus and child level menus position'
-    },
-    recommendColor: 'Apply Recommended Color Algorithm',
-    recommendColorDesc: 'The recommended color algorithm refers to',
-    themeColor: {
-      title: 'Theme Color',
-      primary: 'Primary',
-      info: 'Info',
-      success: 'Success',
-      warning: 'Warning',
-      error: 'Error',
-      followPrimary: 'Follow Primary'
-    },
-    scrollMode: {
-      title: 'Scroll Mode',
-      wrapper: 'Wrapper',
-      content: 'Content'
-    },
-    page: {
-      animate: 'Page Animate',
-      mode: {
-        title: 'Page Animate Mode',
-        fade: 'Fade',
-        'fade-slide': 'Slide',
-        'fade-bottom': 'Fade Zoom',
-        'fade-scale': 'Fade Scale',
-        'zoom-fade': 'Zoom Fade',
-        'zoom-out': 'Zoom Out',
-        none: 'None'
+    appearance: {
+      themeSchema: {
+        title: 'Theme Schema',
+        light: 'Light',
+        dark: 'Dark',
+        auto: 'Follow System'
+      },
+      grayscale: 'Grayscale',
+      colourWeakness: 'Colour Weakness',
+      themeColor: {
+        title: 'Theme Color',
+        primary: 'Primary',
+        info: 'Info',
+        success: 'Success',
+        warning: 'Warning',
+        error: 'Error',
+        followPrimary: 'Follow Primary'
+      },
+      themeRadius: {
+        title: 'Theme Radius'
+      },
+      recommendColor: 'Apply Recommended Color Algorithm',
+      recommendColorDesc: 'The recommended color algorithm refers to',
+      preset: {
+        title: 'Theme Preset',
+        apply: 'Apply',
+        applySuccess: 'Preset applied successfully',
+        default: {
+          name: 'Default Preset',
+          desc: 'Soybean default theme preset'
+        },
+        dark: {
+          name: 'Dark Preset',
+          desc: 'Dark theme preset for night use'
+        },
+        compact: {
+          name: 'Compact',
+          desc: 'Compact layout preset for small screens'
+        },
+        azir: {
+          name: 'Azir Preset',
+          desc: 'Azir favorite Morandi color scheme'
+        }
       }
     },
-    fixedHeaderAndTab: 'Fixed Header And Tab',
-    header: {
-      height: 'Header Height',
-      breadcrumb: {
-        visible: 'Breadcrumb Visible',
-        showIcon: 'Breadcrumb Icon Visible'
+    layout: {
+      layoutMode: {
+        title: 'Layout Mode',
+        vertical: 'Vertical Menu Mode',
+        'vertical-mix': 'Vertical Mix Menu Mode',
+        'vertical-hybrid-header-first': 'Vertical Hybrid Header First',
+        horizontal: 'Horizontal Menu Mode',
+        'top-hybrid-sidebar-first': 'Top Hybrid Sidebar First',
+        'top-hybrid-header-first': 'Top Hybrid Header First',
+        vertical_detail: 'Vertical layout, menu on the left, content on the right.',
+        'vertical-mix_detail': 'Left dual menu layout, first level menu in the dark area on the left, second level menu in the light area on the left.',
+        'vertical-hybrid-header-first_detail': 'Left hybrid layout, first level menu at the top, second level menu in the dark area on the left, third level menu in the light area on the left.',
+        horizontal_detail: 'Top menu layout, menu at the top, content below.',
+        'top-hybrid-sidebar-first_detail': 'Top hybrid layout, first level menu on the left, second level menu at the top.',
+        'top-hybrid-header-first_detail': 'Top hybrid layout, first level menu at the top, second level menu on the left.'
+      },
+      tab: {
+        title: 'Tab Settings',
+        visible: 'Tab Visible',
+        cache: 'Tab Bar Info Cache',
+        cacheTip: 'One-click to open/close global keepalive',
+        height: 'Tab Height',
+        mode: {
+          title: 'Tab Mode',
+          slider: 'Slider',
+          chrome: 'Chrome',
+          button: 'Button'
+        },
+        closeByMiddleClick: 'Close Tab by Middle Click',
+        closeByMiddleClickTip: 'Enable closing tabs by clicking with the middle mouse button'
+      },
+      header: {
+        title: 'Header Settings',
+        height: 'Header Height',
+        breadcrumb: {
+          visible: 'Breadcrumb Visible',
+          showIcon: 'Breadcrumb Icon Visible'
+        }
+      },
+      sider: {
+        title: 'Sider Settings',
+        inverted: 'Dark Sider',
+        width: 'Sider Width',
+        collapsedWidth: 'Sider Collapsed Width',
+        mixWidth: 'Mix Sider Width',
+        mixCollapsedWidth: 'Mix Sider Collapse Width',
+        mixChildMenuWidth: 'Mix Child Menu Width'
+      },
+      footer: {
+        title: 'Footer Settings',
+        visible: 'Footer Visible',
+        fixed: 'Fixed Footer',
+        height: 'Footer Height',
+        right: 'Right Footer'
+      },
+      content: {
+        title: 'Content Area Settings',
+        scrollMode: {
+          title: 'Scroll Mode',
+          tip: 'Theme scrolling only scrolls the main part, outer scrolling can carry header and footer together',
+          wrapper: 'Wrapper',
+          content: 'Content'
+        },
+        page: {
+          animate: 'Page Animate',
+          mode: {
+            title: 'Page Animate Mode',
+            fade: 'Fade',
+            'fade-slide': 'Slide',
+            'fade-bottom': 'Fade Zoom',
+            'fade-scale': 'Fade Scale',
+            'zoom-fade': 'Zoom Fade',
+            'zoom-out': 'Zoom Out',
+            none: 'None'
+          }
+        },
+        fixedHeaderAndTab: 'Fixed Header And Tab'
+      }
+    },
+    general: {
+      title: 'General Settings',
+      watermark: {
+        title: 'Watermark Settings',
+        visible: 'Watermark Full Screen Visible',
+        text: 'Custom Watermark Text',
+        enableUserName: 'Enable User Name Watermark',
+        enableTime: 'Enable Time Watermark',
+        timeFormat: 'Time Format'
       },
       multilingual: {
-        visible: 'Display multilingual button'
+        title: 'Multilingual Settings',
+        visible: 'Display Multilingual Button'
       },
       globalSearch: {
-        visible: 'Display GlobalSearch button'
+        title: 'Global Search Settings',
+        visible: 'Display Global Search Button'
       }
-    },
-    tab: {
-      visible: 'Tab Visible',
-      cache: 'Tag Bar Info Cache',
-      height: 'Tab Height',
-      mode: {
-        title: 'Tab Mode',
-        chrome: 'Chrome',
-        button: 'Button'
-      }
-    },
-    sider: {
-      inverted: 'Dark Sider',
-      width: 'Sider Width',
-      collapsedWidth: 'Sider Collapsed Width',
-      mixWidth: 'Mix Sider Width',
-      mixCollapsedWidth: 'Mix Sider Collapse Width',
-      mixChildMenuWidth: 'Mix Child Menu Width'
-    },
-    footer: {
-      visible: 'Footer Visible',
-      fixed: 'Fixed Footer',
-      height: 'Footer Height',
-      right: 'Right Footer'
-    },
-    watermark: {
-      visible: 'Watermark Full Screen Visible',
-      text: 'Watermark Text',
-      enableUserName: 'Enable User Name Watermark'
     },
     tablePropsTitle: 'Table Props',
     table: {
@@ -183,13 +245,6 @@ const local: App.I18n.Schema = {
       singleColumn: 'Single Column',
       singleLine: 'Single Line',
       striped: 'Striped'
-    },
-    themeDrawerTitle: 'Theme Configuration',
-    pageFunTitle: 'Page Function',
-    resetCacheStrategy: {
-      title: 'Reset Cache Strategy',
-      close: 'Close Page',
-      refresh: 'Refresh Page'
     },
     configOperation: {
       copyConfig: 'Copy Config',

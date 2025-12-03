@@ -28,9 +28,17 @@ declare namespace UnionKey {
    * - vertical: the vertical menu in left
    * - horizontal: the horizontal menu in top
    * - vertical-mix: two vertical mixed menus in left
-   * - horizontal-mix: the vertical first level menus in left and horizontal child level menus in top
+   * - vertical-hybrid-header-first: vertical hybrid with header as first priority
+   * - top-hybrid-sidebar-first: top hybrid with sidebar as first priority
+   * - top-hybrid-header-first: top hybrid with header as first priority
    */
-  type ThemeLayoutMode = 'vertical' | 'horizontal' | 'vertical-mix' | 'horizontal-mix';
+  type ThemeLayoutMode =
+    | 'vertical'
+    | 'horizontal'
+    | 'vertical-mix'
+    | 'vertical-hybrid-header-first'
+    | 'top-hybrid-sidebar-first'
+    | 'top-hybrid-header-first';
 
   /**
    * The scroll mode when content overflow

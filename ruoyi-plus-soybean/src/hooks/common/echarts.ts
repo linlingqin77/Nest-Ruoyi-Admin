@@ -131,11 +131,13 @@ export function useEcharts<T extends ECOption>(optionsFactory: () => T, hooks: C
    * @param callback callback function
    */
   async function updateOptions(callback: (opts: T, optsFactory: () => T) => ECOption = () => chartOptions) {
-    if (!isRendered()) return;
-
     const updatedOpts = callback(chartOptions, optionsFactory);
 
     Object.assign(chartOptions, updatedOpts);
+
+    await nextTick();
+
+    if (!isRendered()) return;
 
     if (isRendered()) {
       chart?.clear();
@@ -154,8 +156,6 @@ export function useEcharts<T extends ECOption>(optionsFactory: () => T, hooks: C
   async function render() {
     if (!isRendered()) {
       const chartTheme = darkMode.value ? 'dark' : 'light';
-
-      await nextTick();
 
       chart = echarts.init(domRef.value, chartTheme);
 
@@ -206,6 +206,8 @@ export function useEcharts<T extends ECOption>(optionsFactory: () => T, hooks: C
     // resize chart
     if (isRendered()) {
       resize();
+
+      return;
     }
 
     // render chart

@@ -198,6 +198,13 @@ export function useTable<A extends NaiveUI.TableApiFn>(config: NaiveUI.NaiveTabl
     scope.stop();
   });
 
+  // calculate the total width of the table this is used for horizontal scrolling
+  const scrollX = computed(() => {
+    return columns.value.reduce((acc, column) => {
+      return acc + Number(column.width ?? column.minWidth ?? 120);
+    }, 0);
+  });
+
   return {
     loading,
     empty,
@@ -212,7 +219,8 @@ export function useTable<A extends NaiveUI.TableApiFn>(config: NaiveUI.NaiveTabl
     getDataByPage,
     searchParams,
     updateSearchParams,
-    resetSearchParams
+    resetSearchParams,
+    scrollX
   };
 }
 

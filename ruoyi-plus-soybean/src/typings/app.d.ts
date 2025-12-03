@@ -4,6 +4,9 @@ declare namespace App {
   namespace Theme {
     type ColorPaletteNumber = import('@sa/color').ColorPaletteNumber;
 
+    /** NaiveUI theme overrides that can be specified in preset */
+    type NaiveUIThemeOverride = import('naive-ui').GlobalThemeOverrides;
+
     /** Theme setting */
     interface ThemeSetting {
       /** Theme scheme */
@@ -16,6 +19,8 @@ declare namespace App {
       recommendColor: boolean;
       /** Theme color */
       themeColor: string;
+      /** Theme radius */
+      themeRadius: number;
       /** Other color */
       otherColor: OtherColor;
       /** Whether info color is followed by the primary color */
@@ -77,6 +82,8 @@ declare namespace App {
         height: number;
         /** Tab mode */
         mode: UnionKey.ThemeTabMode;
+        /** Whether to close tab by middle click */
+        closeTabByMiddleClick: boolean;
       };
       /** Fixed header and tab */
       fixedHeaderAndTab: boolean;
@@ -114,6 +121,10 @@ declare namespace App {
         text: string;
         /** Whether to use user name as watermark text */
         enableUserName: boolean;
+        /** Whether to use current time as watermark text */
+        enableTime: boolean;
+        /** Time format for watermark text */
+        timeFormat: string;
       };
       table: {
         /** Whether to show the table border */
@@ -397,60 +408,112 @@ declare namespace App {
         tokenExpired: string;
       };
       theme: {
-        themeSchema: { title: string } & Record<UnionKey.ThemeScheme, string>;
-        grayscale: string;
-        colourWeakness: string;
-        layoutMode: { title: string; reverseHorizontalMix: string } & Record<UnionKey.ThemeLayoutMode, string>;
-        recommendColor: string;
-        recommendColorDesc: string;
-        themeColor: {
-          title: string;
-          followPrimary: string;
-        } & Theme.ThemeColor;
-        scrollMode: { title: string } & Record<UnionKey.ThemeScrollMode, string>;
-        page: {
-          animate: string;
-          mode: { title: string } & Record<UnionKey.ThemePageAnimateMode, string>;
+        themeDrawerTitle: string;
+        tabs: {
+          appearance: string;
+          layout: string;
+          general: string;
+          preset: string;
         };
-        fixedHeaderAndTab: string;
-        header: {
-          height: string;
-          breadcrumb: {
+        appearance: {
+          themeSchema: { title: string } & Record<UnionKey.ThemeScheme, string>;
+          grayscale: string;
+          colourWeakness: string;
+          themeColor: {
+            title: string;
+            followPrimary: string;
+          } & Record<Theme.ThemeColorKey, string>;
+          recommendColor: string;
+          recommendColorDesc: string;
+          themeRadius: {
+            title: string;
+          };
+          preset: {
+            title: string;
+            apply: string;
+            applySuccess: string;
+            [key: string]:
+              | {
+                  name: string;
+                  desc: string;
+                }
+              | string;
+          };
+        };
+        layout: {
+          layoutMode: { title: string } & Record<UnionKey.ThemeLayoutMode, string> & {
+              [K in `${UnionKey.ThemeLayoutMode}_detail`]: string;
+            };
+          tab: {
+            title: string;
             visible: string;
-            showIcon: string;
+            cache: string;
+            cacheTip: string;
+            height: string;
+            mode: { title: string } & Record<UnionKey.ThemeTabMode, string>;
+            closeByMiddleClick: string;
+            closeByMiddleClickTip: string;
+          };
+          header: {
+            title: string;
+            height: string;
+            breadcrumb: {
+              visible: string;
+              showIcon: string;
+            };
+          };
+          sider: {
+            title: string;
+            inverted: string;
+            width: string;
+            collapsedWidth: string;
+            mixWidth: string;
+            mixCollapsedWidth: string;
+            mixChildMenuWidth: string;
+          };
+          footer: {
+            title: string;
+            visible: string;
+            fixed: string;
+            height: string;
+            right: string;
+          };
+          content: {
+            title: string;
+            scrollMode: { title: string; tip: string } & Record<UnionKey.ThemeScrollMode, string>;
+            page: {
+              animate: string;
+              mode: { title: string } & Record<UnionKey.ThemePageAnimateMode, string>;
+            };
+            fixedHeaderAndTab: string;
+          };
+        };
+        general: {
+          title: string;
+          watermark: {
+            title: string;
+            visible: string;
+            text: string;
+            enableUserName: string;
+            enableTime: string;
+            timeFormat: string;
           };
           multilingual: {
+            title: string;
             visible: string;
           };
           globalSearch: {
+            title: string;
             visible: string;
           };
         };
-        tab: {
-          visible: string;
-          cache: string;
-          height: string;
-          mode: { title: string } & Record<UnionKey.ThemeTabMode, string>;
+        configOperation: {
+          copyConfig: string;
+          copySuccessMsg: string;
+          resetConfig: string;
+          resetSuccessMsg: string;
         };
-        sider: {
-          inverted: string;
-          width: string;
-          collapsedWidth: string;
-          mixWidth: string;
-          mixCollapsedWidth: string;
-          mixChildMenuWidth: string;
-        };
-        footer: {
-          visible: string;
-          fixed: string;
-          height: string;
-          right: string;
-        };
-        watermark: {
-          visible: string;
-          text: string;
-          enableUserName: string;
-        };
+        // RuoYi custom: table settings
         tablePropsTitle: string;
         table: {
           size: { title: string } & Record<UnionKey.ThemeTableSize, string>;
@@ -459,15 +522,6 @@ declare namespace App {
           singleColumn: string;
           singleLine: string;
           striped: string;
-        };
-        themeDrawerTitle: string;
-        pageFunTitle: string;
-        resetCacheStrategy: { title: string } & Record<UnionKey.ResetCacheStrategy, string>;
-        configOperation: {
-          copyConfig: string;
-          copySuccessMsg: string;
-          resetConfig: string;
-          resetSuccessMsg: string;
         };
       };
       route: Record<I18nRouteKey, string>;

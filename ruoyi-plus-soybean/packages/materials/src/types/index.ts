@@ -242,10 +242,11 @@ export type LayoutCssVars = {
  *
  * - Button: button style
  * - Chrome: chrome style
+ * - Slider: slider style
  *
  * @default chrome
  */
-export type PageTabMode = 'button' | 'chrome';
+export type PageTabMode = 'button' | 'chrome' | 'slider';
 
 export interface PageTabProps {
   /** Whether is dark mode */
@@ -268,6 +269,8 @@ export interface PageTabProps {
   buttonClass?: string;
   /** The class of the chrome tab */
   chromeClass?: string;
+  /** The class of the slider tab */
+  sliderClass?: string;
   /** Whether the tab is active */
   active?: boolean;
   /** The color of the active tab */

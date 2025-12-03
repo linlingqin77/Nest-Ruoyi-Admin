@@ -5,6 +5,7 @@ export const themeSettings: App.Theme.ThemeSetting = {
   colourWeakness: false,
   recommendColor: false,
   themeColor: '#0E42D2',
+  themeRadius: 6,
   otherColor: {
     info: '#0E42D2',
     success: '#009A29',
@@ -39,7 +40,8 @@ export const themeSettings: App.Theme.ThemeSetting = {
     visible: true,
     cache: true,
     height: 44,
-    mode: 'chrome'
+    mode: 'chrome',
+    closeTabByMiddleClick: false
   },
   fixedHeaderAndTab: true,
   sider: {
@@ -59,7 +61,9 @@ export const themeSettings: App.Theme.ThemeSetting = {
   watermark: {
     visible: import.meta.env.VITE_WATERMARK === 'Y',
     text: 'RuoYi-Vue-Plus',
-    enableUserName: false
+    enableUserName: false,
+    enableTime: false,
+    timeFormat: 'YYYY-MM-DD HH:mm'
   },
   table: {
     bordered: true,

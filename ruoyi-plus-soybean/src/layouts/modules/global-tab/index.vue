@@ -26,6 +26,8 @@ const tabRef = ref<HTMLElement>();
 const isPCFlag = isPC();
 
 const TAB_DATA_ID = 'data-tab-id';
+const MIDDLE_MOUSE_BUTTON = 1;
+const RIGHT_MOUSE_BUTTON = 2;
 
 type TabNamedNodeMap = NamedNodeMap & {
   [TAB_DATA_ID]: Attr;
@@ -82,6 +84,19 @@ function getContextMenuDisabledKeys(tabId: string) {
 
 function handleCloseTab(tab: App.Global.Tab) {
   tabStore.removeTab(tab.id);
+}
+
+function handleMousedown(e: MouseEvent, tab: App.Global.Tab) {
+  if (e.button === MIDDLE_MOUSE_BUTTON && themeStore.tab.closeTabByMiddleClick && !tabStore.isTabRetain(tab.id)) {
+    e.preventDefault();
+    handleCloseTab(tab);
+  }
+}
+
+function switchTab(e: MouseEvent, tab: App.Global.Tab) {
+  if ([MIDDLE_MOUSE_BUTTON, RIGHT_MOUSE_BUTTON].includes(e.button)) return;
+
+  tabStore.switchRouteByTab(tab);
 }
 
 async function refresh() {
@@ -180,9 +195,10 @@ init();
             :active="tab.id === tabStore.activeTabId"
             :active-color="themeStore.themeColor"
             :closable="!tabStore.isTabRetain(tab.id)"
-            @pointerdown="tabStore.switchRouteByTab(tab)"
+            @pointerdown="switchTab($event, tab)"
             @close="handleCloseTab(tab)"
             @contextmenu="handleContextMenu($event, tab.id)"
+            @mousedown="handleMousedown($event, tab)"
           >
             <template #prefix>
               <SvgIcon :icon="tab.icon" :local-icon="tab.localIcon" class="inline-block align-text-bottom text-16px" />
