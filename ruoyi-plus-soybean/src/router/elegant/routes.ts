@@ -123,6 +123,24 @@ export const generatedRoutes: GeneratedRoute[] = [
         }
       },
       {
+        name: 'monitor_job',
+        path: '/monitor/job',
+        component: 'view.monitor_job',
+        meta: {
+          title: 'monitor_job',
+          i18nKey: 'route.monitor_job'
+        }
+      },
+      {
+        name: 'monitor_job-log',
+        path: '/monitor/job-log',
+        component: 'view.monitor_job-log',
+        meta: {
+          title: 'monitor_job-log',
+          i18nKey: 'route.monitor_job-log'
+        }
+      },
+      {
         name: 'monitor_logininfor',
         path: '/monitor/logininfor',
         component: 'view.monitor_logininfor',
@@ -147,6 +165,15 @@ export const generatedRoutes: GeneratedRoute[] = [
         meta: {
           title: 'monitor_operlog',
           i18nKey: 'route.monitor_operlog'
+        }
+      },
+      {
+        name: 'monitor_server',
+        path: '/monitor/server',
+        component: 'view.monitor_server',
+        meta: {
+          title: 'monitor_server',
+          i18nKey: 'route.monitor_server'
         }
       }
     ]
@@ -309,6 +336,15 @@ export const generatedRoutes: GeneratedRoute[] = [
     },
     children: [
       {
+        name: 'tool_build',
+        path: '/tool/build',
+        component: 'view.tool_build',
+        meta: {
+          title: 'tool_build',
+          i18nKey: 'route.tool_build'
+        }
+      },
+      {
         name: 'tool_gen',
         path: '/tool/gen',
         component: 'view.tool_gen',
@@ -317,6 +353,15 @@ export const generatedRoutes: GeneratedRoute[] = [
           i18nKey: 'route.tool_gen',
           localIcon: 'menu-code',
           order: 2
+        }
+      },
+      {
+        name: 'tool_swagger',
+        path: '/tool/swagger',
+        component: 'view.tool_swagger',
+        meta: {
+          title: 'tool_swagger',
+          i18nKey: 'route.tool_swagger'
         }
       }
     ]

@@ -32,9 +32,12 @@ declare module "@elegant-router/types" {
     "login": "/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?";
     "monitor": "/monitor";
     "monitor_cache": "/monitor/cache";
+    "monitor_job": "/monitor/job";
+    "monitor_job-log": "/monitor/job-log";
     "monitor_logininfor": "/monitor/logininfor";
     "monitor_online": "/monitor/online";
     "monitor_operlog": "/monitor/operlog";
+    "monitor_server": "/monitor/server";
     "social-callback": "/social-callback";
     "system": "/system";
     "system_client": "/system/client";
@@ -51,7 +54,9 @@ declare module "@elegant-router/types" {
     "system_tenant-package": "/system/tenant-package";
     "system_user": "/system/user";
     "tool": "/tool";
+    "tool_build": "/tool/build";
     "tool_gen": "/tool/gen";
+    "tool_swagger": "/tool/swagger";
     "user-center": "/user-center";
   };
 
@@ -128,9 +133,12 @@ declare module "@elegant-router/types" {
     | "demo_tree"
     | "home"
     | "monitor_cache"
+    | "monitor_job-log"
+    | "monitor_job"
     | "monitor_logininfor"
     | "monitor_online"
     | "monitor_operlog"
+    | "monitor_server"
     | "system_client"
     | "system_config"
     | "system_dept"
@@ -144,7 +152,9 @@ declare module "@elegant-router/types" {
     | "system_tenant-package"
     | "system_tenant"
     | "system_user"
+    | "tool_build"
     | "tool_gen"
+    | "tool_swagger"
   >;
 
   /**

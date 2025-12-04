@@ -70,6 +70,7 @@
     "@umoteam/editor": "^8.1.0",
     "@vueuse/core": "14.0.0",
     "clipboard": "2.0.11",
+    "cron-parser": "^5.4.0",
     "dayjs": "1.11.19",
     "defu": "6.1.4",
     "echarts": "6.0.0",

@@ -138,6 +138,24 @@ declare namespace Api {
       }[];
     }>;
 
+    /** 缓存名称 */
+    type CacheName = Common.CommonRecord<{
+      /** 缓存名称 */
+      cacheName: string;
+      /** 备注 */
+      remark: string;
+    }>;
+
+    /** 缓存内容 */
+    type CacheContent = Common.CommonRecord<{
+      /** 缓存名称 */
+      cacheName: string;
+      /** 缓存键名 */
+      cacheKey: string;
+      /** 缓存内容 */
+      cacheValue: string;
+    }>;
+
     type OnlineUser = Common.CommonRecord<{
       /** 用户账号 */
       userName: string;
@@ -166,5 +184,183 @@ declare namespace Api {
     type OnlineUserSearchParams = CommonType.RecordNullable<
       Pick<Api.Monitor.OnlineUser, 'userName' | 'ipaddr'> & Api.Common.CommonSearchParams
     >;
+
+    /** ==================== 服务器监控 ==================== */
+
+    /** CPU 信息 */
+    type CpuInfo = {
+      /** 核心数 */
+      cpuNum: number;
+      /** 用户使用率 */
+      used: number;
+      /** 系统使用率 */
+      sys: number;
+      /** 空闲率 */
+      free: number;
+    };
+
+    /** 内存信息 */
+    type MemInfo = {
+      /** 总内存 */
+      total: number;
+      /** 已用内存 */
+      used: number;
+      /** 剩余内存 */
+      free: number;
+      /** 使用率 */
+      usage: number;
+    };
+
+    /** 系统信息 */
+    type SysInfo = {
+      /** 服务器名称 */
+      computerName: string;
+      /** 服务器IP */
+      computerIp: string;
+      /** 操作系统 */
+      osName: string;
+      /** 系统架构 */
+      osArch: string;
+      /** 项目路径 */
+      userDir?: string;
+    };
+
+    /** Node.js 信息 */
+    type NodeInfo = {
+      /** Node 名称 */
+      name: string;
+      /** Node 版本 */
+      version: string;
+      /** 启动时间 */
+      startTime: string;
+      /** 运行时长 */
+      runTime: string;
+      /** 安装路径 */
+      home: string;
+      /** 总内存 */
+      total: number;
+      /** 最大内存 */
+      max: number;
+      /** 空闲内存 */
+      free: number;
+      /** 已用内存 */
+      used?: number;
+      /** 使用率 */
+      usage: number;
+      /** 运行参数 */
+      inputArgs?: string;
+    };
+
+    /** 磁盘信息 */
+    type SysFile = {
+      /** 盘符路径 */
+      dirName: string;
+      /** 文件系统 */
+      sysTypeName: string;
+      /** 盘符类型 */
+      typeName: string;
+      /** 总大小 */
+      total: string;
+      /** 剩余大小 */
+      free: string;
+      /** 已用大小 */
+      used: string;
+      /** 使用率 */
+      usage: number;
+    };
+
+    /** 服务器监控信息 */
+    type ServerInfo = {
+      /** CPU 信息 */
+      cpu: CpuInfo;
+      /** 内存信息 */
+      mem: MemInfo;
+      /** 系统信息 */
+      sys: SysInfo;
+      /** Node.js 信息 */
+      node?: NodeInfo;
+      /** 磁盘信息 */
+      sysFiles: SysFile[];
+    };
+
+    /** ==================== 定时任务 ==================== */
+
+    /** 执行策略 */
+    type MisfirePolicy = '1' | '2' | '3';
+
+    /** 是否并发 */
+    type Concurrent = '0' | '1';
+
+    /** 定时任务 */
+    type Job = Common.CommonRecord<{
+      /** 任务ID */
+      jobId: CommonType.IdType;
+      /** 任务名称 */
+      jobName: string;
+      /** 任务组名 */
+      jobGroup: string;
+      /** 调用目标字符串 */
+      invokeTarget: string;
+      /** cron执行表达式 */
+      cronExpression: string;
+      /** 执行策略（1立即执行 2执行一次 3放弃执行） */
+      misfirePolicy: MisfirePolicy;
+      /** 是否并发执行（0允许 1禁止） */
+      concurrent: Concurrent;
+      /** 状态（0正常 1暂停） */
+      status: Common.EnableStatus;
+      /** 创建时间 */
+      createTime: string;
+      /** 下次执行时间 */
+      nextValidTime?: string;
+      /** 备注 */
+      remark?: string;
+    }>;
+
+    /** 定时任务搜索参数 */
+    type JobSearchParams = CommonType.RecordNullable<
+      Pick<Job, 'jobName' | 'jobGroup' | 'status'> & Api.Common.CommonSearchParams
+    >;
+
+    /** 定时任务列表 */
+    type JobList = Api.Common.PaginatingQueryRecord<Job>;
+
+    /** 定时任务操作参数 */
+    type JobOperateParams = CommonType.RecordNullable<
+      Pick<
+        Job,
+        'jobId' | 'jobName' | 'jobGroup' | 'invokeTarget' | 'cronExpression' | 'misfirePolicy' | 'concurrent' | 'status'
+      >
+    >;
+
+    /** ==================== 调度日志 ==================== */
+
+    /** 调度日志 */
+    type JobLog = Common.CommonRecord<{
+      /** 日志ID */
+      jobLogId: CommonType.IdType;
+      /** 任务名称 */
+      jobName: string;
+      /** 任务组名 */
+      jobGroup: string;
+      /** 调用目标字符串 */
+      invokeTarget: string;
+      /** 日志信息 */
+      jobMessage: string;
+      /** 执行状态（0成功 1失败） */
+      status: Common.EnableStatus;
+      /** 异常信息 */
+      exceptionInfo?: string;
+      /** 创建时间 */
+      createTime: string;
+    }>;
+
+    /** 调度日志搜索参数 */
+    type JobLogSearchParams = CommonType.RecordNullable<
+      Pick<JobLog, 'jobName' | 'jobGroup' | 'status'> & Api.Common.CommonSearchParams
+    >;
+
+    /** 调度日志列表 */
+    type JobLogList = Api.Common.PaginatingQueryRecord<JobLog>;
   }
 }
